@@ -16,8 +16,6 @@ const MovieList = async () => {
 
   const {data} = await axios.get(`http://localhost:8090/movie/getallmovie`)
 
-  console.log("data is" , data)
-
   return (
     <div className="flex flex-row">
       {

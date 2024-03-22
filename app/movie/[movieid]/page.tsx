@@ -24,6 +24,32 @@ const page = async ({ params }: { params: { movieid: string }, props: Props }) =
   const movieList = await axios.get(`http://localhost:8090/movie/getmovie/${params.movieid}`)
   const movieDetail = await axios.get(`http://localhost:8090/movie/getmovieshowtime/${params.movieid}`)
 
+  let movieDetailShowCase: string[][] = []
+  let movieDate:string[] = []
+  let movieTime:string[] = []
+  let breakpoint = /:(.*)/s
+  let movie_length = movieDetail.data.length
+
+  movieDetail.data.forEach((movieDetail:MovieDetails, i:number) => {
+    // let currentDate = ""    
+    let splitTime = movieDetail.show_time.split(breakpoint)
+
+   
+    if (i == 0) {
+      movieDate.push(splitTime[0])
+    }else if(splitTime[0]  != movieDate[i-1]){
+      movieDetailShowCase.push(movieTime)
+      movieDate.push(splitTime[0])
+      movieTime = []
+    }
+    else if(i == movie_length) {
+      movieDetailShowCase.push(movieTime)
+    }
+      movieTime.push(splitTime[1])
+  
+  })
+
+
 
   return (
     <div className="flex flex-row justify-content-between w-full">
@@ -41,9 +67,9 @@ const page = async ({ params }: { params: { movieid: string }, props: Props }) =
       <div className="w-full p-4">
         <div className="font-serif font-semibold text-2xl">SHOWTIMES</div>
         <div>
-          {movieDetail.data.map((index:number, item:MovieDetails  ) => (
-            <div key={index} className="">
-              {item.}
+          {movieDetail.data.map((item:MovieDetails) => (
+            <div className="">
+              {item.show_time}
             </div>
           ))}
         </div>
