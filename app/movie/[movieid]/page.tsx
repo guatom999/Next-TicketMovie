@@ -34,22 +34,27 @@ const page = async ({ params }: { params: { movieid: string }, props: Props }) =
     // let currentDate = ""    
     let splitTime = movieDetail.show_time.split(breakpoint)
 
-   
     if (i == 0) {
       movieDate.push(splitTime[0])
     }else if(splitTime[0]  != movieDate[i-1]){
       movieDetailShowCase.push(movieTime)
       movieDate.push(splitTime[0])
+
       movieTime = []
     }
-    else if(i == movie_length) {
+    
+    movieTime.push(splitTime[1])
+    if(i+1 == movie_length) {
+      console.log("Last Case")
       movieDetailShowCase.push(movieTime)
+      movieTime = []
     }
-      movieTime.push(splitTime[1])
-  
+
+
   })
 
-
+console.log("movieDetailShowCase ==>", movieDetailShowCase)
+console.log("movieDate ==>", movieDate)
 
   return (
     <div className="flex flex-row justify-content-between w-full">
