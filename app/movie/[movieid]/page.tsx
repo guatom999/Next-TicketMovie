@@ -1,6 +1,10 @@
+'use client'
+
 import axios from 'axios'
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
+import Movieshowdate from './Movieshowdate'
+
 
 interface Props {
   image_url: string,
@@ -20,69 +24,60 @@ interface MovieDetails {
 }
 
 const page = async ({ params }: { params: { movieid: string }, props: Props }) => {
+  const [isClick, setIsClick] = useState(false)
+
 
   const movieList = await axios.get(`http://localhost:8090/movie/getmovie/${params.movieid}`)
   const movieDetail = await axios.get(`http://localhost:8090/movie/getmovieshowtime/${params.movieid}`)
 
   let movieDetailShowCase: string[][] = []
-  let movieDate:string[] = []
-  let movieTime:string[] = []
+  let movieDetailIndex: number[][] = []
+  let movieDetailIndexKeep: number[] = []
+  let key: number[] = []
+  let movieDate: string[] = []
+  let movieTime: string[] = []
   let breakpoint = /:(.*)/s
   let movie_length = movieDetail.data.length
 
-  movieDetail.data.forEach((movieDetail:MovieDetails, i:number) => {
-    // let currentDate = ""    
+  movieDetail.data.forEach((movieDetail: MovieDetails, i: number) => {
+
+    key.push(i)
+
     let splitTime = movieDetail.show_time.split(breakpoint)
 
     if (i == 0) {
       movieDate.push(splitTime[0])
-    }else if(splitTime[0]  != movieDate[i-1]){
+    }
+    else if (splitTime[0] != movieDate[movieDate.length - 1]) {
       movieDetailShowCase.push(movieTime)
+      movieDetailIndex.push(movieDetailIndexKeep)
       movieDate.push(splitTime[0])
-
       movieTime = []
+      movieDetailIndexKeep =[]
     }
-    
+
     movieTime.push(splitTime[1])
-    if(i+1 == movie_length) {
-      console.log("Last Case")
+    movieDetailIndexKeep.push(i)
+
+    if (i + 1 == movie_length) {
       movieDetailShowCase.push(movieTime)
+      movieDetailIndex.push(movieDetailIndexKeep)
+      // movieDetailIndexKeep = []
       movieTime = []
     }
-
 
   })
 
-console.log("movieDetailShowCase ==>", movieDetailShowCase)
-console.log("movieDate ==>", movieDate)
-
   return (
-    <div className="flex flex-row justify-content-between w-full">
-      <div className="w-full p-4" >
-        <div className="font-serif font-semibold text-2xl">MOVIE INFORMATION</div>
-        <div className="flex justify-center p-10">
-          <Image
-            src={movieList.data.image_url}
-            alt='movie image'
-            width={350}
-            height={100}
-          />
-        </div>
-      </div>
-      <div className="w-full p-4">
-        <div className="font-serif font-semibold text-2xl">SHOWTIMES</div>
-        <div>
-          {movieDetail.data.map((item:MovieDetails) => (
-            <div className="">
-              {item.show_time}
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="w-full bg-orange-500">
-
-      </div>
-    </div>
+    <Movieshowdate 
+      movieDetailIndex={movieDetailIndex}
+      movieList={movieList}  
+      movieDetail={movieDetail}  
+      movieDetailShowCase={movieDetailShowCase} 
+      movieDate={movieDate}  
+      movieTime={movieTime} 
+      movie_length={movie_length}
+    />
   )
 }
 

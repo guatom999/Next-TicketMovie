@@ -15,6 +15,12 @@ const config: Config = {
       },
     },
   },
+  // tailwind.config.js
+  variants: {
+    extend: {
+      display: ['group-hover'],
+    }
+  },
   plugins: [],
 };
 export default config;
