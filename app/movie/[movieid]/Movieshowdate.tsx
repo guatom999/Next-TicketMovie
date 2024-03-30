@@ -19,13 +19,19 @@ const Movieshowdate = ({ movieDetailIndex, movieList, movieDetail, movieDetailSh
     const [movieIndex, setMovieIndex] = useState(0)
     const [showTime, setShowTime] = useState("00")
     const [showDate, setShowDate] = useState("")
+    const [reserveSeat, setReserveSeat] = useState<string[]>([])
+    const [isSelected, setIsSelected] = useState<Boolean[]>([false, false, false, false, false, false, false, false, false, false, false, false])
 
-    const boss = ["A1"]
+    const seat = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "D3",]
 
-    const [boolTest , SetBoolTest] = useState(false)
     const movieDetailSeparate = movieDetail.data
 
-    console.log("movieDetail", movieDetailSeparate)
+
+
+    useEffect(() => {
+    }, [reserveSeat])
+
+
 
     const isThatButton = (data: string) => {
         if (data == showTime) {
@@ -34,25 +40,32 @@ const Movieshowdate = ({ movieDetailIndex, movieList, movieDetail, movieDetailSh
         return "bg-white"
     }
 
-    // console.log("movieDetailIndex" , movieDetailIndex)
+    const handleSelectSeat = (data: string, index: number) => {
+        let selectedSeat = isSelected.map((c, i) => {
+            if (i === index) {
 
-    movieDetailSeparate[movieIndex].seat_available.map((data:boolean, index:number) => {
+                return !c
+            } else {
+                return c
+            }
 
-g
-    })
 
-                        {/* {movieDetailSeparate[movieIndex].seat_available[0].map((data:boolean, index:number) => (
-                                                
-                        <div className={`
-                        ${data ? "bg-red-500" : "text-green-500"}
-                        w-6 h-6 m-2  
-                        `}
-                        >
-                            {data ? (<p>true</p>) : (<p>false</p>)}
-                        </div>
-                    ))} */}
+        })
+
+        if (!reserveSeat.includes(data)) {
+            setReserveSeat([...reserveSeat, data])
+        }
+        else {
+            console.log("reserveSeat.indexOf(data) is  ", reserveSeat.indexOf(data))
+            reserveSeat.splice(reserveSeat.indexOf(data), 1)
+            setReserveSeat(reserveSeat)
+        }
+        setIsSelected(selectedSeat)
+    }
 
     return (
+
+
         <div className="flex flex-row justify-content-between w-full">
             <div className="w-full p-4" >
                 <div className="font-serif font-semibold text-2xl">MOVIE INFORMATION</div>
@@ -94,32 +107,39 @@ g
 
                                 ))}
                             </div>
-                            {/* {item.show_time} */}
                         </div>
                     ))}
                 </div>
             </div>
+
 
             <div className="w-full p-4 ">
                 <div className="font-serif font-semibold text-2xl">SEATING</div>
                 <div className="py-10">
                     <p>{movieDetailSeparate[movieIndex].title}</p>
                     <div className="flex flex-row">
-                    {/* {movieDetailSeparate[movieIndex].seat_available[0].map((data:boolean, index:number) => (
-                                                
-                        <div className={`
-                        ${data ? "bg-red-500" : "text-green-500"}
-                        w-6 h-6 m-2  
-                        `}
-                        >
-                            {data ? (<p>true</p>) : (<p>false</p>)}
-                        </div>
-                    ))} */}
+                        {seat.map((data: string, index: number) => (
+                            <div key={index}>
+                                {movieDetailSeparate[movieIndex].seat_available[index][`${data.toString()}`] ? (
+                                    <button
+                                        className={`${isSelected[index] ? "selected" : "select"}`}
+                                        onClick={() => { handleSelectSeat(data, index) }}
+                                    >
+                                    </button>
+                                ) : (
+                                    <button className="bg-[#898989] hover:cursor-pointer border-2 border-[#898989] border-opacity-90 w-6 h-6 m-1"></button>
+                                )}
+                            </div>
+
+                        ))
+                        }
                     </div>
+                    <div className="container">ที่นั่ง</div>
+                    <div className="container"><p>{reserveSeat}</p></div>
 
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 
