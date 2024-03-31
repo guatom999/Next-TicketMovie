@@ -113,7 +113,7 @@ const Movieshowdate = ({ movieDetailIndex, movieList, movieDetail, movieDetailSh
             </div>
 
 
-            <div className="w-full p-4 ">
+            <div className="w-full p-4 mr-5 ">
                 <div className="font-serif font-semibold text-2xl">SEATING</div>
                 <div className="py-10">
                     <p>{movieDetailSeparate[movieIndex].title}</p>
@@ -135,8 +135,18 @@ const Movieshowdate = ({ movieDetailIndex, movieList, movieDetail, movieDetailSh
                         }
                     </div>
                     <div className="container">ที่นั่ง</div>
-                    <div className="container"><p>{reserveSeat}</p></div>
-
+                    <div className="flex flex-row items-center w-full  h-[40px]">
+                        {reserveSeat.map((v, i) => (
+                            <div className="">
+                                <p className="px-1">{v}</p>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="w-full bg-slate-600 flex justify-center items-center">
+                        <button onClick={() => { console.log("payment") }}>
+                            {reserveSeat.length === 0 ? (<p className="p-4 text-5xl text-white">ชำระเงิน </p>) : (<p className="p-4 text-5xl text-white">ชำระเงิน {reserveSeat.length * 150}.</p>)}
+                        </button>
+                    </div>
                 </div>
             </div >
         </div >
