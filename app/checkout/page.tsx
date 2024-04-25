@@ -1,20 +1,27 @@
-// import React from 'react'
+'use client'
 
-// type Props = {}
+import React, { useEffect } from 'react'
+import Script from 'next/script'
 
-// const page = (props: Props) => {
-//   return (
-//     <div className="own-form">
-//       <form id="checkoutForm" method="POST" action="/charge">
-//         <script type="text/javascript" src="https://cdn.omise.co/omise.js"
-//           data-key="OMISE_PUBLIC_KEY"
-//           data-amount="12345"
-//           data-currency="THB"
-//           data-default-payment-method="credit_card">
-//         </script>
-//       </form>
-//     </div>
-//   )
-// }
+type Props = {}
 
-// export default page
+const page = (props: Props) => {
+
+  return (
+    <form name="checkoutForm" method="POST" action="checkout.php">
+      <script type="text/javascript" src="https://cdn.omise.co/omise.js"
+        data-key="tokn_test_5z9lkjfwqntw628zi2b"
+        data-image="http://bit.ly/customer_image"
+        data-frame-label="Merchant site name"
+        data-button-label="Pay now"
+        data-submit-label="Submit"
+        data-location="no"
+        data-amount="10025"
+        data-currency="thb"
+      >
+      </script>
+    </form>
+  )
+}
+
+export default page

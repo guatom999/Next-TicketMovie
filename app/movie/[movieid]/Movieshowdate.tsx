@@ -3,10 +3,13 @@
 import { AxiosResponse } from 'axios'
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
+import CheckOut from '@/app/components/CheckOut'
+
 
 type Props = {
-    movieList: AxiosResponse
-    movieDetail: AxiosResponse
+    movid_id: string,
+    movieList: AxiosResponse<any, any> | undefined
+    movieDetail: AxiosResponse<any, any> | undefined
     movieDetailIndex: number[][]
     movieDetailShowCase: any
     movieDate: any
@@ -14,7 +17,7 @@ type Props = {
     movie_length: any
 }
 
-const Movieshowdate = ({ movieDetailIndex, movieList, movieDetail, movieDetailShowCase, movieDate, movieTime, movie_length }: Props) => {
+const Movieshowdate = ({ movid_id, movieDetailIndex, movieList, movieDetail, movieDetailShowCase, movieDate, movieTime, movie_length }: Props) => {
 
     const [movieIndex, setMovieIndex] = useState(0)
     const [showTime, setShowTime] = useState("00")
@@ -24,14 +27,12 @@ const Movieshowdate = ({ movieDetailIndex, movieList, movieDetail, movieDetailSh
 
     const seat = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "D3",]
 
-    const movieDetailSeparate = movieDetail.data
-
-
+    const movieDetailSeparate = movieDetail?.data
 
     useEffect(() => {
-    }, [reserveSeat])
-
-
+        setIsSelected([false, false, false, false, false, false, false, false, false, false, false, false])
+        setReserveSeat([])
+    }, [movieIndex])
 
     const isThatButton = (data: string) => {
         if (data == showTime) {
@@ -43,20 +44,16 @@ const Movieshowdate = ({ movieDetailIndex, movieList, movieDetail, movieDetailSh
     const handleSelectSeat = (data: string, index: number) => {
         let selectedSeat = isSelected.map((c, i) => {
             if (i === index) {
-
                 return !c
             } else {
                 return c
             }
-
-
         })
 
         if (!reserveSeat.includes(data)) {
             setReserveSeat([...reserveSeat, data])
         }
         else {
-            console.log("reserveSeat.indexOf(data) is  ", reserveSeat.indexOf(data))
             reserveSeat.splice(reserveSeat.indexOf(data), 1)
             setReserveSeat(reserveSeat)
         }
@@ -64,14 +61,12 @@ const Movieshowdate = ({ movieDetailIndex, movieList, movieDetail, movieDetailSh
     }
 
     return (
-
-
         <div className="flex flex-row justify-content-between w-full">
             <div className="w-full p-4" >
                 <div className="font-serif font-semibold text-2xl">MOVIE INFORMATION</div>
                 <div className="flex justify-center p-10">
                     <Image
-                        src={movieList.data.image_url}
+                        src={movieList?.data.image_url}
                         alt='movie image'
                         width={350}
                         height={100}
@@ -94,11 +89,11 @@ const Movieshowdate = ({ movieDetailIndex, movieList, movieDetail, movieDetailSh
                                     >
                                         <button
                                             className={`
-                                            flex justify-center 
-                                            items-center border rounded-md w-[120px] h-[36px]
-                                             hover:bg-slate-500 hover:text-white hover:cursor-pointer 
-                                             ${isThatButton(index.toString() + i.toString())}
-                                            `}
+                                                        flex justify-center 
+                                                        items-center border rounded-md w-[120px] h-[36px]
+                                                         hover:bg-slate-500 hover:text-white hover:cursor-pointer 
+                                                         ${isThatButton(index.toString() + i.toString())}
+                                                        `}
                                             onClick={() => { setShowTime(index.toString() + i.toString()), setMovieIndex(movieDetailIndex[i][index]) }}
                                         >
                                             <p className="">{data}</p>
@@ -137,19 +132,34 @@ const Movieshowdate = ({ movieDetailIndex, movieList, movieDetail, movieDetailSh
                     <div className="container">ที่นั่ง</div>
                     <div className="flex flex-row items-center w-full  h-[40px]">
                         {reserveSeat.map((v, i) => (
-                            <div className="">
+                            <div
+                                key={i}
+                                className=""
+                            >
                                 <p className="px-1">{v}</p>
                             </div>
                         ))}
                     </div>
                     <div className="w-full bg-slate-600 flex justify-center items-center">
-                        <button onClick={() => { console.log("payment") }}>
-                            {reserveSeat.length === 0 ? (<p className="p-4 text-5xl text-white">ชำระเงิน </p>) : (<p className="p-4 text-5xl text-white">ชำระเงิน {reserveSeat.length * 150}.</p>)}
+                        <button onClick={() => {
+                            // console.log("movid_id is" ,movieDetailSeparate[movieIndex].movie_id ) 
+                        }}>
+                            {reserveSeat.length === 0 ?
+                                (
+                                    <p className="p-4 text-5xl text-white">ชำระเงิน </p>
+                                ) : (
+                                    <CheckOut totalPrice={reserveSeat.length * 150} movie_id={movieDetailSeparate[movieIndex].movie_id} reserveSeat={reserveSeat} />
+                                    // <p className="p-4 text-5xl text-white">ชำระเงิน {reserveSeat.length * 150}.</p>
+                                )}
                         </button>
                     </div>
                 </div>
             </div >
         </div >
+
+
+
+
     )
 }
 
