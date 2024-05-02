@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { FunctionComponent } from 'react'; // importing FunctionComponent
+import React from 'react'; // importing FunctionComponent
 
 
 type Props = {
@@ -17,7 +17,6 @@ type Props = {
 
 const CheckOutWithCreditCard = async ({ email, customer_id, movie_id,token, reserveSeat, price }: Props)  => {
 
-    console.log("email is" , email , "token is" , token)
 
     await axios.post("http://localhost:8103/payment/buyticket", {
         email: email,
@@ -27,7 +26,8 @@ const CheckOutWithCreditCard = async ({ email, customer_id, movie_id,token, rese
         seat_no: reserveSeat,
         price: price,
     }).then((res) => {
-        console.log("res is", res)
+        console.log("res is" , res)
+        return res
     }).catch((err) => {
         console.log(err)
     })

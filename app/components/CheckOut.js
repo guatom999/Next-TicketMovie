@@ -1,12 +1,15 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import Script from "react-load-script";
 import CheckOutWithCreditCard from "./CheckOutWithCreditCard"
+import Modal from "./Modal"
 
 let OmiseCard
 
 const CheckOut = ({ totalPrice, movie_id, reserveSeat }) => {
+
+    const [isLoading, setIsLoading] = useState(false)
 
     let amount = totalPrice * 100
 
@@ -34,6 +37,7 @@ const CheckOut = ({ totalPrice, movie_id, reserveSeat }) => {
         OmiseCard.open({
             amount: amount,
             onCreateTokenSuccess: (token) => {
+                setIsLoading(true),
                 CheckOutWithCreditCard(
                     {
                         email: "test1234@hotmail.com",
@@ -43,19 +47,35 @@ const CheckOut = ({ totalPrice, movie_id, reserveSeat }) => {
                         reserveSeat: reserveSeat,
                         price: amount
                     }
-                )
+                ).then((result) => {
+                    // console.log("result is" ,result)
+                    setTimeout(() => {
+                        setIsLoading(false)
+                    }, 5000)
+                })
 
             },
             onFormClosed: () => {
                 console.log("closed form",)
             },
-        })
+        },
+        )
     }
 
     const handleClick = (e) => {
+        // setIsLoading(true) 
         e.preventDefault();
         creditCardConfigure();
         omisePaymentHandler();
+    }
+
+    if (isLoading) {
+        return (
+            // <div className="flex items-center min-h-screen justify-center">
+            //     <p className="animate-bounce">Loading...</p>
+            // </div>
+            <Modal />
+        )
     }
 
 
@@ -69,7 +89,9 @@ const CheckOut = ({ totalPrice, movie_id, reserveSeat }) => {
                 <div
                     id="credit-card"
                     type="button"
-                    onClick={(e) => { handleClick(e) }}
+                    onClick={(e) => {
+                        handleClick(e)
+                    }}
                     className="p-4 text-5xl text-white"
                 >
                     ชำระเงิน {totalPrice}.

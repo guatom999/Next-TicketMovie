@@ -20,7 +20,9 @@ const Header = (props: Props) => {
         </Link>
       </div>
       <div className="flex">
-        <FiAlignJustify className="text-5xl text-slate-300" />
+        <Link href="/authentication/login">
+          <FiAlignJustify className="text-5xl text-slate-300" />
+        </Link>
       </div>
     </div>
   )
