@@ -47,8 +47,8 @@ const Carousel = ({ slides }: Props) => {
         className="flex transition-transform ease-out duration-1000"
         style={{ transform: `translateX(-${curr * 100}%)` }}
       >
-        {slides.map((img) => (
-          <img src={img} alt="" />
+        {slides.map((img,index) => (
+          <img key={index} src={img} alt="" />
         ))}
       </div>
       <div className="absolute inset-0 flex items-center justify-between p-4">

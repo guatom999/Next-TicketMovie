@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 
 
 const handler = NextAuth({
+  secret:process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. 'Sign in with...')
@@ -29,15 +30,16 @@ const handler = NextAuth({
           body: JSON.stringify(credentials),
           headers: { "Content-Type": "application/json" }
         })
+        const data = await res.json()
 
-        console.log("res is", res)
-
-        const user = await res.json()
-
+        console.log("res from login is" , data)
 
         // If no error and we have user data, return it
-        if (user) {
-          return user
+        if (data?.status == "ok") {
+          data.user.id = data.user._id
+          data.user.image = data.user.image_url
+          data.user.name = data.user.user_name
+          return data.user
         }
         // Return null if user data could not be retrieved
         return null

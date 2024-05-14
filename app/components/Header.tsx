@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import { FiAlignJustify } from 'react-icons/fi'
 import Link from 'next/link'
@@ -10,21 +10,12 @@ import { useSession, signIn, signOut } from 'next-auth/react'
 type Props = {}
 
 const Header = (props: Props) => {
+  const [expand, setExpand] = useState(false)
 
   const { data: session } = useSession()
-  // if (session) {
-  //     return (
-  //         <div>
-  //             <h1> already logged in </h1>
-  //             <button
-  //                 className="btn btn-primary"
-  //                 onClick={() => signOut}
-  //             >
-  //                 Sign Out
-  //             </button>
-  //         </div>
-  //     )
-  // }
+
+  console.log("session is", session?.user)
+
   return (
     <div className="shadow-md w-full flex justify-between px-5 pt-2 pb-1">
       <div className="flex">
@@ -40,7 +31,19 @@ const Header = (props: Props) => {
       {
         session ? (
           <div>
-            <h1>Logged in</h1>
+            <p>Test {session.user?.email}</p>
+            {/* <Image
+              src={`${session.user?.image}`}
+              width={150}
+              height={48}
+              alt="Logo"
+            /> */}
+            <button
+              className='text-xl'
+              onClick={() => signOut()}
+            >
+              SignOut
+            </button>
           </div>
         ) : (
           <div className="flex">
