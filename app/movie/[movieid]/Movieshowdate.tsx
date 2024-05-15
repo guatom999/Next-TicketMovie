@@ -4,6 +4,7 @@ import { AxiosResponse } from 'axios'
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import CheckOut from '@/app/components/CheckOut'
+import { useSession } from 'next-auth/react'
 
 
 type Props = {
@@ -18,6 +19,8 @@ type Props = {
 }
 
 const Movieshowdate = ({ movid_id, movieDetailIndex, movieList, movieDetail, movieDetailShowCase, movieDate, movieTime, movie_length }: Props) => {
+
+    const { data: session } = useSession()
 
     const [movieIndex, setMovieIndex] = useState(0)
     const [showTime, setShowTime] = useState("00")
@@ -148,7 +151,7 @@ const Movieshowdate = ({ movid_id, movieDetailIndex, movieList, movieDetail, mov
                                 (
                                     <p className="p-4 text-5xl text-white">ชำระเงิน </p>
                                 ) : (
-                                    <CheckOut totalPrice={reserveSeat.length * 150} movie_id={movieDetailSeparate[movieIndex].movie_id} reserveSeat={reserveSeat} />
+                                    <CheckOut totalPrice={reserveSeat.length * 150} session={session} movie_id={movieDetailSeparate[movieIndex].movie_id} reserveSeat={reserveSeat} />
                                     // <p className="p-4 text-5xl text-white">ชำระเงิน {reserveSeat.length * 150}.</p>
                                 )}
                         </button>

@@ -5,7 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 
 
 const handler = NextAuth({
-  secret:process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. 'Sign in with...')
@@ -32,17 +32,18 @@ const handler = NextAuth({
         })
         const data = await res.json()
 
-        console.log("res from login is" , data)
-
+        // console.log("res from login is" , data)
         // If no error and we have user data, return it
         if (data?.status == "ok") {
           data.user.id = data.user._id
           data.user.image = data.user.image_url
           data.user.name = data.user.user_name
           return data.user
+        } else {
+          console.log("status err")
+          throw new Error(JSON.stringify({ errors: "login failed", status: false }))
         }
-        // Return null if user data could not be retrieved
-        return null
+
       }
     }),
     // GithubProvider({
@@ -52,8 +53,9 @@ const handler = NextAuth({
     // ...add more providers here
   ],
   pages: {
-    signIn: '/authentication/login'
-  }
+  signIn: '/authentication/login',
+  error: '/authentication/login',
+},
 })
 
 export { handler as GET, handler as POST }

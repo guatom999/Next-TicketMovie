@@ -4,10 +4,14 @@ import React, { useState } from 'react'
 import Script from "react-load-script";
 import CheckOutWithCreditCard from "./CheckOutWithCreditCard"
 import Modal from "./Modal"
+import { useRouter } from 'next/navigation'
+
 
 let OmiseCard
 
-const CheckOut = ({ totalPrice, movie_id, reserveSeat }) => {
+const CheckOut = ({ totalPrice, session, movie_id, reserveSeat }) => {
+
+    const router = useRouter()
 
     const [isLoading, setIsLoading] = useState(false)
 
@@ -38,21 +42,21 @@ const CheckOut = ({ totalPrice, movie_id, reserveSeat }) => {
             amount: amount,
             onCreateTokenSuccess: (token) => {
                 setIsLoading(true),
-                CheckOutWithCreditCard(
-                    {
-                        email: "test1234@hotmail.com",
-                        customer_id: "user0001",
-                        movie_id: movie_id,
-                        token: token,
-                        reserveSeat: reserveSeat,
-                        price: amount
-                    }
-                ).then((result) => {
-                    // console.log("result is" ,result)
-                    setTimeout(() => {
-                        setIsLoading(false)
-                    }, 5000)
-                })
+                    CheckOutWithCreditCard(
+                        {
+                            email: "test1234@hotmail.com",
+                            customer_id: "user0001",
+                            movie_id: movie_id,
+                            token: token,
+                            reserveSeat: reserveSeat,
+                            price: amount
+                        }
+                    ).then((result) => {
+                        // console.log("result is" ,result)
+                        setTimeout(() => {
+                            setIsLoading(false)
+                        }, 5000)
+                    })
 
             },
             onFormClosed: () => {
@@ -64,9 +68,15 @@ const CheckOut = ({ totalPrice, movie_id, reserveSeat }) => {
 
     const handleClick = (e) => {
         // setIsLoading(true) 
+
         e.preventDefault();
-        creditCardConfigure();
-        omisePaymentHandler();
+        if (!session) {
+            router.push("/authentication/login")
+        } else {
+            creditCardConfigure();
+            omisePaymentHandler();
+        }
+
     }
 
     if (isLoading) {

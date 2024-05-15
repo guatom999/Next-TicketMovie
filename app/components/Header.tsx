@@ -14,7 +14,7 @@ const Header = (props: Props) => {
 
   const { data: session } = useSession()
 
-  console.log("session is", session?.user)
+  // console.log("session is", session?.user)
 
   return (
     <div className="shadow-md w-full flex justify-between px-5 pt-2 pb-1">
