@@ -7,6 +7,7 @@ import { getServerSession } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import CustomerProviders from "./providers"
+import SideBar from './components/SideBar'
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -28,6 +29,7 @@ export default async function RootLayout({
       <CustomerProviders>
         <body className={inter.className}>
           <Header />
+          {/* <SideBar/> */}
           {children}
           <Footer />
         </body>

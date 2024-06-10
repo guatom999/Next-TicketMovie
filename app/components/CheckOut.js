@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation'
 
 let OmiseCard
 
-const CheckOut = ({ totalPrice, session, movie_id, reserveSeat }) => {
+const CheckOut = ({ totalPrice, session, movie_id, reserveSeat , date }) => {
 
     const router = useRouter()
 
@@ -49,7 +49,8 @@ const CheckOut = ({ totalPrice, session, movie_id, reserveSeat }) => {
                             movie_id: movie_id,
                             token: token,
                             reserveSeat: reserveSeat,
-                            price: amount
+                            price: amount,
+                            date: date
                         }
                     ).then((result) => {
                         // console.log("result is" ,result)

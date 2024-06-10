@@ -9,13 +9,14 @@ type Props = {
     token: string,
     reserveSeat: string[],
     price: number,
+    date: string,
 }
 
 // type TestProps = {
 //     token: string | null,
 // }
 
-const CheckOutWithCreditCard = async ({ email, customer_id, movie_id,token, reserveSeat, price }: Props)  => {
+const CheckOutWithCreditCard = async ({ email, customer_id, movie_id, token, reserveSeat, price, date }: Props) => {
 
 
     await axios.post("http://localhost:8103/payment/buyticket", {
@@ -25,8 +26,9 @@ const CheckOutWithCreditCard = async ({ email, customer_id, movie_id,token, rese
         token: token,
         seat_no: reserveSeat,
         price: price,
+        date: date,
     }).then((res) => {
-        console.log("res is" , res)
+        console.log("res is", res)
         return res
     }).catch((err) => {
         console.log(err)

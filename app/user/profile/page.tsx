@@ -2,11 +2,15 @@
 import React from 'react'
 import { useSession } from "next-auth/react"
 
-type Props = {}
+type Props = {
+  // session: 
+}
 
 const page = (props: Props) => {
 
   const { data: session } = useSession()
+
+
 
 
 

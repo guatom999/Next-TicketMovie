@@ -3,45 +3,6 @@
 @tailwind utilities;
 
 
-/* .btn-group{ */
-  
-  /* .select{
-    padding:0;
-    margin:0;
-    border-width: 2px;
-    --tw-border-opacity: 1;
-    border-color: rgb(137 137 137 / var(--tw-border-opacity));
-    position:relative;
-    
-      input:checked + label {
-        background-color: #efad0e;
-        &:hover,
-        &:focus,
-        &:active{
-          background-color: #efad0e;      
-        }
-    }  
-    .dissapear_checkbox{
-        cursor: pointer;
-        opacity: 0;
-        width: 100%;
-      }
-    
-    .button_select{
-      width: 1.5rem;
-      height: 1.5rem;
-      margin: 0.25rem;
-      display:flex;
-      background-color: transparent;   
-      
-      &:hover,
-      &:focus,
-      &:active{
-        background-color: transparent;      
-      }
-    }
-  } */
-
 .select {
   background-color: white;
   cursor: pointer;
@@ -52,9 +13,6 @@
   width: 1.5rem;
   height: 1.5rem;
   margin: 0.25rem;
-  /* --tw-bg-opacity: 1;
-  background-color: rgb(109 40 217 / var(--tw-bg-opacity)); */
-
 }
 
 .selected {
@@ -67,4 +25,13 @@
   width: 1.5rem;
   height: 1.5rem;
   margin: 0.25rem;
+}
+
+.menuSelect {
+  color:black
+}
+
+.menuSelected {
+  background-color: black;
+  color:white
 }
