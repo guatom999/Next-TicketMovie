@@ -77,7 +77,7 @@ const Header = (props: Props) => {
           // )
         }
       </div>
-      <SideBar isOpen={isSidebarOpen} setOpen={toggleOpenSideBar} />
+      <SideBar isOpen={isSidebarOpen} setOpen={toggleOpenSideBar} session={session}/>
     </div>
   )
 }

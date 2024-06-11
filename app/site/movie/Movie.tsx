@@ -16,7 +16,7 @@ const Movie = ({ data }: Props) => {
     return (
         <div className="my-10 ">
             <div className="flex justify-center">
-                <p className="text-3xl">MOVIES</p>
+                <p className="text-3xl font-bold">MOVIES</p>
             </div>
             <div className="flex flex-row justify-center mb-5">
                 <button className={`mt-7 mx-5 ${optionsSelect == 0 ? "font-bold underline decoration-4 underline-offset-8" : ""}`} onClick={() => { setOptionsSelect(0) }}>NOW SHOWING</button>
