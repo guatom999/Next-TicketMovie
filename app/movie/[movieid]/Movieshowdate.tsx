@@ -94,7 +94,7 @@ const Movieshowdate = ({ movid_id, movieDetailIndex, movieList, movieDetail, mov
                                             className={`
                                                         flex justify-center 
                                                         items-center border rounded-md w-[120px] h-[36px]
-                                                         hover:bg-slate-500 hover:text-white hover:cursor-pointer 
+                                                         hover:bg-slate-500 duration-100 hover:text-white hover:cursor-pointer 
                                                          ${isThatButton(index.toString() + i.toString())}
                                                         `}
                                             onClick={() => { setShowTime(index.toString() + i.toString()), setMovieIndex(movieDetailIndex[i][index]), setShowDate(date) }}
@@ -151,12 +151,12 @@ const Movieshowdate = ({ movid_id, movieDetailIndex, movieList, movieDetail, mov
                                 (
                                     <p className="p-4 text-5xl text-white">ชำระเงิน </p>
                                 ) : (
-                                    <CheckOut 
-                                    totalPrice={reserveSeat.length * 150} 
-                                    session={session} 
-                                    movie_id={movieDetailSeparate[movieIndex].movie_id} 
-                                    reserveSeat={reserveSeat} 
-                                    date={showDate}
+                                    <CheckOut
+                                        totalPrice={reserveSeat.length * 150}
+                                        session={session}
+                                        movie_id={movieDetailSeparate[movieIndex].movie_id}
+                                        reserveSeat={reserveSeat}
+                                        date={showDate}
                                     />
                                     // <p className="p-4 text-5xl text-white">ชำระเงิน {reserveSeat.length * 150}.</p>
                                 )}

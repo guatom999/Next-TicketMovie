@@ -46,9 +46,11 @@ const Movie = ({ data }: Props) => {
                         </div>
                     </div>
                 ) : (
-                    <>
-                        <h1>COMING SOON</h1>
-                    </>
+                    <div className="w-11/12 mx-auto">
+                        <div className="flex flex-wrap justify-center">
+                        </div>
+                    </div>
+
                 )
             }
 
