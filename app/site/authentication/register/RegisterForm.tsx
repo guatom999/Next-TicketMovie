@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import Modal from "../../components/Modal"
+import Modal from "../../../components/Modal"
 
 type Props = {
     isLoading: boolean
