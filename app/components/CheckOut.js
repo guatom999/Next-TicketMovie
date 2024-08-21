@@ -5,11 +5,12 @@ import Script from "react-load-script";
 import CheckOutWithCreditCard from "./CheckOutWithCreditCard"
 import Modal from "./Modal"
 import { useRouter } from 'next/navigation'
+import Ticket from './Ticket'
 
 
 let OmiseCard
 
-const CheckOut = ({ totalPrice, session, movie_id, reserveSeat , date }) => {
+const CheckOut = ({ totalPrice, session, movie_id, movie_name, reserveSeat, date }) => {
 
     const router = useRouter()
 
@@ -45,18 +46,24 @@ const CheckOut = ({ totalPrice, session, movie_id, reserveSeat , date }) => {
                     CheckOutWithCreditCard(
                         {
                             email: "test1234@hotmail.com",
-                            customer_id: "user0001",
+                            customer_id: "user0002",
                             movie_id: movie_id,
+                            movie_name: movie_name,
                             token: token,
                             reserveSeat: reserveSeat,
                             price: amount,
                             date: date
                         }
                     ).then((result) => {
-                        // console.log("result is" ,result)
                         setTimeout(() => {
+                            // <Ticket src={result.url}/>
+                            console.log("result is ", result.url)
                             setIsLoading(false)
+                            // router.push(`../ticket/` + result.url)
+                            router.push(`../ticket`)
                         }, 5000)
+                    }).catch((error) => {
+                        console.log("error", error)
                     })
 
             },
@@ -82,9 +89,6 @@ const CheckOut = ({ totalPrice, session, movie_id, reserveSeat , date }) => {
 
     if (isLoading) {
         return (
-            // <div className="flex items-center min-h-screen justify-center">
-            //     <p className="animate-bounce">Loading...</p>
-            // </div>
             <Modal />
         )
     }

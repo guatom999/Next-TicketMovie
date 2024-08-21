@@ -5,11 +5,12 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import CheckOut from '@/app/components/CheckOut'
 import { useSession } from 'next-auth/react'
-
+import SeatDetail from '@/app/components/SeatDetail'
 
 type Props = {
     movid_id: string,
-    movieList: AxiosResponse<any, any> | undefined
+    // movieList: AxiosResponse<any, any> | undefined
+    movieList: AxiosResponse<any, any> | any | undefined
     movieDetail: AxiosResponse<any, any> | undefined
     movieDetailIndex: number[][]
     movieDetailShowCase: any
@@ -17,24 +18,27 @@ type Props = {
     movieTime: any
     movie_length: any
 }
-
 const Movieshowdate = ({ movid_id, movieDetailIndex, movieList, movieDetail, movieDetailShowCase, movieDate, movieTime, movie_length }: Props) => {
-
-    const { data: session } = useSession()
-
     const [movieIndex, setMovieIndex] = useState(0)
     const [showTime, setShowTime] = useState("00")
     const [showDate, setShowDate] = useState("")
     const [reserveSeat, setReserveSeat] = useState<string[]>([])
-    const [isSelected, setIsSelected] = useState<Boolean[]>([false, false, false, false, false, false, false, false, false, false, false, false])
+    const [isSelected, setIsSelected] = useState<Boolean[]>(Array(48).fill(false))
+    const { data: session } = useSession()
 
-    const seat = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "D3",]
+    //Need Refactor
+    const seat = ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10", "A11", "A12", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "B12", "C1",
+        "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11", "C12", "D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10", "D11", "D12"]
 
-    const movieDetailSeparate = movieDetail?.data
+
+    const movieDetailSeparate = movieDetail
+
+    // console.log("movieDetailSeparate", movieDetailSeparate[0].seat_available[0])
 
     useEffect(() => {
-        setIsSelected([false, false, false, false, false, false, false, false, false, false, false, false])
+        // setIsSelected([false, false, false, false, false, false, false, false, false, false, false, false])
         setReserveSeat([])
+
     }, [movieIndex])
 
     const isThatButton = (data: string) => {
@@ -63,17 +67,21 @@ const Movieshowdate = ({ movid_id, movieDetailIndex, movieList, movieDetail, mov
         setIsSelected(selectedSeat)
     }
 
+
     return (
         <div className="flex flex-row justify-content-between w-full">
             <div className="w-full p-4" >
                 <div className="font-serif font-semibold text-2xl">MOVIE INFORMATION</div>
                 <div className="flex justify-center p-10">
                     <Image
-                        src={movieList?.data.image_url}
+                        src={movieList?.image_url}
                         alt='movie image'
                         width={350}
                         height={100}
                     />
+                </div>
+                <div className="flex justify-center p-10">
+                    {/* <p>${movieList?.data}</p> */}
                 </div>
             </div>
             <div className="w-full p-4">
@@ -111,13 +119,20 @@ const Movieshowdate = ({ movid_id, movieDetailIndex, movieList, movieDetail, mov
             </div>
 
 
-            <div className="w-full p-4 mr-5 ">
+            <div className="w-full p-4 mr-5">
                 <div className="font-serif font-semibold text-2xl">SEATING</div>
                 <div className="py-10">
-                    <p>{movieDetailSeparate[movieIndex].title}</p>
-                    <div className="flex flex-row">
+                    <p className="font-semibold text-2xl">{movieDetailSeparate[movieIndex].title}</p>
+                    <SeatDetail />
+                    <p className="flex justify-center font-semibold text-3xl">SCREEN</p>
+                    <div className="relative mt-3 mb-20">
+                        <div className="absolute bottom-0 left-0 right-0 border-b-2 border-slate-700"></div>
+                    </div>
+                    {/* <div className="flex flex-wrap px-30 "> */}
+                    <div className="grid grid-cols-12  w-3/5 mx-auto">
+                        {/* {movieDetailSeparate[movieIndex].seat_available.map((data: string, index: number) => ( */}
                         {seat.map((data: string, index: number) => (
-                            <div key={index}>
+                            <div key={index} >
                                 {movieDetailSeparate[movieIndex].seat_available[index][`${data.toString()}`] ? (
                                     <button
                                         className={`${isSelected[index] ? "selected" : "select"}`}
@@ -128,24 +143,24 @@ const Movieshowdate = ({ movid_id, movieDetailIndex, movieList, movieDetail, mov
                                     <button className="bg-[#898989] hover:cursor-pointer border-2 border-[#898989] border-opacity-90 w-6 h-6 m-1"></button>
                                 )}
                             </div>
-
                         ))
                         }
                     </div>
-                    <div className="container">ที่นั่ง</div>
-                    <div className="flex flex-row items-center w-full  h-[40px]">
-                        {reserveSeat.map((v, i) => (
-                            <div
-                                key={i}
-                                className=""
-                            >
-                                <p className="px-1">{v}</p>
-                            </div>
-                        ))}
+                    <div className="text-2xl font-bold">ที่นั่ง</div>
+                    <div className="flex items-center w-full bg-white  h-[40px]">
+                        <div>
+                            {reserveSeat.map((v, i) => (
+                                <div
+                                    key={i}
+                                    className="p-5"
+                                >
+                                    <p className="">{v}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                     <div className="w-full bg-slate-600 flex justify-center items-center">
                         <button onClick={() => {
-                            // console.log("movid_id is" ,movieDetailSeparate[movieIndex].movie_id ) 
                         }}>
                             {reserveSeat.length === 0 ?
                                 (
@@ -154,11 +169,11 @@ const Movieshowdate = ({ movid_id, movieDetailIndex, movieList, movieDetail, mov
                                     <CheckOut
                                         totalPrice={reserveSeat.length * 150}
                                         session={session}
+                                        movie_name={movieList?.title}
                                         movie_id={movieDetailSeparate[movieIndex].movie_id}
                                         reserveSeat={reserveSeat}
                                         date={showDate}
                                     />
-                                    // <p className="p-4 text-5xl text-white">ชำระเงิน {reserveSeat.length * 150}.</p>
                                 )}
                         </button>
                     </div>

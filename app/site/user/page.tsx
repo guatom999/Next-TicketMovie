@@ -1,6 +1,8 @@
 'use client'
 import React from 'react'
 import { useSession } from "next-auth/react"
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 type Props = {
   // session: 
@@ -8,8 +10,16 @@ type Props = {
 
 const page = (props: Props) => {
 
+  let router = useRouter()
+
+
   const { data: session } = useSession()
 
+  console.log("session", { session })
+
+  if (!session) {
+    router.replace("authentication/login")
+  }
 
   return (
     <div className="w-1/3 mx-auto pt-6">
@@ -20,6 +30,17 @@ const page = (props: Props) => {
         <div className="flex flex-row py-3">
           <p className="w-1/2">EMAIL</p>
           <p className="w-1/2">{session?.user?.email}</p>
+        </div>
+        <div className="flex flex-row py-3">
+          <p className="w-1/2">TICKET</p>
+          <Link
+            // href={`../site/ticket`}
+            href={`../ticket`}
+            className="flex justify-center border px-5 py-1 w-1/2"
+            replace>
+            {/* <button className="border  px-5 py-1 w-1/2">SHOW TICKET</button> */}
+            SHOW TICKET
+          </Link>
         </div>
         <div className="flex flex-row py-3">
           <p className="w-1/2">MOBILE</p>

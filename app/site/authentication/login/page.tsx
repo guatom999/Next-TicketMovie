@@ -1,7 +1,9 @@
 'use client'
 import { useSession, signIn, signOut } from "next-auth/react"
+import { AiFillGithub } from 'react-icons/ai'
 import React, { useRef, useState } from 'react'
-import { useRouter , useParams} from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
+
 
 
 
@@ -13,8 +15,13 @@ const page = (props: Props) => {
   const email = useRef<HTMLInputElement>(null)
   const password = useRef<HTMLInputElement>(null)
   const router = useRouter()
+  const { data: session } = useSession()
 
   const { error } = useParams();
+
+  if (session) {
+    router.replace("../../")
+  }
 
   const handleSubmit = () => {
 
@@ -40,6 +47,17 @@ const page = (props: Props) => {
     // .catch((err) => {
     //   console.error(err);
     // });
+  }
+
+  const handleLoginWithGitHub = () => {
+    signIn("github").then((res) => {
+      setTimeout(() => { }, 1000);
+      if (res?.error) {
+        seIsError(true)
+      } else {
+        // router.push("../../")
+      }
+    })
   }
 
   return (
@@ -77,6 +95,15 @@ const page = (props: Props) => {
           <>
           </>
         )}
+        <div className="flex justify-center">
+          <button
+            className="mt-5 p-3 border rounded-xl hover:bg-slate-500 hover:text-white"
+            // onClick={() => signIn('github')}
+            onClick={() => handleLoginWithGitHub()}
+          >
+            Login With GitHub
+          </button>
+        </div>
         <div className="flex justify-center">
           <button
             className="mt-12 bg-gray-300 border rounded-md p-2"

@@ -1,11 +1,11 @@
-'use client'
-
+'use server'
 import axios, { AxiosResponse } from 'axios'
 import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
 import Movieshowdate from './Movieshowdate'
-import { useQuery } from 'react-query';
-
+import { getServerSession } from 'next-auth/next';
+// import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+// import { useSession } from 'next-auth/react'
+// import { useQuery } from 'react-query';
 
 interface Props {
   image_url: string,
@@ -25,50 +25,18 @@ interface MovieDetails {
 }
 
 const page = async ({ params }: { params: { movieid: string }, props: Props }) => {
-  const [isClick, setIsClick] = useState(false)
-  // const [isLoading, setIsLoading] = useState(true)
-  // const [movieDetail, setMovieDetail] = useState<AxiosResponse<any, any> | undefined>()
-  // const [movieList, setMovieList] = useState<AxiosResponse<any, any> | undefined>()
 
-  // const { isLoading , error ,data} = useQuery<any>('')
+  // const { data: session } = useSession()
+  // console.log("data session is" , session)
+  const { data: movieDetail } = await axios.get(`http://localhost:8090/movie/getmovieshowtime/${params.movieid}`,
+    {
+      headers:{
+        // 'Authorization':`bearer ${session?.}`
+      }
+    }
+  )
 
-  // const fetchMovieDetail = async () => {
-  //   const res = await axios.get(`http://localhost:8090/movie/getmovieshowtime/${params.movieid}`)
-  //   return res.data.json()
-  // }
-
-  // const fetchMovieList = async () => {
-  //   const res = await axios.get(`http://localhost:8090/movie/getmovie/${params.movieid}`)
-  //   return res.data.json()
-  // }
-
-  // const { isLoading , error , data} = useQuery<any>('', fetchMovieDetail, {
-  //   onSuccess: () => 
-
-    
-  // })
-
-
-  // const [movieDetail , movieList] = await Promise.all([fetchMovieDetail,fetchMovieList])
-
-  const movieDetail = await axios.get(`http://localhost:8090/movie/getmovieshowtime/${params.movieid}`)
-  const movieList = await axios.get(`http://localhost:8090/movie/getmovie/${params.movieid}`)
-
-  // useEffect(() => {
-  //   axios.get(`http://localhost:8090/movie/getmovieshowtime/${params.movieid}`).then((data) => {
-  //     setMovieDetail(data)
-  //   }).catch((err) => {
-  //     console.log("err" , err)
-  //   })
-  //   axios.get(`http://localhost:8090/movie/getmovie/${params.movieid}`).then((data) => {
-  //     setMovieList(data)
-  //   }).catch((err) => {
-  //     console.log("err" , err)
-  //   })
-  // })
-
-
-
+  const { data: movieList } = await axios.get(`http://localhost:8090/movie/getmovie/${params.movieid}`)
 
   let movieDetailShowCase: string[][] = []
   let movieDetailIndex: number[][] = []
@@ -77,9 +45,11 @@ const page = async ({ params }: { params: { movieid: string }, props: Props }) =
   let movieDate: string[] = []
   let movieTime: string[] = []
   let breakpoint = /:(.*)/s
-  let movie_length = movieDetail?.data.length
+  // let movie_length = movieDetail?.data.length
+  let movie_length = movieDetail?.length
 
-  movieDetail?.data.forEach((movieDetail: MovieDetails, i: number) => {
+
+  movieDetail?.forEach((movieDetail: MovieDetails, i: number) => {
 
     key.push(i)
 

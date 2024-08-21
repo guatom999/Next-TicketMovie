@@ -14,7 +14,7 @@ type Props = {
 
 const SideBar = ({ isOpen, setOpen, session }: Props) => {
   const menuList = ["HOME", "MOVIE", "NEWS", "EVENT", "E-MEMBER PRIVILAGE", "PROMOTION", "FAQ", "ABOUT US", "CONTACT US", "CINEMA LOCATION", "LOGIN", "LOGOUT"]
-  const linkList = ["home", "movie", "news", "event", "e_member", "promotion", "faq", "aboutus", "contactus", "cinemalocation", "authentication/login", ""]
+  const linkList = ["../", "movie", "news", "event", "e_member", "promotion", "faq", "aboutus", "contactus", "cinemalocation", "authentication/login", ""]
   const [menuIndex, setMenuIndex] = useState(0)
 
   return (
@@ -29,7 +29,7 @@ const SideBar = ({ isOpen, setOpen, session }: Props) => {
               <>
                 {
                   index == 10 && session ? (
-                    <Link href={`../site/${linkList[index]}`} replace>
+                    <Link href={`../site/user`} replace>
                       <button
                         className={`flex justify-start w-full  pb-2 pt-4 px-16  ${menuIndex == index ? "bg-black text-white" : "hover:bg-white"}`}
                         onClick={() => {
@@ -41,7 +41,7 @@ const SideBar = ({ isOpen, setOpen, session }: Props) => {
                       </button>
                     </Link>
                   ) : (
-                    <Link href={`${index == 11 ? `../` : `../site/${linkList[index]}`}`} replace>
+                    <Link href={`${index == 11 ? `../../` : `/site/${linkList[index]}`}`} replace>
                       <button
                         className={`flex justify-start w-full  pb-2 pt-4 px-16  ${menuIndex == index ? "bg-black text-white" : "hover:bg-white"}`}
                         onClick={() => {
