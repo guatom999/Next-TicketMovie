@@ -1,5 +1,5 @@
 'use client'
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signIn } from "next-auth/react"
 import { AiFillGithub } from 'react-icons/ai'
 import React, { useRef, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
@@ -31,8 +31,11 @@ const page = (props: Props) => {
       redirect: false,
     }).then((res) => {
       if (res?.error) {
+        console.log("res error is ::::::::::::::::::::::::::::::>" , res)
         seIsError(true)
       } else {
+        console.log("res from login is::::::::::::::::::::::::::>",res?.status)
+        setTimeout(() => {} , 5000)
         router.push("/")
       }
     })

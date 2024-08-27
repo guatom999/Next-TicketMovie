@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import CheckOut from '@/app/components/CheckOut'
 import { useSession } from 'next-auth/react'
+import { GetLocalTime } from '@/utils/time'
 import SeatDetail from '@/app/components/SeatDetail'
 
 type Props = {
@@ -33,7 +34,7 @@ const Movieshowdate = ({ movid_id, movieDetailIndex, movieList, movieDetail, mov
 
     const movieDetailSeparate = movieDetail
 
-    // console.log("movieDetailSeparate", movieDetailSeparate[0].seat_available[0])
+    console.log("GetLocalTime is :::::::::::::::::> ",GetLocalTime())
 
     useEffect(() => {
         // setIsSelected([false, false, false, false, false, false, false, false, false, false, false, false])
@@ -84,6 +85,10 @@ const Movieshowdate = ({ movid_id, movieDetailIndex, movieList, movieDetail, mov
                     {/* <p>${movieList?.data}</p> */}
                 </div>
             </div>
+
+            {/* {
+                movieDate[0] < GetLocalTime ? (<></>) : (<></>)
+            } */}
             <div className="w-full p-4">
                 <div className="font-serif font-semibold text-2xl">SHOWTIMES</div>
                 <div className="py-10">
@@ -147,14 +152,22 @@ const Movieshowdate = ({ movid_id, movieDetailIndex, movieList, movieDetail, mov
                         }
                     </div>
                     <div className="text-2xl font-bold">ที่นั่ง</div>
-                    <div className="flex items-center w-full bg-white  h-[40px]">
-                        <div>
-                            {reserveSeat.map((v, i) => (
+                    <div className=" w-full bg-red h-[40px]">
+                        <div className="flex flex-row w-full">
+                            {reserveSeat.map((v, index) => (
                                 <div
-                                    key={i}
-                                    className="p-5"
+                                    key={index}
+                                    className="mx-1"
                                 >
-                                    <p className="">{v}</p>
+                                    {index == reserveSeat.length - 1 ? (
+                                        <div>
+                                            <p className="">{v}</p>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <p className="">{v},</p>
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>

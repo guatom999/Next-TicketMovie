@@ -7,8 +7,6 @@ type Props = {
 
 const Ticket = ({src}: Props) => {
 
-    console.log("get src is" , src)
-
     return (
         <div className="flex justify-center my-10 ">
             <div className="w-1/5 ">

@@ -1,6 +1,6 @@
-// import create from 'zustand';
-// import { persist } from 'zustand/middleware';
-// import axios from 'axios';
+import create from 'zustand';
+import { persist } from 'zustand/middleware';
+import axios from 'axios';
 
 // import { BASE_URL } from '../utils';
 
@@ -15,6 +15,7 @@
 
 //         fetchAllUsers: async () => {
 //             const { data } = await axios.get(`${BASE_URL}/api/users`);
+            
 
 //             set({ allUser: data })
 //         }

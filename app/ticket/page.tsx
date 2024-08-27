@@ -1,19 +1,20 @@
 import React from 'react'
 import Ticket from './Ticket'
 import axios from 'axios'
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+// import { useSession } from "next-auth/react"
 
 type Props = {
     src: string
 }
 
-const page = ({ src }: Props) => {
 
-    const customerid = "user0002"
+const page = async ({ src }: Props) => {
 
-    const data = axios.get(`http://localhost:8101/inventory/${customerid}`).then(() => {}).catch((error) => {
-        console.log('error is', error)
-    })
+    const session:any = await getServerSession(authOptions);
 
+    let { data } = await axios.get(`http://localhost:8101/inventory/${session?.user._id}`)
 
     return (
         <Ticket src={src} ticketData={data} />

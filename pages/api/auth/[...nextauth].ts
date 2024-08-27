@@ -1,10 +1,10 @@
 import NextAuth from "next-auth/next"
+import { AuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github"
 import CredentialsProvider from "next-auth/providers/credentials"
 
-
-
-const handler = NextAuth({
+export const authOptions:  AuthOptions = {
+// const handler = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
@@ -23,8 +23,6 @@ const handler = NextAuth({
         })
         const user = await res.json()
 
-        console.log("user:", user)
-
         if (user?.status == "ok") {
           user.user.id = user.user._id
           user.user.image = user.user.image_url
@@ -41,7 +39,6 @@ const handler = NextAuth({
       clientId: process.env.GITHUB_ID as string,
       clientSecret: process.env.GITHUB_SECRET as string,
     }),
-    // ...add more providers here
   ],
   callbacks: {
     async jwt({ token, user }) {
@@ -61,6 +58,12 @@ const handler = NextAuth({
     signIn: '/authentication/login',
     error: '/authentication/login',
   },
-})
+  session: {
+    strategy: "jwt"
+  },
+}
 
-export { handler as GET, handler as POST }
+export default NextAuth(authOptions) 
+
+
+// export { handler as GET, handler as POST }

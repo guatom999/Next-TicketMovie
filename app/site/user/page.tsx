@@ -15,7 +15,7 @@ const page = (props: Props) => {
 
   const { data: session } = useSession()
 
-  console.log("session", { session })
+  // console.log("session", { session })
 
   if (!session) {
     router.replace("authentication/login")

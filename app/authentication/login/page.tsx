@@ -30,11 +30,9 @@
 //       }
 //     })
 //     // .catch((error) => {
-//     //   console.log("error is" , error)
 //     // })
 
 //     // .then((res) => {
-//     //   console.log("res is" ,res);
 //     //   // router.push("/")
 //     // })
 //     // .catch((err) => {

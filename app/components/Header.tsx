@@ -19,8 +19,6 @@ const Header = (props: Props) => {
     setIsSidebarOpen(!isSidebarOpen)
   }
 
-  // console.log("session is", session?.user)
-
   return (
     <div className="sticky top-0 z-10 bg-white">
       <div className="shadow-md w-full flex justify-between px-5 pt-2 pb-1">

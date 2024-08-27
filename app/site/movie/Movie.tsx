@@ -11,8 +11,6 @@ const Movie = ({ data }: Props) => {
 
     const [optionsSelect, setOptionsSelect] = useState(0)
 
-    console.log("data is", data)
-
     return (
         <div className="my-10 ">
             <div className="flex justify-center">

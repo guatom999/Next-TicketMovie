@@ -1,16 +1,16 @@
-'use client'
-
 import React, { useState } from 'react'
 import Script from "react-load-script";
 import CheckOutWithCreditCard from "./CheckOutWithCreditCard"
 import Modal from "./Modal"
 import { useRouter } from 'next/navigation'
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import Ticket from './Ticket'
 
 
 let OmiseCard
 
-const CheckOut = ({ totalPrice, session, movie_id, movie_name, reserveSeat, date }) => {
+const CheckOut =  ({ totalPrice, session, movie_id, movie_name, reserveSeat, date }) => {
 
     const router = useRouter()
 
@@ -45,8 +45,8 @@ const CheckOut = ({ totalPrice, session, movie_id, movie_name, reserveSeat, date
                 setIsLoading(true),
                     CheckOutWithCreditCard(
                         {
-                            email: "test1234@hotmail.com",
-                            customer_id: "user0002",
+                            email: session.email,
+                            customer_id: session.user.id,
                             movie_id: movie_id,
                             movie_name: movie_name,
                             token: token,
@@ -56,8 +56,6 @@ const CheckOut = ({ totalPrice, session, movie_id, movie_name, reserveSeat, date
                         }
                     ).then((result) => {
                         setTimeout(() => {
-                            // <Ticket src={result.url}/>
-                            console.log("result is ", result.url)
                             setIsLoading(false)
                             // router.push(`../ticket/` + result.url)
                             router.push(`../ticket`)

@@ -1,9 +1,10 @@
 import Carousel from "./components/Carousel";
 import MovieList from "./components/MovieList";
+import axios from 'axios'
 import { useSession } from "next-auth/react"
 
 
-export default function Home() {
+export default async function Home() {
 
   const slides = [
     "https://www.housesamyan.com/assets/uploads/banner/image_web_path/20220126005322_9DDC1635-1368-4C58-A1AF-6918758ED952.jpg",
@@ -11,11 +12,13 @@ export default function Home() {
   ]
 
 
+    const { data:movie } = await axios.get(`http://localhost:8090/movie/getallmovie`)
+    const { data:comingsoonMovie } = await axios.get(`http://localhost:8090/movie/comingsoonmovie`)
 
   return (
     <div>
       <Carousel slides={slides}/>
-      <MovieList/>
+      <MovieList movie={movie} comingsoonMovie={comingsoonMovie}/>
     </div>
   );
 }

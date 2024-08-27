@@ -3,9 +3,6 @@ import axios, { AxiosResponse } from 'axios'
 import React, { useState, useEffect } from 'react'
 import Movieshowdate from './Movieshowdate'
 import { getServerSession } from 'next-auth/next';
-// import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-// import { useSession } from 'next-auth/react'
-// import { useQuery } from 'react-query';
 
 interface Props {
   image_url: string,
