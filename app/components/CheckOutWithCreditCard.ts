@@ -19,6 +19,8 @@ type Props = {
 
 const CheckOutWithCreditCard = async ({ email, customer_id, movie_id, movie_name, token, reserveSeat, price, date }: Props) => {
 
+    console.log("price from frontend is ::::::::::::::>" , price)
+
     const { data } = await axios.post("http://localhost:8103/payment/buyticket", {
         email: email,
         customer_id: customer_id,
