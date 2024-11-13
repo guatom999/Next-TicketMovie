@@ -1,44 +1,42 @@
-'use client'
-import { useSession, signIn } from "next-auth/react"
-import { AiFillGithub } from 'react-icons/ai'
-import React, { useRef, useState } from 'react'
-import { useRouter, useParams } from 'next/navigation'
+"use client";
+import { useSession, signIn } from "next-auth/react";
+import { AiFillGithub } from "react-icons/ai";
+import React, { useRef, useState } from "react";
+import { useRouter, useParams } from "next/navigation";
 
-
-
-
-
-type Props = {}
+type Props = {};
 
 const page = (props: Props) => {
-  const [isError, seIsError] = useState(false)
-  const email = useRef<HTMLInputElement>(null)
-  const password = useRef<HTMLInputElement>(null)
-  const router = useRouter()
-  const { data: session } = useSession()
+  const [isError, seIsError] = useState(false);
+  const email = useRef<HTMLInputElement>(null);
+  const password = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+  const { data: session } = useSession();
 
   const { error } = useParams();
 
   if (session) {
-    router.replace("../../")
+    router.replace("../../");
   }
 
   const handleSubmit = () => {
-
     signIn("credentials", {
       email: email.current?.value,
       password: password.current?.value,
       redirect: false,
     }).then((res) => {
       if (res?.error) {
-        console.log("res error is ::::::::::::::::::::::::::::::>" , res)
-        seIsError(true)
+        console.log("res error is ::::::::::::::::::::::::::::::>", res);
+        seIsError(true);
       } else {
-        console.log("res from login is::::::::::::::::::::::::::>",res?.status)
-        setTimeout(() => {} , 5000)
-        router.push("/")
+        console.log(
+          "res from login is::::::::::::::::::::::::::>",
+          res?.status
+        );
+        setTimeout(() => {}, 5000);
+        router.push("/");
       }
-    })
+    });
     // .catch((error) => {
     //   console.log("error is" , error)
     // })
@@ -50,18 +48,18 @@ const page = (props: Props) => {
     // .catch((err) => {
     //   console.error(err);
     // });
-  }
+  };
 
   const handleLoginWithGitHub = () => {
     signIn("github").then((res) => {
-      setTimeout(() => { }, 1000);
+      setTimeout(() => {}, 1000);
       if (res?.error) {
-        seIsError(true)
+        seIsError(true);
       } else {
         // router.push("../../")
       }
-    })
-  }
+    });
+  };
 
   return (
     <div className="flex justify-center items-center">
@@ -90,13 +88,14 @@ const page = (props: Props) => {
           </label>
         </div>
         {isError ? (
-          <div className="my-2 flex justify-center border border-red-600
-          ">
+          <div
+            className="my-2 flex justify-center border border-red-600
+          "
+          >
             <p className="text-lg">some thing wrong</p>
           </div>
         ) : (
-          <>
-          </>
+          <></>
         )}
         <div className="flex justify-center">
           <button
@@ -107,17 +106,17 @@ const page = (props: Props) => {
             Login With GitHub
           </button>
         </div>
-        <div className="flex justify-center">
-          <button
-            className="mt-12 bg-gray-300 border rounded-md p-2"
-            onClick={handleSubmit}
-          >
-            Submit
-          </button>
+          <div className="flex justify-center">
+            <button
+              className="mt-12 bg-gray-300 border rounded-md p-2"
+              onClick={handleSubmit}
+            >
+              Sign In
+            </button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

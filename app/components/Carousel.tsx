@@ -10,10 +10,9 @@ type Props = {
 };
 
 const Carousel = ({ slides }: Props) => {
-  const autoSlide = false;
-  const autoSlideInterval = 10;
-
   const [curr, setCurr] = useState(0);
+  const autoSlide = true;
+  const autoSlideInterval = 5000;
 
   const prev = () => {
     setCurr(() => {
@@ -26,20 +25,26 @@ const Carousel = ({ slides }: Props) => {
     });
   };
 
+  useEffect(() => {
+    if (autoSlide) {
+      const intervalId = setInterval(() => {
+        next();
+      }, autoSlideInterval);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [autoSlide, curr]);
+
+
   return (
     <div className="overflow-hidden relative mt-2">
       <div
         className="flex transition-transform duration-1000"
         style={{ transform: `translateX(-${curr * 100}%)` }}
       >
-          {slides.map((img, index) => (
-            <img
-              key={index}
-              src={img}
-              alt=""
-              className="hover:cursor-pointer"
-            />
-          ))}
+        {slides.map((img, index) => (
+          <img key={index} src={img} alt="" className="hover:cursor-pointer" />
+        ))}
       </div>
       <div className="absolute inset-5 flex items-center justify-between p-4">
         <button

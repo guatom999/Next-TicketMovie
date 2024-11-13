@@ -6,3 +6,10 @@ export const GetLocalTime = () => {
     const day = String(now.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
 }
+
+export const FormatTime = () => {
+    
+
+
+    return ""
+}

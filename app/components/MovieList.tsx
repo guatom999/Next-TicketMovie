@@ -9,6 +9,7 @@ interface MovieData {
   movie_id: string;
   title: string;
   price: number;
+  release_at: string;
   image_url: string;
   avaliable: number;
 }
@@ -19,18 +20,24 @@ interface Props {
   comingsoonMovie: any;
 }
 
-const MovieList = ({ movie,  comingsoonMovie }: Props) => {
+const MovieList = ({ movie, comingsoonMovie }: Props) => {
   const [optionsSelect, setOptionsSelect] = useState(0);
 
   const [curr, setCurr] = useState(0);
-  const autoSlide = true
-  const autoSlideInterval = 1000
+  const autoSlide = true;
+  const autoSlideInterval = 1000;
+  const optionSelectLength =
+    optionsSelect === 0 ? movie.length : comingsoonMovie.length;
 
-  const changeSlide = (newIndex:any) => {
+  const changeSlide = (newIndex: any) => {
     setCurr((prevState) => {
-      const nextIndex = newIndex % movie.length; 
-      if(prevState == movie.length - 6 ) return 0
-      return nextIndex <= 0 ? movie.length - 6 : nextIndex;
+      const nextIndex = newIndex % optionSelectLength;
+      if (optionsSelect == 0) {
+        if (prevState == optionSelectLength - 6) return 0;
+      } else {
+        if (prevState == optionSelectLength - 6) return 0;
+      }
+      return nextIndex <= 0 ? optionSelectLength - 6 : nextIndex;
     });
   };
 
@@ -38,7 +45,7 @@ const MovieList = ({ movie,  comingsoonMovie }: Props) => {
   const next = () => changeSlide(curr + 1);
 
   useEffect(() => {
-    if (autoSlide) {
+    if (autoSlide && optionSelectLength > 6) {
       const intervalId = setInterval(() => {
         changeSlide(curr + 1);
       }, autoSlideInterval);
@@ -46,38 +53,6 @@ const MovieList = ({ movie,  comingsoonMovie }: Props) => {
       return () => clearInterval(intervalId);
     }
   }, [autoSlide, curr, autoSlideInterval]);
-
-  // const [curr, setCurr] = useState(0);
-
-  // const changeSlide = (newIndex: any) => {
-  //   setCurr((prevState) => {
-  //     console.log("prevState ======?" , prevState)
-  //     // const nextIndex = newIndex % movie.length; // Handle looping
-  //     // return 
-  //     return prevState + 1
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   if (autoSlide) {
-  //     const intervalId = setInterval(() => {
-  //       changeSlide
-  //     }, 1000);
-
-  //     return () => clearInterval(intervalId);
-  //   }
-  // }, [curr]);
-
-  // const prev = () => {
-  //   setCurr(() => {
-  //     return curr == 0 ? movie.length - 6 : curr - 1;
-  //   });
-  // };
-  // const next = () => {
-  //   setCurr(() => {
-  //     return curr == movie.length - 6 ? 0 : curr + 1;
-  //   });
-  // };
 
   return (
     <>
@@ -90,6 +65,7 @@ const MovieList = ({ movie,  comingsoonMovie }: Props) => {
           }`}
           onClick={() => {
             setOptionsSelect(0);
+            setCurr(0);
           }}
         >
           NOW SHOWING
@@ -102,6 +78,7 @@ const MovieList = ({ movie,  comingsoonMovie }: Props) => {
           }`}
           onClick={() => {
             setOptionsSelect(1);
+            setCurr(0);
           }}
         >
           COMING SOON
@@ -109,13 +86,51 @@ const MovieList = ({ movie,  comingsoonMovie }: Props) => {
       </div>
       <div className="overflow-hidden">
         {optionsSelect == 0 ? (
-          <>
+          <div className="w-full h-auto">
             <div
               className="flex transition-transform duration-500 ease-in-out"
               // style={{ transform: `translateX(-${curr * 100}%)` }}
               style={{ transform: `translateX(-${curr * 317}px)` }}
             >
               {movie?.map((result: MovieData, index: number) => (
+                <Link
+                  key={result.movie_id}
+                  className="hover:cursor-pointer flex-shrink-0"
+                  href={`/movie/${result.movie_id}`}
+                >
+                  <div>
+                    <Image
+                      className="mx-1 cursor-pointer" // Add cursor-pointer here
+                      src={result.image_url}
+                      alt="Movie Image"
+                      width={309}
+                      height={463}
+                    />
+                    <div className="flex flex-col justify-between">
+                        <div>{result.title}</div>
+                        <div>{result?.release_at}</div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <div className="absolute inset-x-5 bottom-20 flex items-center justify-between p-4">
+              <button onClick={prev}>
+                <ChevronLeft size={40} />
+              </button>
+              <button onClick={next}>
+                <ChevronRight size={40} />
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div
+              className="flex transition-transform duration-500 ease-in-out"
+              // style={{ transform: `translateX(-${curr * 100}%)` }}
+              style={{ transform: `translateX(-${curr * 317}px)` }}
+            >
+              {comingsoonMovie?.map((result: MovieData, index: number) => (
                 <Link
                   key={result.movie_id}
                   className="hover:cursor-pointer"
@@ -141,9 +156,7 @@ const MovieList = ({ movie,  comingsoonMovie }: Props) => {
                 <ChevronRight size={40} />
               </button>
             </div>
-          </>
-        ) : (
-          <></>
+          </div>
         )}
       </div>
     </>
