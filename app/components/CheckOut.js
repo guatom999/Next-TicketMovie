@@ -1,117 +1,113 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import Script from "react-load-script";
-import CheckOutWithCreditCard from "./CheckOutWithCreditCard"
-import Modal from "./Modal"
-import { useRouter } from 'next/navigation'
+import CheckOutWithCreditCard from "./CheckOutWithCreditCard";
+import Modal from "./Modal";
+import { useRouter } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import Ticket from './Ticket'
+import Ticket from "./Ticket";
 
+let OmiseCard;
 
-let OmiseCard
+const CheckOut = ({
+  totalPrice,
+  session,
+  movie_id,
+  movie_name,
+  reserveSeat,
+  date,
+}) => {
+  const router = useRouter();
 
-const CheckOut =  ({ totalPrice, session, movie_id, movie_name, reserveSeat, date }) => {
+  const [isLoading, setIsLoading] = useState(false);
 
-    const router = useRouter()
+  let amount = totalPrice * 100;
 
-    const [isLoading, setIsLoading] = useState(false)
+  const handleLoadScript = () => {
+    OmiseCard = window.OmiseCard;
+    OmiseCard.configure({
+      publicKey: process.env.NEXT_PUBLIC_OMISE_PUBLIC_KEY,
+      currency: "THB",
+      frameLabel: "Ticket Shop",
+      submitLabel: "Pay NOW",
+      buttonLabel: "Pay with Omise",
+    });
+  };
 
-    let amount = totalPrice * 100
+  const creditCardConfigure = () => {
+    OmiseCard.configure({
+      defaultPaymentMethod: "credit_card",
+      otherPaymentMethods: [],
+    });
+    OmiseCard.configureButton("#credit-card");
+    OmiseCard.attach();
+  };
 
-    const handleLoadScript = () => {
-        OmiseCard = window.OmiseCard
-        OmiseCard.configure({
-            publicKey: process.env.NEXT_PUBLIC_OMISE_PUBLIC_KEY,
-            currency: 'THB',
-            frameLabel: 'Ticket Shop',
-            submitLabel: 'Pay NOW',
-            buttonLabel: 'Pay with Omise'
-        });
+  const omisePaymentHandler = () => {
+    OmiseCard.open({
+      amount: amount,
+      onCreateTokenSuccess: (token) => {
+        setIsLoading(true),
+          CheckOutWithCreditCard({
+            email: session.email,
+            customer_id: session.user.id,
+            movie_id: movie_id,
+            movie_name: movie_name,
+            token: token,
+            reserveSeat: reserveSeat,
+            price: amount,
+            date: date,
+          })
+            .then((result) => {
+              setTimeout(() => {
+                setIsLoading(false);
+                // router.push(`../ticket/` + result.url)
+                router.push(`../ticket`);
+              }, 5000);
+            })
+            .catch((error) => {
+              console.log("error", error);
+            });
+      },
+      onFormClosed: () => {
+        console.log("closed form");
+      },
+    });
+  };
+
+  const handleClick = (e) => {
+    // setIsLoading(true)
+
+    e.preventDefault();
+    if (!session) {
+      router.push("/site/authentication/login");
+    } else {
+      creditCardConfigure();
+      omisePaymentHandler();
     }
+  };
 
-    const creditCardConfigure = () => {
-        OmiseCard.configure({
-            defaultPaymentMethod: 'credit_card',
-            otherPaymentMethods: []
-        });
-        OmiseCard.configureButton("#credit-card");
-        OmiseCard.attach();
-    }
+  if (isLoading) {
+    return <Modal />;
+  }
 
-    const omisePaymentHandler = () => {
-        OmiseCard.open({
-            amount: amount,
-            onCreateTokenSuccess: (token) => {
-                setIsLoading(true),
-                    CheckOutWithCreditCard(
-                        {
-                            email: session.email,
-                            customer_id: session.user.id,
-                            movie_id: movie_id,
-                            movie_name: movie_name,
-                            token: token,
-                            reserveSeat: reserveSeat,
-                            price: amount,
-                            date: date
-                        }
-                    ).then((result) => {
-                        setTimeout(() => {
-                            setIsLoading(false)
-                            // router.push(`../ticket/` + result.url)
-                            router.push(`../ticket`)
-                        }, 5000)
-                    }).catch((error) => {
-                        console.log("error", error)
-                    })
-
-            },
-            onFormClosed: () => {
-                console.log("closed form",)
-            },
-        },
-        )
-    }
-
-    const handleClick = (e) => {
-        // setIsLoading(true) 
-
-        e.preventDefault();
-        if (!session) {
-            router.push("/authentication/login")
-        } else {
-            creditCardConfigure();
-            omisePaymentHandler();
-        }
-
-    }
-
-    if (isLoading) {
-        return (
-            <Modal />
-        )
-    }
-
-
-    return (
-        <div className="own-form">
-            <Script
-                url="https://cdn.omise.co/omise.js"
-                onLoad={handleLoadScript}
-            />
-            <form>
-                <div
-                    id="credit-card"
-                    type="button"
-                    onClick={(e) => {
-                        handleClick(e)
-                    }}
-                    className="p-4 text-5xl text-white"
-                >
-                    ชำระเงิน {totalPrice}.
-                </div>
-            </form>
+  return (
+    <div className="own-form">
+      <Script url="https://cdn.omise.co/omise.js" onLoad={handleLoadScript} />
+      <form>
+        <div
+          id="credit-card"
+          type="button"
+          onClick={(e) => {
+            handleClick(e);
+          }}
+          className="p-4 text-5xl text-white"
+        >
+          ชำระเงิน {totalPrice}.
         </div>
-    )
-}
+      </form>
+    </div>
+  );
+};
 
-export default CheckOut
+export default CheckOut;

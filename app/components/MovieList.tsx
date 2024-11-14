@@ -4,6 +4,7 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "react-feather";
+import { FormatTime } from "@/utils/time";
 
 interface MovieData {
   movie_id: string;
@@ -25,7 +26,7 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
 
   const [curr, setCurr] = useState(0);
   const autoSlide = true;
-  const autoSlideInterval = 1000;
+  const autoSlideInterval = 2000;
   const optionSelectLength =
     optionsSelect === 0 ? movie.length : comingsoonMovie.length;
 
@@ -100,15 +101,16 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
                 >
                   <div>
                     <Image
-                      className="mx-1 cursor-pointer" // Add cursor-pointer here
+                      className="mx-1 cursor-pointer"
                       src={result.image_url}
                       alt="Movie Image"
                       width={309}
                       height={463}
                     />
-                    <div className="flex flex-col justify-between">
-                        <div>{result.title}</div>
-                        <div>{result?.release_at}</div>
+                    <div className="flex flex-col justify-between m-2 font-sans">
+                      <div className=" font-semibold ">{result.title}</div>
+                      {/* <div>{result?.release_at}</div> */}
+                      <div>{FormatTime(result?.release_at)}</div>
                     </div>
                   </div>
                 </Link>
