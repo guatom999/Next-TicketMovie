@@ -5,10 +5,9 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { getServerSession } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import CustomerProviders from "./providers"
-import SideBar from './components/SideBar'
-
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import CustomerProviders from "./providers";
+import SideBar from "./components/SideBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,8 +21,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-
   return (
     <html lang="en">
       <CustomerProviders>
@@ -31,10 +28,9 @@ export default async function RootLayout({
           <Header />
           {/* <SideBar/> */}
           {children}
-          <Footer />
+          {/* <Footer /> */}
         </body>
       </CustomerProviders>
-
     </html>
   );
 }

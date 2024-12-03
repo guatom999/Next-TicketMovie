@@ -1,23 +1,21 @@
-'use client'
-import React, { useState } from 'react'
-import Image from 'next/image'
-import { FiAlignJustify } from 'react-icons/fi'
-import Link from 'next/link'
-import { useSession, signIn, signOut } from 'next-auth/react'
-import SideBar from './SideBar'
+"use client";
+import React, { useState } from "react";
+import Image from "next/image";
+import { FiAlignJustify } from "react-icons/fi";
+import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react";
+import SideBar from "./SideBar";
 
-
-
-type Props = {}
+type Props = {};
 
 const Header = (props: Props) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const { data: session } = useSession()
+  const { data: session } = useSession();
 
   const toggleOpenSideBar = () => {
-    setIsSidebarOpen(!isSidebarOpen)
-  }
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   return (
     <div className="sticky top-0 z-10 bg-white">
@@ -33,7 +31,11 @@ const Header = (props: Props) => {
           </Link>
         </div>
         <div className="flex">
-          <button onClick={() => { toggleOpenSideBar() }}>
+          <button
+            onClick={() => {
+              toggleOpenSideBar();
+            }}
+          >
             <FiAlignJustify className="text-5xl text-slate-300" />
           </button>
         </div>
@@ -75,9 +77,13 @@ const Header = (props: Props) => {
           // )
         }
       </div>
-      <SideBar isOpen={isSidebarOpen} setOpen={toggleOpenSideBar} session={session}/>
+      <SideBar
+        isOpen={isSidebarOpen}
+        setOpen={toggleOpenSideBar}
+        session={session}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

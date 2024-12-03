@@ -168,7 +168,7 @@ const Movieshowdate = ({
                 {movieDate.map((date: any, i: number) => (
                   <div key={i} className="">
                     <p>{date}</p>
-                    <div className=" flex flex-row gap-2">
+                    <div className=" flex flex-wrap gap-2">
                       {movieDetailShowCase[i].map(
                         (data: any, index: number) => (
                           <div
