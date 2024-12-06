@@ -28,7 +28,7 @@ export default async function RootLayout({
           <Header />
           {/* <SideBar/> */}
           {children}
-          {/* <Footer /> */}
+          <Footer />
         </body>
       </CustomerProviders>
     </html>

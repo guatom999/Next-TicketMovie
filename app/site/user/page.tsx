@@ -1,24 +1,23 @@
-'use client'
-import React from 'react'
-import { useSession } from "next-auth/react"
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+"use client";
+import React from "react";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 type Props = {
-  // session: 
-}
+  // session:
+};
 
 const page = (props: Props) => {
+  let router = useRouter();
 
-  let router = useRouter()
-
-
-  const { data: session } = useSession()
+  const { data: session } = useSession();
 
   // console.log("session", { session })
 
   if (!session) {
-    router.replace("authentication/login")
+    router.replace("authentication/login");
   }
 
   return (
@@ -26,7 +25,16 @@ const page = (props: Props) => {
       <div className="flex justify-center items-center">
         <h1>PROFILE</h1>
       </div>
-      <div>
+      <div className="">
+        <div className="flex justify-center items-center">
+          <Image
+            className="mx-1 cursor-pointer"
+            src={session?.user?.image_url ?? ""}
+            alt="Movie Image"
+            width={100}
+            height={463}
+          />
+        </div>
         <div className="flex flex-row py-3">
           <p className="w-1/2">EMAIL</p>
           <p className="w-1/2">{session?.user?.email}</p>
@@ -37,7 +45,8 @@ const page = (props: Props) => {
             // href={`../site/ticket`}
             href={`../ticket`}
             className="flex justify-center border px-5 py-1 w-1/2"
-            replace>
+            replace
+          >
             {/* <button className="border  px-5 py-1 w-1/2">SHOW TICKET</button> */}
             SHOW TICKET
           </Link>
@@ -46,9 +55,7 @@ const page = (props: Props) => {
           <p className="w-1/2">MOBILE</p>
           <div className="flex flex-row w-1/2 relative">
             <p className="">+66 89 888 8888</p>
-            <button className="border-2 p-1 absolute right-0">
-              CHANGE
-            </button>
+            <button className="border-2 p-1 absolute right-0">CHANGE</button>
           </div>
         </div>
         <div className="flex flex-row py-3">
@@ -81,7 +88,7 @@ const page = (props: Props) => {
         </div> */}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

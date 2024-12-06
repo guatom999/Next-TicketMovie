@@ -2,14 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 .select {
   background-color: white;
   cursor: pointer;
   border-width: 2px;
   --tw-border-opacity: 1;
-    border-color: rgb(137 137 137 / var(--tw-border-opacity));
+  border-color: rgb(137 137 137 / var(--tw-border-opacity));
   --tw-border-opacity: 0.9;
   width: 1.5rem;
   height: 1.5rem;
@@ -21,7 +19,7 @@
   cursor: pointer;
   border-width: 2px;
   --tw-border-opacity: 1;
-    border-color: rgb(137 137 137 / var(--tw-border-opacity));
+  border-color: rgb(137 137 137 / var(--tw-border-opacity));
   --tw-border-opacity: 0.9;
   width: 1.5rem;
   height: 1.5rem;
@@ -29,10 +27,18 @@
 }
 
 .menuSelect {
-  color:black
+  color: black;
 }
 
 .menuSelected {
   background-color: black;
-  color:white
+  color: white;
+}
+
+.hidden-slide {
+  pointer-events: none;
+}
+
+.visible-slide {
+  pointer-events: auto;
 }

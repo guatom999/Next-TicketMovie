@@ -25,11 +25,13 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
   const [optionsSelect, setOptionsSelect] = useState(0);
 
   const [curr, setCurr] = useState(0);
+  const [isHover, setIsHover] = useState(false);
   const autoSlide = true;
   const autoSlideInterval = 2000;
   const optionSelectLength =
     optionsSelect === 0 ? movie.length : comingsoonMovie.length;
 
+  console.log("comingsoonMovie", comingsoonMovie)
   const changeSlide = (newIndex: any) => {
     setCurr((prevState) => {
       const nextIndex = newIndex % optionSelectLength;
@@ -48,22 +50,23 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
   useEffect(() => {
     if (autoSlide && optionSelectLength > 6) {
       const intervalId = setInterval(() => {
-        changeSlide(curr + 1);
+        if (!isHover) {
+          changeSlide(curr + 1);
+        }
       }, autoSlideInterval);
 
       return () => clearInterval(intervalId);
     }
-  }, [autoSlide, curr, autoSlideInterval]);
+  }, [autoSlide, curr, autoSlideInterval, isHover]);
 
   return (
     <>
       <div className="my-5">
         <button
-          className={`mt-7 mx-5 ${
-            optionsSelect == 0
-              ? "font-bold underline decoration-4 underline-offset-8"
-              : ""
-          }`}
+          className={`mt-7 mx-5 ${optionsSelect == 0
+            ? "font-bold underline decoration-4 underline-offset-8"
+            : ""
+            }`}
           onClick={() => {
             setOptionsSelect(0);
             setCurr(0);
@@ -72,11 +75,10 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
           NOW SHOWING
         </button>
         <button
-          className={`mt-7 mx-5 ${
-            optionsSelect == 1
-              ? "font-bold underline decoration-4 underline-offset-8"
-              : ""
-          }`}
+          className={`mt-7 mx-5 ${optionsSelect == 1
+            ? "font-bold underline decoration-4 underline-offset-8"
+            : ""
+            }`}
           onClick={() => {
             setOptionsSelect(1);
             setCurr(0);
@@ -90,6 +92,8 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
           <div className="w-full h-auto">
             <div
               className="flex transition-transform duration-500 ease-in-out"
+              onMouseOver={() => setIsHover(!isHover)}
+              onMouseOut={() => setIsHover(!isHover)}
               // style={{ transform: `translateX(-${curr * 100}%)` }}
               style={{ transform: `translateX(-${curr * 317}px)` }}
             >
@@ -99,19 +103,17 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
                   className="hover:cursor-pointer flex-shrink-0"
                   href={`/movie/${result.movie_id}`}
                 >
-                  <div>
-                    <Image
-                      className="mx-1 cursor-pointer"
-                      src={result.image_url}
-                      alt="Movie Image"
-                      width={309}
-                      height={463}
-                    />
-                    <div className="flex flex-col justify-between m-2 font-sans">
-                      <div className=" font-semibold ">{result.title}</div>
-                      {/* <div>{result?.release_at}</div> */}
-                      <div>{FormatTime(result?.release_at)}</div>
-                    </div>
+                  <Image
+                    className="mx-1 cursor-pointer"
+                    src={result.image_url}
+                    alt="Movie Image"
+                    width={309}
+                    height={463}
+                  />
+                  <div className="flex flex-col justify-between m-2 font-sans">
+                    <div className=" font-semibold ">{result.title}</div>
+                    {/* <div>{result?.release_at}</div> */}
+                    <div>{FormatTime(result?.release_at)}</div>
                   </div>
                 </Link>
               ))}
@@ -126,19 +128,19 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
             </div>
           </div>
         ) : (
-          <div>
+          <div className="w-full h-auto">
             <div
               className="flex transition-transform duration-500 ease-in-out"
+              onMouseOver={() => setIsHover(!isHover)}
+              onMouseOut={() => setIsHover(!isHover)}
               // style={{ transform: `translateX(-${curr * 100}%)` }}
               style={{ transform: `translateX(-${curr * 317}px)` }}
             >
               {comingsoonMovie?.map((result: MovieData, index: number) => (
                 <Link
                   key={result.movie_id}
-                  className="hover:cursor-pointer"
+                  className="hover:cursor-pointer flex-shrink-0"
                   href={`/movie/${result.movie_id}`}
-                  passHref
-                  legacyBehavior
                 >
                   <Image
                     className="mx-1 cursor-pointer" // Add cursor-pointer here
@@ -147,6 +149,11 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
                     width={309}
                     height={463}
                   />
+                  <div className="flex flex-col justify-between m-2 font-sans">
+                    <div className=" font-semibold ">{result.title}</div>
+                    {/* <div>{result?.release_at}</div> */}
+                    <div>{FormatTime(result?.release_at)}</div>
+                  </div>
                 </Link>
               ))}
             </div>

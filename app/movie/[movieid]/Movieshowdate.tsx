@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import CheckOut from "@/app/components/CheckOut";
 import { useSession } from "next-auth/react";
-import { DateStringToInteger, GetLocalTime } from "@/utils/time";
+import { DateStringToInteger, FormatTime, GetLocalTime } from "@/utils/time";
 import SeatDetail from "@/app/components/SeatDetail";
 
 type Props = {
@@ -162,13 +162,14 @@ const Movieshowdate = ({
       <>
         {isNotComingSoon() ? (
           <>
-            <div className="w-full p-4">
+            <div className="w-full max-h-screen p-4 overflow-y-scroll">
               <div className="font-serif font-semibold text-2xl">SHOWTIMES</div>
-              <div className="py-10">
+              <div className="py-10 ">
                 {movieDate.map((date: any, i: number) => (
-                  <div key={i} className="">
-                    <p>{date}</p>
-                    <div className=" flex flex-wrap gap-2">
+                  <div key={i} className="my-5">
+                    {/* <p>{date}</p> */}
+                    <p>{FormatTime(date)}</p>
+                    <div className=" flex flex-wrap gap-2 my-3 ">
                       {movieDetailShowCase[i].map(
                         (data: any, index: number) => (
                           <div
@@ -181,9 +182,9 @@ const Movieshowdate = ({
                                                         items-center border rounded-md w-[120px] h-[36px]
                                                          hover:bg-slate-500 duration-100 hover:text-white hover:cursor-pointer 
                                                          ${isThatButton(
-                                                           index.toString() +
-                                                             i.toString(),
-                                                         )}
+                                index.toString() +
+                                i.toString(),
+                              )}
                                                         `}
                               onClick={() => {
                                 setShowTime(index.toString() + i.toString()),
@@ -224,9 +225,8 @@ const Movieshowdate = ({
                         `${data.toString()}`
                       ] ? (
                         <button
-                          className={`${
-                            isSelected[index] ? "selected" : "select"
-                          }`}
+                          className={`${isSelected[index] ? "selected" : "select"
+                            }`}
                           onClick={() => {
                             handleSelectSeat(data, index);
                           }}
