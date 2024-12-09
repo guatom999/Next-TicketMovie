@@ -30,7 +30,7 @@ const Header = (props: Props) => {
             />
           </Link>
         </div>
-        <div className="flex">
+        <div className="flex sidebarbutton">
           <button
             onClick={() => {
               toggleOpenSideBar();
@@ -39,16 +39,6 @@ const Header = (props: Props) => {
             <FiAlignJustify className="text-5xl text-slate-300" />
           </button>
         </div>
-        {/* <div>
-          <button
-            className="p-2 border border-blue-600"
-            onClick={() => { toggleOpenSideBar() }}
-          >
-            SideBar Test
-          </button>
-        </div> */}
-
-        {/* Show Session User Test */}
         {
           // session ? (
           //   <div>

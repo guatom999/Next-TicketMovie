@@ -33,26 +33,16 @@ const page = (props: Props) => {
           "res from login is::::::::::::::::::::::::::>",
           res?.status
         );
-        setTimeout(() => {}, 5000);
+        setTimeout(() => { }, 5000);
         router.push("/");
       }
     });
-    // .catch((error) => {
-    //   console.log("error is" , error)
-    // })
 
-    // .then((res) => {
-    //   console.log("res is" ,res);
-    //   // router.push("/")
-    // })
-    // .catch((err) => {
-    //   console.error(err);
-    // });
   };
 
   const handleLoginWithGitHub = () => {
     signIn("github").then((res) => {
-      setTimeout(() => {}, 1000);
+      setTimeout(() => { }, 1000);
       if (res?.error) {
         seIsError(true);
       } else {
@@ -106,13 +96,13 @@ const page = (props: Props) => {
             Login With GitHub
           </button>
         </div>
-          <div className="flex justify-center">
-            <button
-              className="mt-12 bg-gray-300 border rounded-md p-2"
-              onClick={handleSubmit}
-            >
-              Sign In
-            </button>
+        <div className="flex justify-center">
+          <button
+            className="mt-12 bg-gray-300 border rounded-md p-2"
+            onClick={handleSubmit}
+          >
+            Sign In
+          </button>
         </div>
       </div>
     </div>

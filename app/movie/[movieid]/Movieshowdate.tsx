@@ -40,7 +40,6 @@ const Movieshowdate = ({
 
   const { data: session } = useSession();
 
-  console.log("movieDate", movieDate);
 
   const seat = [
     "A1",

@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
@@ -42,96 +44,86 @@ const SideBar = ({ isOpen, setOpen, session }: Props) => {
   const [menuIndex, setMenuIndex] = useState(0);
 
   const handleClickOutside = (event: any) => {
-    if (isOpen && !event.target.closest(".sidebar")) {
+    if (isOpen && !event.target.closest(".sidebar") && !event.target.closest(".sidebarbutton")) {
       setOpen();
     }
   };
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
-
-    // Cleanup function to remove listener on unmount
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isOpen]); // Re-attach listener only when isOpen changes
+  }, [isOpen]);
 
   return (
     <>
       {isOpen ? (
-        <div className="fixed flex justify-end  bg-black bg-opacity-20 backdrop-blur-sm z-10 w-full">
+        <div
+          // className={`fixed flex justify-end bg-black bg-opacity-20 backdrop-blur-sm z-10 w-full  ${isOpen ? "transition-transform duration-300 translate-x-0" : "transition-transform duration-300 translate-y-12"
+          //   } `}
+          className={`fixed left-0 flex justify-end bg-black bg-opacity-20 backdrop-blur-sm z-10 w-full transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-96"} 
+            } `}
+        >
           <div className="text-xl w-1/3 h-screen bg-slate-200 z-20 sidebar">
             {menuList.map((v, index) => (
               <>
-                {index == 10 && session ? (
-                  <Link href={`../site/user`} replace>
-                    <button
-                      className={`flex justify-start w-full  pb-2 pt-4 px-16  ${
-                        menuIndex == index
+                <div
+                  key={index}
+                >
+                  {index == 10 && session ? (
+                    <Link
+                      href={"../site/user"}
+                      replace
+                    >
+                      <button
+                        className={`flex justify-start w-full pb-2 pt-4 px-16 ${menuIndex == index
                           ? "bg-black text-white"
                           : "hover:bg-white"
-                      }`}
-                      onClick={() => {
-                        setMenuIndex(index);
-                        setOpen();
-                      }}
-                    >
-                      <p style={{ textTransform: "uppercase" }}>
-                        {session.user?.email}
-                      </p>
-                    </button>
-                  </Link>
-                ) : (
-                  <Link
-                    href={`${
-                      index == 11 ? `../../` : `/site/${linkList[index]}`
-                    }`}
-                    replace
-                  >
-                    <button
-                      className={`flex justify-start w-full  pb-2 pt-4 px-16  ${
-                        menuIndex == index
-                          ? "bg-black text-white"
-                          : "hover:bg-white"
-                      }`}
-                      onClick={() => {
-                        if (index == 11) {
-                          signOut();
-                        }
-                        setMenuIndex(index);
-                        setOpen();
-                      }}
-                    >
-                      <p>{v}</p>
-                    </button>
-                  </Link>
-                )}
-                {/* {
-                  index == 11 ? (
-                    <>
-                      <Link href={`../`} replace>
-                        <button
-                          className={`flex justify-start w-full  pb-2 pt-4 px-16  ${menuIndex == index ? "bg-black text-white" : "hover:bg-white"}`}
-                          onClick={() => {
-                            signOut()
-                            setMenuIndex(index)
-                            setOpen()
-                          }}
-                        >
-                          <p style={{ textTransform: 'uppercase' }}>{session.user?.email}</p>
-                        </button>
-                      </Link>
-                    </>
+                          }`}
+                        onClick={() => {
+                          setOpen();
+                          setMenuIndex(index);
+                        }}
+                      >
+                        <p style={{ textTransform: "uppercase" }}>
+                          {session.user?.email}
+                        </p>
+                      </button>
+                    </Link>
                   ) : (
-                    <>
-                    </>
-                  )
-                } */}
+                    <Link
+                      href={`${index == 11 ? "../../" : `/site/${linkList[index]}`
+                        }`}
+                      replace
+                    >
+                      <button
+                        className={`flex justify-start w-full pb-2 pt-4 px-16 ${menuIndex == index
+                          ? "bg-black text-white"
+                          : "hover:bg-white"
+                          }`}
+                        onClick={() => {
+                          if (index == 11) {
+                            signOut();
+                          }
+                          setOpen();
+                          setMenuIndex(index);
+                        }}
+                      >
+                        <p>{v}</p>
+                      </button>
+                    </Link>
+                  )}
+                </div>
               </>
             ))}
           </div>
         </div>
       ) : (
-        <></>
+        <div
+          className={`fixed flex justify-end bg-black bg-opacity-20 backdrop-blur-sm z-10 w-full transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"
+            }`}
+        ></div>
       )}
+
     </>
   );
 };

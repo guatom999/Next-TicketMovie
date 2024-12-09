@@ -2,6 +2,9 @@ import Carousel from "./components/Carousel";
 import MovieList from "./components/MovieList";
 import axios from 'axios'
 import { useSession } from "next-auth/react"
+import Label from "./components/Label";
+import NewsLabel from "./components/NewsLabel";
+import PromotionsLabel from "./components/PromotionsLabel";
 
 
 export default async function Home() {
@@ -12,13 +15,15 @@ export default async function Home() {
   ]
 
 
-    const { data:movie } = await axios.get(`http://localhost:8090/movie/getallmovie`)
-    const { data:comingsoonMovie } = await axios.get(`http://localhost:8090/movie/comingsoonmovie`)
+  const { data: movie } = await axios.get(`http://localhost:8090/movie/getallmovie`)
+  const { data: comingsoonMovie } = await axios.get(`http://localhost:8090/movie/comingsoonmovie`)
 
   return (
     <div>
-      <Carousel slides={slides}/>
-      <MovieList movie={movie} comingsoonMovie={comingsoonMovie}/>
+      <Carousel slides={slides} />
+      <MovieList movie={movie} comingsoonMovie={comingsoonMovie} />
+      <PromotionsLabel />
+      <NewsLabel />
     </div>
   );
 }

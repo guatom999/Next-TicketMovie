@@ -31,7 +31,6 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
   const optionSelectLength =
     optionsSelect === 0 ? movie.length : comingsoonMovie.length;
 
-  console.log("comingsoonMovie", comingsoonMovie)
   const changeSlide = (newIndex: any) => {
     setCurr((prevState) => {
       const nextIndex = newIndex % optionSelectLength;
@@ -111,9 +110,9 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
                     height={463}
                   />
                   <div className="flex flex-col justify-between m-2 font-sans">
-                    <div className=" font-semibold ">{result.title}</div>
+                    <div className=" font-semibold font-serif ">{result.title}</div>
                     {/* <div>{result?.release_at}</div> */}
-                    <div>{FormatTime(result?.release_at)}</div>
+                    <div className="text-sm">{FormatTime(result?.release_at)}</div>
                   </div>
                 </Link>
               ))}

@@ -14,17 +14,19 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       gridTemplateColumns: {
-        '13': 'repeat(13, minmax(0, 1fr))',
-        '14': 'repeat(14, minmax(0, 1fr))',
+        "13": "repeat(13, minmax(0, 1fr))",
+        "14": "repeat(14, minmax(0, 1fr))",
       },
-
+      fontFamily: {
+        sans: ["var(--font-noto-sans-thai)", "sans-serif"],
+      },
     },
   },
   // tailwind.config.js
   variants: {
     extend: {
-      display: ['group-hover'],
-    }
+      display: ["group-hover"],
+    },
   },
   plugins: [],
 };
