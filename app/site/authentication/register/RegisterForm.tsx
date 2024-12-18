@@ -22,23 +22,23 @@ const RegisterForm = ({ isLoading, email, username, password, setEmail, setUsern
             {isLoading ? (
                 <Modal />
             ) : (
-                <div className="w-[400px] m-10">
-                    <p className="flex justify-center">Register</p>
+                <div className="w-[250px] m-10">
+                    <p className="flex justify-center text-4xl">Register</p>
                     <form
                         onSubmit={handleSubmit}
                     >
-                        <div className="flex justify-center">
+                        <div className="w-full flex justify-center  my-5">
                             <input
                                 value={email}
-                                className=" border-b-4 p-2"
+                                className="w-full border-b-4 p-2"
                                 placeholder="Email"
                                 onChange={(e) => { setEmail(e.target.value) }}
                             />
                         </div>
-                        <div className="flex justify-center">
+                        <div className="w-full flex justify-center">
                             <input
                                 value={username}
-                                className=" border-b-4 p-2"
+                                className="w-full border-b-4 p-2"
                                 placeholder="Username"
                                 onChange={(e) => { setUsername(e.target.value) }}
                             />
@@ -46,14 +46,14 @@ const RegisterForm = ({ isLoading, email, username, password, setEmail, setUsern
                         <div className="flex justify-center">
                             <input
                                 value={password}
-                                className="border-b-4 p-2"
+                                className="w-full border-b-4 p-2"
                                 placeholder="Password"
                                 onChange={(e) => { setPassword(e.target.value) }}
                             />
                         </div>
                         <div className="flex justify-center">
                             <button
-                                className="mt-12 bg-gray-300 border rounded-md p-2"
+                                className="w-full mt-12 bg-gray-300 border rounded-md p-2"
                                 onClick={handleSubmit}
                             >
                                 Submit

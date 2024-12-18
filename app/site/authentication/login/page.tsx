@@ -13,7 +13,7 @@ const page = (props: Props) => {
   const router = useRouter();
   const { data: session } = useSession();
 
-  const { error } = useParams();
+  // const { error } = useParams();
 
   if (session) {
     router.replace("../../");
@@ -40,6 +40,10 @@ const page = (props: Props) => {
 
   };
 
+  const handlerRegisterBunnton = () => {
+    router.push("/site/authentication/register");
+  }
+
   const handleLoginWithGitHub = () => {
     signIn("github").then((res) => {
       setTimeout(() => { }, 1000);
@@ -53,44 +57,46 @@ const page = (props: Props) => {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="w-[400px] m-10">
-        <p className="flex justify-center">Login</p>
-        <div className="flex justify-center">
-          <label>
+      <div className="w-[250px] m-10">
+        <p className="flex justify-center text-4xl">Login</p>
+        <div className="flex justify-center my-5">
+          <label className="w-full">
             <input
               name="email"
               type="text"
-              className="border-b-4 p-2"
+              className="w-full border-b-4 p-2"
               placeholder="Email"
               ref={email}
             />
           </label>
         </div>
-        <div className="flex justify-center">
-          <label>
+        <div className="flex justify-center my-5">
+          <label className="w-full">
             <input
               name="password"
               type="password"
-              className="border-b-4 p-2"
+              className="w-full border-b-4 p-2"
               placeholder="Password"
               ref={password}
             />
           </label>
         </div>
         {isError ? (
-          <div
-            className="my-2 flex justify-center border border-red-600
-          "
-          >
-            <p className="text-lg">some thing wrong</p>
+          <div className="my-2 flex justify-center border border-red-600">
+            <p className="text-lg">Some thing wrong</p>
           </div>
         ) : (
           <></>
         )}
-        <div className="flex justify-center">
+        <div className="flex flex-col justify-center mt-12 gap-y-6">
           <button
-            className="mt-5 p-3 border rounded-xl hover:bg-slate-500 hover:text-white"
-            // onClick={() => signIn('github')}
+            className="bg-gray-300 border rounded-md p-2 mx-2"
+            onClick={handleSubmit}
+          >
+            Sign In
+          </button>
+          <button
+            className="bg-gray-300 border rounded-md p-2 mx-2"
             onClick={() => handleLoginWithGitHub()}
           >
             Login With GitHub
@@ -98,10 +104,10 @@ const page = (props: Props) => {
         </div>
         <div className="flex justify-center">
           <button
-            className="mt-12 bg-gray-300 border rounded-md p-2"
-            onClick={handleSubmit}
+            className="mt-12 bg-gray-300 border rounded-md p-2 mx-2"
+            onClick={handlerRegisterBunnton}
           >
-            Sign In
+            Register
           </button>
         </div>
       </div>

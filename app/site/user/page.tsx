@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,8 +13,11 @@ const page = (props: Props) => {
   let router = useRouter();
 
   const { data: session } = useSession();
+  const [option, setOption] = useState(0)
 
   // console.log("session", { session })
+
+  console.log("session is", session)
 
   if (!session) {
     router.replace("authentication/login");
@@ -31,7 +34,7 @@ const page = (props: Props) => {
             className="mx-1 cursor-pointer"
             src={session?.user?.image_url ?? ""}
             alt="Movie Image"
-            width={100}
+            width={200}
             height={463}
           />
         </div>
@@ -70,24 +73,22 @@ const page = (props: Props) => {
           <p className="w-1/2">MY POINTS</p>
           <p className="w-1/2">0</p>
         </div>
-        {/* <div className="flex flex-row">
-          <div className="w-1/2">
-            <p className="py-3">EMAIL</p>
-            <p className="py-3">MOBILE</p>
-            <p className="py-3">TYPE OF MEMBER</p>
-            <p className="py-3">CHANGE PASSWORD</p>
-            <p className="py-3">MY POINTS</p>
+        <div className="flex justify-center gap-10 text-xl">
+          <div
+            className={`cursor-pointer ${option == 0 ? "" : "text-slate-500"} px-[20px] py-[17px]`}
+            onClick={() => { setOption(0) }}
+          >
+            <span className="px-20">Ticket</span>
           </div>
-          <div className="w-1/2">
-            <p className="py-3">{session?.user?.email}</p>
-            <p className="py-3">+66 89 888</p>
-            <p className="py-3">REGULAR</p>
-            <p className="py-3">CHANGE PASSWORD</p>
-            <p className="py-3">MY POINTS</p>
+          <div
+            className={`cursor-pointer ${option == 1 ? "" : "text-slate-500"} px-[20px] py-[17px]`}
+            onClick={() => { setOption(1) }}
+          >
+            <span className="px-20">History</span>
           </div>
-        </div> */}
+        </div>
       </div>
-    </div>
+    </div >
   );
 };
 
