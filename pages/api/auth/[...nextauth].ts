@@ -1,39 +1,44 @@
-import NextAuth from "next-auth/next"
+import NextAuth from "next-auth/next";
 import { AuthOptions } from "next-auth";
-import GithubProvider from "next-auth/providers/github"
-import CredentialsProvider from "next-auth/providers/credentials"
+import GithubProvider from "next-auth/providers/github";
+import CredentialsProvider from "next-auth/providers/credentials";
+import axios from "axios";
 
-export const authOptions:  AuthOptions = {
-// const handler = NextAuth({
-  secret: process.env.NEXTAUTH_SECRET,
+export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
-      name: 'Credentials',
+      name: "Credentials",
 
       credentials: {
         email: { label: "email", type: "text", placeholder: "email" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        try {
+          const res = await axios.post("http://localhost:8100/user/login", {
+            email: credentials?.email,
+            password: credentials?.password,
+          });
 
-        const res = await fetch("http://localhost:8100/user/login", {
-          method: 'POST',
-          body: JSON.stringify(credentials),
-          headers: { "Content-Type": "application/json" }
-        })
-        const user = await res.json()
+          if (res.data?.status === "ok" && res.data.user) {
+            console.log("return this");
 
-        if (user?.status == "ok") {
-          user.user.id = user.user._id
-          user.user.image = user.user.image_url
-          user.user.name = user.user.user_name
-          return user.user
-        } else {
-          console.log("status err")
-          throw new Error(JSON.stringify({ errors: "login failed", status: false }))
+            return {
+              id: res.data.user._id,
+              customerId: res.data.user.customer_id,
+              name: res.data.user.user_name,
+              email: res.data.user.email,
+              image: res.data.user.image_url,
+              accessToken: res.data.user.credential.access_token,
+              refreshToken: res.data.user.credential.refresh_token,
+            };
+          }
+          return null;
+        } catch (error) {
+          console.log("login error", error);
+          return null;
         }
-
-      }
+      },
     }),
     GithubProvider({
       clientId: process.env.GITHUB_ID as string,
@@ -42,28 +47,37 @@ export const authOptions:  AuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      // Persist the OAuth access_token and or the user id to the token right after signin
-
-      return { ...token, ...user }
+      if (user) {
+        token.id = user.id;
+        token.customerId = user.customerId;
+        token.accessToken = user.accessToken;
+        token.refreshToken = user.refreshToken;
+      }
+      return { ...token };
     },
-    async session({ session, token, user }) {
-      // Send properties to the client, like an access_token and user id from a provider.
-      session.user = token as any
+    async session({ session, token }) {
+      session.user = {
+        ...session.user,
+        _id: token.id as string,
+        customer_id: token.customerId as string,
+        access_token: token.accessToken as string,
+        refresh_token: token.refreshToken as string,
+      };
 
-      return session
-    }
+      console.log("session is", session);
 
+      return session;
+    },
   },
   pages: {
-    signIn: '/authentication/login',
-    error: '/authentication/login',
+    signIn: "/authentication/login",
+    error: "/authentication/login",
   },
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
-    strategy: "jwt"
+    strategy: "jwt",
+    maxAge: 60,
   },
-}
+};
 
-export default NextAuth(authOptions) 
-
-
-// export { handler as GET, handler as POST }
+export default NextAuth(authOptions);

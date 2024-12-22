@@ -17,7 +17,6 @@ const page = (props: Props) => {
 
   // console.log("session", { session })
 
-  console.log("session is", session)
 
   if (!session) {
     router.replace("authentication/login");
@@ -32,7 +31,7 @@ const page = (props: Props) => {
         <div className="flex justify-center items-center">
           <Image
             className="mx-1 cursor-pointer"
-            src={session?.user?.image_url ?? ""}
+            src={session?.user?.image ?? ""}
             alt="Movie Image"
             width={200}
             height={463}

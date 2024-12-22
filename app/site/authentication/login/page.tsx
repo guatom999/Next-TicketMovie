@@ -30,7 +30,6 @@ const page = (props: Props) => {
         seIsError(true);
       } else {
         console.log(
-          "res from login is::::::::::::::::::::::::::>",
           res?.status
         );
         setTimeout(() => { }, 5000);

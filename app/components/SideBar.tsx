@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
+import axios from "axios";
 
 type EmptyProps = {};
 
@@ -48,6 +49,11 @@ const SideBar = ({ isOpen, setOpen, session }: Props) => {
       setOpen();
     }
   };
+
+  const handleSingOut = () => {
+    axios.post("http://localhost:8100/user/logout",)
+    signOut();
+  }
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -102,7 +108,7 @@ const SideBar = ({ isOpen, setOpen, session }: Props) => {
                           }`}
                         onClick={() => {
                           if (index == 11) {
-                            signOut();
+                            handleSingOut();
                           }
                           setOpen();
                           setMenuIndex(index);
