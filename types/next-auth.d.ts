@@ -23,5 +23,6 @@ declare module "next-auth" {
     image: string;
     accessToken: string;
     refreshToken: string;
+    expireAt: number;
   }
 }

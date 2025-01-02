@@ -3,12 +3,17 @@ import { AuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
+import { decode } from "@/utils/decode";
+import { GetNumericalDate } from "@/utils/time";
+
+interface DecodeToken {
+  exp: number;
+}
 
 export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
-
       credentials: {
         email: { label: "email", type: "text", placeholder: "email" },
         password: { label: "Password", type: "password" },
@@ -21,7 +26,11 @@ export const authOptions: AuthOptions = {
           });
 
           if (res.data?.status === "ok" && res.data.user) {
-            console.log("return this");
+            let decodedToken = decode(
+              res.data.user.credential.access_token,
+            ) as DecodeToken | null;
+
+            const expireAt = decodedToken?.exp ?? 0;
 
             return {
               id: res.data.user._id,
@@ -31,6 +40,7 @@ export const authOptions: AuthOptions = {
               image: res.data.user.image_url,
               accessToken: res.data.user.credential.access_token,
               refreshToken: res.data.user.credential.refresh_token,
+              expireAt,
             };
           }
           return null;
@@ -52,8 +62,10 @@ export const authOptions: AuthOptions = {
         token.customerId = user.customerId;
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
+        token.expireAt = user.expireAt;
       }
-      return { ...token };
+
+      return token;
     },
     async session({ session, token }) {
       session.user = {
@@ -64,7 +76,9 @@ export const authOptions: AuthOptions = {
         refresh_token: token.refreshToken as string,
       };
 
-      console.log("session is", session);
+      const now = new Date();
+
+      session.expires = new Date().toISOString();
 
       return session;
     },
@@ -76,7 +90,7 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
-    maxAge: 60,
+    maxAge: Number(process.env.SESSION_DURATION),
   },
 };
 

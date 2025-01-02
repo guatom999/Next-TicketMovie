@@ -7,19 +7,16 @@ export const GetLocalTime = () => {
   return `${year}-${month}-${day}`;
 };
 
-// export const GetIntergerLocalTime =  () => {
-//     GetLocalTime()
-
-//   return DateStringToInteger(formattedDate.replace(",", ""))
-
-// };
+export const GetNumericalDate = (): number => {
+  return Math.floor(Date.now() / 1000);
+};
 
 export const FormatTime = (date: string) => {
   const dateObject = new Date(date);
 
   const options = { weekday: "long", day: "numeric", month: "short" };
   const formattedDate = new Intl.DateTimeFormat("en-Us", options).format(
-    dateObject
+    dateObject,
   );
 
   return formattedDate.replace(",", "");
