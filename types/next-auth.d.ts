@@ -20,9 +20,11 @@ declare module "next-auth" {
     id: string;
     customerId: string;
     name: string;
+    email: string;
     image: string;
     accessToken: string;
     refreshToken: string;
-    expireAt: number;
+    accessTokenExpireAt: number;
+    refreshTokenExpireAt: number;
   }
 }
