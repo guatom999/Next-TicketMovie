@@ -19,7 +19,7 @@ const page = (props: Props) => {
 
 
   if (!session) {
-    router.replace("authentication/login");
+    router.replace("/site/authentication/login");
   }
 
   return (

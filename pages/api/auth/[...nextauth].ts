@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
 import { decode } from "@/utils/decode";
 import { GetNumericalDate } from "@/utils/time";
+import { signOut } from "next-auth/react";
 
 interface DecodeToken {
   exp: number;
@@ -72,62 +73,65 @@ export const authOptions: AuthOptions = {
         token.refreshTokenExpireAt = user.refreshTokenExpireAt * 1000;
       }
 
-      if (Date.now() < token.accessTokenExpireAt) {
-        console.log("return token");
-        return token;
-      } else if (
-        Date.now() > token.accessTokenExpireAt &&
-        Date.now() < token.refreshTokenExpireAt
-      ) {
-        const res = await axios.post(
-          "http://localhost:8100/user/refresh-token",
-          {
-            credential_id: token.id,
-            customer_id: token.customerId,
-            refresh_token: token.refreshToken,
-          },
-        );
-
-        if (res.data?.status === "ok" && res.data.user) {
-          let accessTokenDecoded = decode(
-            res.data.user.credential.access_token,
-          ) as DecodeToken | null;
-
-          let refreshTokenDecode = decode(
-            res.data.user.credential.refresh_token,
-          ) as DecodeToken | null;
-
-          token.id = user.id;
-          token.customerId = user.customerId;
-          token.accessToken = user.accessToken;
-          token.refreshToken = user.refreshToken;
-          token.accessTokenExpireAt = accessTokenDecoded
-            ? accessTokenDecoded.exp * 1000
-            : 0;
-          token.refreshTokenExpireAt = refreshTokenDecode
-            ? refreshTokenDecode.exp * 1000
-            : 0;
-        }
-
-        return token;
-      }
-
-      return null;
+      return token;
     },
     async session({ session, token }: { session: any; token: any }) {
       const now = Date.now();
 
+      // Refresh token if access token is expired
       if (now > token.accessTokenExpireAt) {
-        console.log("session is expired");
-        session.error = "AccessToken is expired";
+        try {
+          const res = await axios.post(
+            `${process.env.NEXT_DEV_AUTH_URL_REFRESHTOKEN}`,
+            {
+              credential_id: token.id,
+              customer_id: token.customerId,
+              refresh_token: token.refreshToken,
+            },
+          );
+
+          console.log(
+            "res after refresh is :::::::::::::::::::::::::::::>",
+            res.data,
+          );
+
+          if (res.data?.status === "ok" && res.data.user) {
+            const accessTokenDecoded = decode(
+              res.data.user.credential.access_token,
+            ) as DecodeToken | null;
+            const refreshTokenDecoded = decode(
+              res.data.user.credential.refresh_token,
+            ) as DecodeToken | null;
+
+            token.accessToken = res.data.user.credential.access_token;
+            token.refreshToken = res.data.user.credential.refresh_token;
+            token.accessTokenExpireAt = accessTokenDecoded?.exp
+              ? accessTokenDecoded.exp * 1000
+              : now;
+            token.refreshTokenExpireAt = refreshTokenDecoded?.exp
+              ? refreshTokenDecoded.exp * 1000
+              : now;
+          } else {
+            console.error("Failed to refresh token: Invalid response");
+          }
+        } catch (error) {
+          console.error(
+            "Error refreshing token during session callback:",
+            error,
+          );
+
+          await signOut({ redirect: false });
+
+          return null;
+        }
       }
 
       session.user = {
         ...session.user,
-        _id: token.id as string,
-        customer_id: token.customerId as string,
-        access_token: token.accessToken as string,
-        refresh_token: token.refreshToken as string,
+        _id: token.id,
+        customer_id: token.customerId,
+        access_token: token.accessToken,
+        refresh_token: token.refreshToken,
       };
 
       return session;
@@ -143,13 +147,5 @@ export const authOptions: AuthOptions = {
     // maxAge: Number(process.env.SESSION_DURATION),
   },
 };
-
-// const refreshTokenRotation = async (token: string): Promise<any> => {
-//   const res = await axios.post(`${process.env.NEXT_DEV_AUTH_URL_REFRESHTOKEN}`, {
-
-//   });
-
-//   return 0;
-// };
 
 export default NextAuth(authOptions);
