@@ -50,7 +50,7 @@ const CheckOut = ({
         setIsLoading(true),
           CheckOutWithCreditCard({
             email: session.email,
-            customer_id: session.user.id,
+            customer_id: session.user.customer_id,
             movie_id: movie_id,
             movie_name: movie_name,
             token: token,
@@ -61,7 +61,7 @@ const CheckOut = ({
             .then((result) => {
               setTimeout(() => {
                 setIsLoading(false);
-                // router.push(`../ticket/` + result.url)
+                // router.push(`../ticket/` + result.url);
                 router.push(`../ticket`);
               }, 5000);
             })

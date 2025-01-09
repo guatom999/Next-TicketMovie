@@ -52,7 +52,7 @@ export const authOptions: AuthOptions = {
           }
           return null;
         } catch (error) {
-          console.log("login error", error);
+          // console.log("login error", error);
           return null;
         }
       },
@@ -90,10 +90,10 @@ export const authOptions: AuthOptions = {
             },
           );
 
-          console.log(
-            "res after refresh is :::::::::::::::::::::::::::::>",
-            res.data,
-          );
+          // console.log(
+          //   "res after refresh is :::::::::::::::::::::::::::::>",
+          //   res.data,
+          // );
 
           if (res.data?.status === "ok" && res.data.user) {
             const accessTokenDecoded = decode(
@@ -112,14 +112,14 @@ export const authOptions: AuthOptions = {
               ? refreshTokenDecoded.exp * 1000
               : now;
           } else {
-            console.error("Failed to refresh token: Invalid response");
+            // console.error("Failed to refresh token: Invalid response");
+            return null;
           }
         } catch (error) {
-          console.error(
-            "Error refreshing token during session callback:",
-            error,
-          );
-
+          // console.error(
+          //   "Error refreshing token during session callback:",
+          //   error,
+          // );
           await signOut({ redirect: false });
 
           return null;

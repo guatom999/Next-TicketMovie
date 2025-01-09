@@ -19,7 +19,7 @@ const Ticket = ({ src, ticketData }: Props) => {
                         <div className="flex flex-row border rounded-md w-full ">
                             {/* {value.movie_id} */}
                             <div>
-                                <Image src={value.ticket_image} width={230} height={100} alt="qr image"/>
+                                <Image src={value.ticket_image} width={230} height={100} alt="qr image" />
                             </div>
                             <div>
                                 <p className="font-mono font-semibold text-2xl py-5">{value.movie_name}</p>
