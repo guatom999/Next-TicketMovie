@@ -14,6 +14,7 @@ const CheckOut = ({
   session,
   movie_id,
   movie_name,
+  movie_image,
   reserveSeat,
   date,
 }) => {
@@ -53,6 +54,7 @@ const CheckOut = ({
             customer_id: session.user.customer_id,
             movie_id: movie_id,
             movie_name: movie_name,
+            poster_image: movie_image,
             token: token,
             reserveSeat: reserveSeat,
             price: amount,

@@ -263,7 +263,8 @@ const Movieshowdate = ({
                         totalPrice={reserveSeat.length * 150}
                         session={session}
                         movie_name={movieList?.title}
-                        movie_id={movieDetailSeparate[movieIndex].movie_id}
+                        movie_id={movieDetailSeparate[movieIndex]?.movie_id}
+                        movie_image={movieList?.image_url}
                         reserveSeat={reserveSeat}
                         date={showDate}
                       />
