@@ -42,7 +42,6 @@ export default async function RootLayout({
       <CustomerProviders>
         <body className={`${kanit.className} antialiased`}>
           <Header />
-          {/* <SideBar/> */}
           {children}
           <Footer />
         </body>
