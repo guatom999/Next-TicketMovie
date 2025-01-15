@@ -17,6 +17,8 @@ const page = async ({ src }: Props) => {
     // console.log("session?.user.customer_i  is ", session?.user.customer_id)
     let { data } = await axios.get(`http://localhost:8101/inventory/${session?.user.customer_id}`)
 
+    console.log("data is :::::::::::::::>", data)
+
     return (
         <Ticket src={src} ticketData={data} />
     )

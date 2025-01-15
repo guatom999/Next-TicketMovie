@@ -43,6 +43,10 @@
   pointer-events: auto;
 }
 
+.blur-background {
+  filter: blur(5px);
+}
+
 /* .promotion-description {
 }
 
