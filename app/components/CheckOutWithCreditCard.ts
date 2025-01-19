@@ -6,6 +6,8 @@ type Props = {
   customer_id: string;
   movie_name: string;
   movie_id: string;
+  movie_date: string;
+  movie_showtime: string;
   poster_image: string;
   token: string;
   reserveSeat: string[];
@@ -22,6 +24,8 @@ const CheckOutWithCreditCard = async ({
   customer_id,
   movie_id,
   movie_name,
+  movie_date,
+  movie_showtime,
   poster_image,
   token,
   reserveSeat,
@@ -33,6 +37,8 @@ const CheckOutWithCreditCard = async ({
     customer_id: customer_id,
     movie_id: movie_id,
     movie_name: movie_name,
+    movie_date,
+    movie_showtime,
     poster_image: poster_image,
     token: token,
     seat_no: reserveSeat,

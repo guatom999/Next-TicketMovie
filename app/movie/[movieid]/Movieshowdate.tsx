@@ -97,7 +97,7 @@ const Movieshowdate = ({
   useEffect(() => {
     // setIsSelected([false, false, false, false, false, false, false, false, false, false, false, false])
     setReserveSeat([]);
-  }, [movieIndex]);
+  }, [movieIndex, showTime],);
 
   const isNotComingSoon = () => {
     if (
@@ -166,7 +166,6 @@ const Movieshowdate = ({
               <div className="py-10 ">
                 {movieDate.map((date: any, i: number) => (
                   <div key={i} className="my-5">
-                    {/* <p>{date}</p> */}
                     <p>{FormatTime(date)}</p>
                     <div className=" flex flex-wrap gap-2 my-3 ">
                       {movieDetailShowCase[i].map(
@@ -181,12 +180,11 @@ const Movieshowdate = ({
                                                         items-center border rounded-md w-[120px] h-[36px]
                                                          hover:bg-slate-500 duration-100 hover:text-white hover:cursor-pointer 
                                                          ${isThatButton(
-                                index.toString() +
-                                i.toString(),
+                                i.toString() + index.toString()
                               )}
                                                         `}
                               onClick={() => {
-                                setShowTime(index.toString() + i.toString()),
+                                setShowTime(i.toString() + index.toString()),
                                   setMovieIndex(movieDetailIndex[i][index]),
                                   setShowDate(date);
                               }}
@@ -263,6 +261,8 @@ const Movieshowdate = ({
                         totalPrice={reserveSeat.length * 150}
                         session={session}
                         movie_name={movieList?.title}
+                        movie_date={movieDate[showTime.split("")[0]]}
+                        movie_showtime={movieDetailShowCase[showTime.split("")[0]][showTime.split("")[1]]}
                         movie_id={movieDetailSeparate[movieIndex]?.movie_id}
                         movie_image={movieList?.image_url}
                         reserveSeat={reserveSeat}

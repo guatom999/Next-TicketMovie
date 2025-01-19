@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useState, forwardRef } from 'react';
+'use client'
+import React, { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
 
 type Props = {
@@ -11,6 +12,8 @@ type Props = {
 const TicketDetail = ({ data, setOpen, isOpen }: Props) => {
   const [openModal, setOpenModal] = useState(true);
   const modalRef = useRef<HTMLDivElement>(null);
+
+  console.log("seat is ", data.seat)
 
   const handleClickOutside = (event: any) => {
     if (isOpen && !event.target.closest(".ticket-card") && !event.target.closest(".sidebarbutton")) {
@@ -65,7 +68,7 @@ const TicketDetail = ({ data, setOpen, isOpen }: Props) => {
             </div>
             <div>
               Seat.<br />
-              {data.seat}
+              {data.seat.map((seat: string, index: number) => (<>{index === 0 ? seat + "," : seat}</>))}
             </div>
           </div>
         </div>

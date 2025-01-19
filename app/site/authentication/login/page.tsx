@@ -63,7 +63,7 @@ const page = (props: Props) => {
             <input
               name="email"
               type="text"
-              className="w-full border-b-4 p-2"
+              className="w-full border-b-2 border-gray-300 p-2"
               placeholder="Email"
               ref={email}
             />
@@ -74,7 +74,7 @@ const page = (props: Props) => {
             <input
               name="password"
               type="password"
-              className="w-full border-b-4 p-2"
+              className="w-full border-b-2 border-gray-300 p-2"
               placeholder="Password"
               ref={password}
             />
