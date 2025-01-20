@@ -8,7 +8,18 @@ export const GetLocalTime = () => {
 };
 
 export const GetNumericalDate = (): number => {
-  return Math.floor(Date.now() / 1000);
+  const timeNow = new Date();
+  const bangkokStringTime = timeNow.toLocaleString("en-US", {
+    timeZone: "Asia/Bangkok",
+  });
+  const bangkokTime = new Date(bangkokStringTime);
+
+  console.log(
+    "Math.floor(bangkokTime.getTime() / 1000) is :::::::::::::>",
+    Math.floor(bangkokTime.getTime() / 1000),
+  );
+
+  return Math.floor(bangkokTime.getTime() / 1000);
 };
 
 export const FormatTime = (date: string) => {
@@ -24,5 +35,7 @@ export const FormatTime = (date: string) => {
 
 export const DateStringToInteger = (dateString: string) => {
   const date = new Date(dateString);
+
+  console.log("date.getTime() is ::::::::::::::::::>", date.getTime());
   return date.getTime();
 };

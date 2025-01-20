@@ -4,7 +4,6 @@ import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
 import { decode } from "@/utils/decode";
-import { GetNumericalDate } from "@/utils/time";
 import { signOut } from "next-auth/react";
 
 interface DecodeToken {

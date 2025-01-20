@@ -15,10 +15,6 @@ type Props = {
   date: string;
 };
 
-// type TestProps = {
-//     token: string | null,
-// }
-
 const CheckOutWithCreditCard = async ({
   email,
   customer_id,

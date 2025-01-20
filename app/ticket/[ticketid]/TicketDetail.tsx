@@ -11,9 +11,8 @@ type Props = {
 // const TicketDetail = forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
 const TicketDetail = ({ data, setOpen, isOpen }: Props) => {
   const [openModal, setOpenModal] = useState(true);
-  const modalRef = useRef<HTMLDivElement>(null);
 
-  console.log("seat is ", data.seat)
+  console.log("data on TikcetDeatail is :::::::::::::::::::::::::::::::::::::::>", data)
 
   const handleClickOutside = (event: any) => {
     if (isOpen && !event.target.closest(".ticket-card") && !event.target.closest(".sidebarbutton")) {
@@ -54,7 +53,7 @@ const TicketDetail = ({ data, setOpen, isOpen }: Props) => {
           <div className="flex justify-between  w-full px-10 py-3">
             <div>
               Event Time<br />
-              {data.created_at.split(":")[0]}
+              {data.movie_date}
             </div>
             <div>
               Order No.<br />
@@ -63,12 +62,12 @@ const TicketDetail = ({ data, setOpen, isOpen }: Props) => {
           </div>
           <div className="flex justify-between  w-full px-10 py-3">
             <div>
-              Price<br />
-              {data.price}
+              Show time<br />
+              {data.movie_show_time}
             </div>
             <div>
               Seat.<br />
-              {data.seat.map((seat: string, index: number) => (<>{index === 0 ? seat + "," : seat}</>))}
+              {data.seat.map((seat: string, index: number) => (<>{index === 0 ? seat : "," + seat}</>))}
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import { DateStringToInteger } from "@/utils/time";
+import { DateStringToInteger, GetNumericalDate } from "@/utils/time";
 
 import TicketDetail from "./[ticketid]/TicketDetail";
 
@@ -20,7 +20,7 @@ const Ticket = ({ src, ticketData }: Props) => {
     };
 
     useEffect(() => {
-        console.log("data from string is", DateStringToInteger(ticketData[0].created_at), "date now is ============>", Date.now());
+        console.log("data from string is", DateStringToInteger(ticketData[0].created_at), "date now is ============>", GetNumericalDate());
     }, [])
 
 
@@ -45,7 +45,7 @@ const Ticket = ({ src, ticketData }: Props) => {
                     {
                         selectedTicketType === 0 ?
                             (
-                                ticketData.filter((ticket: any) => Date.now() < DateStringToInteger(ticketData[0].created_at)).map((item: any) =>
+                                ticketData.filter((ticket: any) => GetNumericalDate() < DateStringToInteger(ticket.movie_date) / 1000).map((item: any) =>
                                     <div
                                         key={item.id}
                                         className="flex items-center rounded-lg shadow-md"
@@ -57,7 +57,7 @@ const Ticket = ({ src, ticketData }: Props) => {
                                                 className="w-1/3 object-cover"
                                             />
                                             <div className="flex flex-col w-2/3 p-4 relative group-hover group">
-                                                <p className="text-sm text-blue-500 font-semibold">{item.created_at.split(":")[0]}</p>
+                                                <p className="text-sm text-blue-500 font-semibold">{item.movie_date}</p>
 
                                                 <p className="text-md font-bold text-gray-800 leading-tight">
                                                     {item.movie_name}
@@ -93,7 +93,7 @@ const Ticket = ({ src, ticketData }: Props) => {
                             )
                             :
                             (
-                                ticketData.filter((ticket: any) => Date.now() > DateStringToInteger(ticketData[0].created_at)).map((item: any) =>
+                                ticketData.filter((ticket: any) => GetNumericalDate() > DateStringToInteger(ticket.movie_date) / 1000).map((item: any) =>
                                     <div
                                         key={item.id}
                                         className="flex items-center rounded-lg shadow-md"
@@ -105,7 +105,7 @@ const Ticket = ({ src, ticketData }: Props) => {
                                                 className="w-1/3 object-cover"
                                             />
                                             <div className="flex flex-col w-2/3 p-4 relative group-hover group">
-                                                <p className="text-sm text-blue-500 font-semibold">{item.created_at.split(":")[0]}</p>
+                                                <p className="text-sm text-blue-500 font-semibold">{item.movie_date}</p>
 
                                                 <p className="text-md font-bold text-gray-800 leading-tight">
                                                     {item.movie_name}

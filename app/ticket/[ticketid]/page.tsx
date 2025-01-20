@@ -8,13 +8,11 @@ type Props = {
 
 const page = async ({ params }: { params: { ticketid: string }, props: Props }) => {
 
-  const { data } = await axios.get(`http://localhost:8090/movie/getmovieshowtime/${params.ticketid}`)
+  // const { data } = await axios.get(`http://localhost:8090/movie/getmovieshowtime/${params.ticketid}`)
 
-  console.log("data is ", data)
-
-  return (
-    <TicketDetail data={data} />
-  )
+  // return (
+  //   <TicketDetail data={data} />
+  // )
 }
 
 export default page

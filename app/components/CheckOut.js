@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import Ticket from "./Ticket";
+import { type } from "os";
 
 let OmiseCard;
 
