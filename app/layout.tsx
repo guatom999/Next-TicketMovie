@@ -40,9 +40,11 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <CustomerProviders>
-        <body className={`${kanit.className} antialiased`}>
+        <body
+          className={`${kanit.className} antialiased flex flex-col min-h-screen`}
+        >
           <Header />
-          {children}
+          <main className="flex-grow">{children}</main>
           <Footer />
         </body>
       </CustomerProviders>
