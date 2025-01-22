@@ -7,7 +7,7 @@ export const GetLocalTime = () => {
   return `${year}-${month}-${day}`;
 };
 
-export const GetNumericalDate = (): number => {
+export const GetNumericalDate = (getHours: boolean): number => {
   const timeNow = new Date();
   const bangkokStringTime = timeNow.toLocaleString("en-US", {
     timeZone: "Asia/Bangkok",
@@ -18,7 +18,8 @@ export const GetNumericalDate = (): number => {
     bangkokTime.getFullYear(),
     bangkokTime.getMonth(),
     bangkokTime.getDate(),
-    bangkokTime.getHours(),
+    getHours ? bangkokTime.getHours() : 0,
+    // bangkokTime.getHours(),
   );
 
   return Math.floor(bangkokMidnight.getTime());
@@ -35,7 +36,7 @@ export const FormatTime = (date: string): string => {
   return formattedDate.replace(",", "");
 };
 
-export const convertBangkokTime = (
+export const ConvertBangkokTime = (
   dateString: string,
   time: string,
 ): number => {
@@ -43,6 +44,8 @@ export const convertBangkokTime = (
   const [hoursPart, minutePart] = time.split(":").map(Number);
 
   const bkkNowDate = new Date(year, month - 1, day, hoursPart, minutePart);
+
+  // console.log("bkkNowDate is", bkkNowDate);
 
   return bkkNowDate.getTime();
 };

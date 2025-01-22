@@ -60,9 +60,7 @@ const page = async ({
       movieDate.push(splitTime[0]);
     } else if (splitTime[0] != movieDate[movieDate.length - 1]) {
       movieDetailShowCase.push(movieTime);
-      console.log("movieDetailShowCase", movieDetailShowCase)
       movieDetailIndex.push(movieDetailIndexKeep);
-      console.log("movieDetailIndex", movieDetailIndex)
       movieDate.push(splitTime[0]);
       movieTime = [];
       movieDetailIndexKeep = [];
@@ -77,6 +75,8 @@ const page = async ({
       movieTime = [];
     }
   });
+
+  // console.log("movieDate is", movieDate)
 
   return (
     <>

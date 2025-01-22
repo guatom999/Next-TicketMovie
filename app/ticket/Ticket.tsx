@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import { DateStringToInteger, GetNumericalDate } from "@/utils/time";
+import { DateStringToInteger, GetNumericalDate, ConvertBangkokTime } from "@/utils/time";
 
 import TicketDetail from "./[ticketid]/TicketDetail";
 
@@ -44,7 +44,9 @@ const Ticket = ({ src, ticketData }: Props) => {
                     {
                         selectedTicketType === 0 ?
                             (
-                                ticketData.filter((ticket: any) => GetNumericalDate() <= DateStringToInteger(ticket.movie_date)).map((item: any) =>
+                                ticketData.filter((ticket: any) => {
+                                    return GetNumericalDate(false) <= ConvertBangkokTime(ticket.movie_date, ticket.movie_show_time)
+                                }).map((item: any) =>
                                     <div
                                         key={item.id}
                                         className="flex items-center rounded-lg shadow-md"

@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import CheckOut from "@/app/components/CheckOut";
 import { useSession } from "next-auth/react";
-import { DateStringToInteger, FormatTime, GetNumericalDate, convertBangkokTime } from "@/utils/time";
+import { DateStringToInteger, FormatTime, GetNumericalDate, ConvertBangkokTime } from "@/utils/time";
 import SeatDetail from "@/app/components/SeatDetail";
 
 type Props = {
@@ -104,14 +104,18 @@ const Movieshowdate = ({
   const isNotComingSoon = () => {
     // console.log("to compare date is", movieDate[0], DateStringToInteger(movieDate[0]), GetNumericalDate())
     if (
-      DateStringToInteger(movieDate[0]) > GetNumericalDate()
+      DateStringToInteger(movieDate[0]) > GetNumericalDate(false)
     ) {
       return false;
     }
     movieDate = movieDate.filter(
-      (showDate: string) =>
-        DateStringToInteger(showDate) >= GetNumericalDate(),
+      (showDate: string) => {
+        // console.log("movieDate = movieDate.filter", new Date(DateStringToInteger(showDate)), new Date(GetNumericalDate(false)))
+        return DateStringToInteger(showDate) >= GetNumericalDate(false)
+      }
     );
+
+    // console.log("movieDate after first filter is", movieDate[0])
     return true;
   };
 
@@ -124,7 +128,6 @@ const Movieshowdate = ({
 
   // const compareShowTime = (day: string, hours: number): boolean => {
   const compareShowTime = (data: any): boolean => {
-    console.log("dat is ============>", data)
 
     const timeNow = new Date()
     const bkkTimeNow = timeNow.toLocaleString("en-US", {
@@ -188,7 +191,10 @@ const Movieshowdate = ({
                     <p>{FormatTime(date)}</p>
                     <div className=" flex flex-wrap gap-2 my-3 ">
                       {/* {movieDetailShowCase[i].filter((showtime: any, index: number) => compareShowTime(date, parseInt(showtime.split(":")[0]))).map( */}
-                      {movieDetailShowCase[i].filter((showtime: any, index: number) => convertBangkokTime(date, showtime) > GetNumericalDate()).map(
+                      {movieDetailShowCase[i].filter((showtime: any) => {
+                        // console.log("check showtime ", date, showtime, new Date(ConvertBangkokTime(date, showtime)), new Date(GetNumericalDate(true)))
+                        return ConvertBangkokTime(date, showtime) - GetNumericalDate(true)
+                      }).map(
                         // {movieDetailShowCase[i].map(
                         (data: any, index: number) => (
                           <div
