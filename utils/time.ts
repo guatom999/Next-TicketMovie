@@ -14,10 +14,17 @@ export const GetNumericalDate = (): number => {
   });
   const bangkokTime = new Date(bangkokStringTime);
 
-  return Math.floor(bangkokTime.getTime() / 1000);
+  const bangkokMidnight = new Date(
+    bangkokTime.getFullYear(),
+    bangkokTime.getMonth(),
+    bangkokTime.getDate(),
+    bangkokTime.getHours(),
+  );
+
+  return Math.floor(bangkokMidnight.getTime());
 };
 
-export const FormatTime = (date: string) => {
+export const FormatTime = (date: string): string => {
   const dateObject = new Date(date);
 
   const options = { weekday: "long", day: "numeric", month: "short" };
@@ -28,8 +35,41 @@ export const FormatTime = (date: string) => {
   return formattedDate.replace(",", "");
 };
 
+export const convertBangkokTime = (
+  dateString: string,
+  time: string,
+): number => {
+  const [year, month, day] = dateString.split("-").map(Number);
+  const [hoursPart, minutePart] = time.split(":").map(Number);
+
+  const bkkNowDate = new Date(year, month - 1, day, hoursPart, minutePart);
+
+  return bkkNowDate.getTime();
+};
+
 export const DateStringToInteger = (dateString: string): number => {
   const date = new Date(dateString);
+  const bangkokStringTime = date.toLocaleString("en-US", {
+    timeZone: "Asia/Bangkok",
+  });
+  const bangkokTime = new Date(bangkokStringTime);
 
-  return date.getTime();
+  const bangkokMidnight = new Date(
+    bangkokTime.getFullYear(),
+    bangkokTime.getMonth(),
+    bangkokTime.getDate(),
+  );
+
+  return bangkokMidnight.getTime();
+};
+
+const getBangkokTime = (): string => {
+  const bangkokTime = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Bangkok",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(new Date());
+
+  return bangkokTime;
 };

@@ -20,7 +20,6 @@ const Ticket = ({ src, ticketData }: Props) => {
     };
 
     useEffect(() => {
-        // console.log("data from string is", DateStringToInteger(ticketData[0].created_at), "date now is ============>", GetNumericalDate());
     }, [])
 
 
@@ -45,7 +44,7 @@ const Ticket = ({ src, ticketData }: Props) => {
                     {
                         selectedTicketType === 0 ?
                             (
-                                ticketData.filter((ticket: any) => (GetNumericalDate() - (GetNumericalDate() % 86400)) <= DateStringToInteger(ticket.movie_date) / 1000).map((item: any) =>
+                                ticketData.filter((ticket: any) => GetNumericalDate() <= DateStringToInteger(ticket.movie_date)).map((item: any) =>
                                     <div
                                         key={item.id}
                                         className="flex items-center rounded-lg shadow-md"
@@ -93,7 +92,7 @@ const Ticket = ({ src, ticketData }: Props) => {
                             )
                             :
                             (
-                                ticketData.filter((ticket: any) => (GetNumericalDate() - (GetNumericalDate() % 86400)) > DateStringToInteger(ticket.movie_date) / 1000).map((item: any) =>
+                                ticketData.filter((ticket: any) => GetNumericalDate() > DateStringToInteger(ticket.movie_date)).map((item: any) =>
                                     <div
                                         key={item.id}
                                         className="flex items-center rounded-lg shadow-md"

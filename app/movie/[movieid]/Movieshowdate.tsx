@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import CheckOut from "@/app/components/CheckOut";
 import { useSession } from "next-auth/react";
-import { DateStringToInteger, FormatTime, GetLocalTime } from "@/utils/time";
+import { DateStringToInteger, FormatTime, GetNumericalDate, convertBangkokTime } from "@/utils/time";
 import SeatDetail from "@/app/components/SeatDetail";
 
 type Props = {
@@ -99,15 +99,18 @@ const Movieshowdate = ({
     setReserveSeat([]);
   }, [movieIndex, showTime],);
 
+  // console.log("movieDetailShowCase is :::::::::>", movieDetailShowCase)
+
   const isNotComingSoon = () => {
+    // console.log("to compare date is", movieDate[0], DateStringToInteger(movieDate[0]), GetNumericalDate())
     if (
-      DateStringToInteger(movieDate[0]) > DateStringToInteger(GetLocalTime())
+      DateStringToInteger(movieDate[0]) > GetNumericalDate()
     ) {
       return false;
     }
     movieDate = movieDate.filter(
       (showDate: string) =>
-        DateStringToInteger(showDate) > DateStringToInteger(GetLocalTime()),
+        DateStringToInteger(showDate) >= GetNumericalDate(),
     );
     return true;
   };
@@ -118,6 +121,22 @@ const Movieshowdate = ({
     }
     return "bg-white";
   };
+
+  // const compareShowTime = (day: string, hours: number): boolean => {
+  const compareShowTime = (data: any): boolean => {
+    console.log("dat is ============>", data)
+
+    const timeNow = new Date()
+    const bkkTimeNow = timeNow.toLocaleString("en-US", {
+      timeZone: "Asia/Bangkok",
+    });
+    const bangkokTime = new Date(bkkTimeNow);
+
+
+    // if (hours > bangkokTime.getHours()) return true
+
+    return false
+  }
 
   const handleSelectSeat = (data: string, index: number) => {
     let selectedSeat = isSelected.map((c, i) => {
@@ -168,7 +187,9 @@ const Movieshowdate = ({
                   <div key={i} className="my-5">
                     <p>{FormatTime(date)}</p>
                     <div className=" flex flex-wrap gap-2 my-3 ">
-                      {movieDetailShowCase[i].map(
+                      {/* {movieDetailShowCase[i].filter((showtime: any, index: number) => compareShowTime(date, parseInt(showtime.split(":")[0]))).map( */}
+                      {movieDetailShowCase[i].filter((showtime: any, index: number) => convertBangkokTime(date, showtime) > GetNumericalDate()).map(
+                        // {movieDetailShowCase[i].map(
                         (data: any, index: number) => (
                           <div
                             // key={movieDetailIndex[i][index]}
@@ -176,10 +197,10 @@ const Movieshowdate = ({
                           >
                             <button
                               className={`
-                                                        flex justify-center 
-                                                        items-center border rounded-md w-[120px] h-[36px]
-                                                         hover:bg-slate-500 duration-100 hover:text-white hover:cursor-pointer 
-                                                         ${isThatButton(
+                                          flex justify-center 
+                                          items-center border rounded-md w-[120px] h-[36px]
+                                           hover:bg-slate-500 duration-100 hover:text-white hover:cursor-pointer 
+                                           ${isThatButton(
                                 i.toString() + index.toString()
                               )}
                                                         `}

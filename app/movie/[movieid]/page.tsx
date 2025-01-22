@@ -55,11 +55,14 @@ const page = async ({
 
     let splitTime = movieDetail.show_time.split(breakpoint);
 
+
     if (i == 0) {
       movieDate.push(splitTime[0]);
     } else if (splitTime[0] != movieDate[movieDate.length - 1]) {
       movieDetailShowCase.push(movieTime);
+      console.log("movieDetailShowCase", movieDetailShowCase)
       movieDetailIndex.push(movieDetailIndexKeep);
+      console.log("movieDetailIndex", movieDetailIndex)
       movieDate.push(splitTime[0]);
       movieTime = [];
       movieDetailIndexKeep = [];

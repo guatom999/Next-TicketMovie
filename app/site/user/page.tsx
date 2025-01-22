@@ -28,7 +28,7 @@ const page = (props: Props) => {
         <h1>PROFILE</h1>
       </div>
       <div className="">
-        <div className="flex justify-center items-center">
+        {/* <div className="flex justify-center items-center">
           <Image
             className="mx-1 cursor-pointer"
             src={session?.user?.image ?? ""}
@@ -36,7 +36,7 @@ const page = (props: Props) => {
             width={200}
             height={463}
           />
-        </div>
+        </div> */}
         <div className="flex flex-row py-3">
           <p className="w-1/2">EMAIL</p>
           <p className="w-1/2">{session?.user?.email}</p>
