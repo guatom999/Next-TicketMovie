@@ -193,7 +193,7 @@ const Movieshowdate = ({
                       {/* {movieDetailShowCase[i].filter((showtime: any, index: number) => compareShowTime(date, parseInt(showtime.split(":")[0]))).map( */}
                       {movieDetailShowCase[i].filter((showtime: any) => {
                         // console.log("check showtime ", date, showtime, new Date(ConvertBangkokTime(date, showtime)), new Date(GetNumericalDate(true)))
-                        return ConvertBangkokTime(date, showtime) - GetNumericalDate(true)
+                        return ConvertBangkokTime(date, showtime) >= GetNumericalDate(true)
                       }).map(
                         // {movieDetailShowCase[i].map(
                         (data: any, index: number) => (

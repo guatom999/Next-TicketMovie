@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect, useState } from "react";
 import { DateStringToInteger, GetNumericalDate, ConvertBangkokTime } from "@/utils/time";
+import Modal from "@/app/components/Modal";
 
 import TicketDetail from "./[ticketid]/TicketDetail";
 
@@ -11,6 +12,7 @@ type Props = {
 
 const Ticket = ({ src, ticketData }: Props) => {
     const [openModal, setOpenModal] = useState(false);
+    const [openTestModal, setOpenTestModal] = useState(false)
     const [selectedTicket, setSelectedTicket] = useState(null);
     const [selectedTicketType, setSelectedTicketType] = useState(0)
 
@@ -18,6 +20,10 @@ const Ticket = ({ src, ticketData }: Props) => {
         setSelectedTicket(ticket);
         setOpenModal(!openModal);
     };
+
+    const toggleTestModel = () => {
+        setOpenTestModal(!openTestModal)
+    }
 
     useEffect(() => {
     }, [])
@@ -30,8 +36,18 @@ const Ticket = ({ src, ticketData }: Props) => {
             )}
             <div className={`mx-auto w-3/5 my-10 ${openModal ? "blur-sm" : ""}`}>
                 <div className="flex justify-center">
-                    <p className="text-3xl font-bold">TICKET</p>
+                    <button onClick={() => { setOpenTestModal(true) }}>
+                        <p className="text-3xl font-bold">TICKET</p>
+                    </button>
                 </div>
+                {openTestModal && (
+                    <Modal
+                        isOpen={openTestModal}
+                        setOpen={toggleTestModel}
+                        iconType={"success"}
+                        label={"Success"}
+                    />
+                )}
                 <div className="flex flex-row justify-center items-center gap-10 mt-14 text-xl">
                     <div className={`cursor-pointer ${selectedTicketType == 0 ? "font-bold" : ""}`} onClick={() => setSelectedTicketType(0)}>
                         Upcoming
