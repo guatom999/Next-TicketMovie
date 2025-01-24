@@ -3,11 +3,22 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-type Props = {
-    data: any
+interface MovieProps {
+    movie: MovieDetail[]
+    comingSoonMovie: MovieDetail[]
+
 }
 
-const Movie = ({ data }: Props) => {
+interface MovieDetail {
+    movie_id: string
+    title: string
+    release_at: string
+    price: number
+    image_url: string
+    valiable: number
+}
+
+const Movie: React.FC<MovieProps> = ({ movie, comingSoonMovie }) => {
 
     const [optionsSelect, setOptionsSelect] = useState(0)
 
@@ -24,7 +35,29 @@ const Movie = ({ data }: Props) => {
                 optionsSelect == 0 ? (
                     <div className="w-11/12 mx-auto">
                         <div className="flex flex-wrap justify-center">
-                            {data.map((value: any, index: number) => (
+                            {movie.map((value: any, index: number) => (
+                                <Link href={`/movie/${value.movie_id}`}>
+                                    <div className="content-center px-4">
+                                        <Image
+                                            key={index}
+                                            src={value.image_url}
+                                            alt='test'
+                                            width={234}
+                                            height={100}
+                                        />
+                                        <div className='flex flex-col items-center my-2 gap-1'>
+                                            <p className="font-bold">{value.title}</p>
+                                            <p className="">{value.relea}</p>
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                ) : (
+                    <div className="w-11/12 mx-auto">
+                        <div className="flex flex-wrap justify-center">
+                            {comingSoonMovie.map((value: any, index: number) => (
                                 <Link href={`/movie/${value.movie_id}`}>
                                     <div className="content-center px-4">
                                         <Image
@@ -40,12 +73,8 @@ const Movie = ({ data }: Props) => {
                                         </div>
                                     </div>
                                 </Link>
-                            ))}
-                        </div>
-                    </div>
-                ) : (
-                    <div className="w-11/12 mx-auto">
-                        <div className="flex flex-wrap justify-center">
+                            ))
+                            }
                         </div>
                     </div>
 
