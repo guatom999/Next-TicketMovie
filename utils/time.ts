@@ -7,7 +7,7 @@ export const GetLocalTime = () => {
   return `${year}-${month}-${day}`;
 };
 
-export const GetNumericalDate = (getHours: boolean): number => {
+export const GetNumericalDate = (getHours?: boolean): number => {
   const timeNow = new Date();
   const bangkokStringTime = timeNow.toLocaleString("en-US", {
     timeZone: "Asia/Bangkok",

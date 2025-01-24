@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@fontsource-variable/noto-sans-thai": "^5.1.0",
+    "@headlessui/react": "^2.2.0",
     "@next/font": "^14.2.15",
     "@react-oauth/google": "^0.12.1",
     "axios": "^1.6.8",

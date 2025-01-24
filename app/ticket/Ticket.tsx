@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { DateStringToInteger, GetNumericalDate, ConvertBangkokTime } from "@/utils/time";
 import Modal from "@/app/components/Modal";
+import LoadingModal from "@/app/components/LoadingModal";
 
 import TicketDetail from "./[ticketid]/TicketDetail";
 
@@ -12,7 +13,8 @@ type Props = {
 
 const Ticket = ({ src, ticketData }: Props) => {
     const [openModal, setOpenModal] = useState(false);
-    const [openTestModal, setOpenTestModal] = useState(false)
+    // const [openTestModal, setOpenTestModal] = useState(false)
+    // const [openLoadingModal, setOpenLoadingModal] = useState(false)
     const [selectedTicket, setSelectedTicket] = useState(null);
     const [selectedTicketType, setSelectedTicketType] = useState(0)
 
@@ -21,9 +23,13 @@ const Ticket = ({ src, ticketData }: Props) => {
         setOpenModal(!openModal);
     };
 
-    const toggleTestModel = () => {
-        setOpenTestModal(!openTestModal)
-    }
+    // const toggleTestModel = () => {
+    //     setOpenTestModal(!openTestModal)
+    // }
+
+    // const toggleTestLoadingModal = () => {
+    //     setOpenLoadingModal(!openLoadingModal)
+    // }
 
     useEffect(() => {
     }, [])
@@ -35,12 +41,15 @@ const Ticket = ({ src, ticketData }: Props) => {
                 <div className="fixed inset-0 z-10 bg-gray-800 bg-opacity-50 backdrop-blur-sm"></div>
             )}
             <div className={`mx-auto w-3/5 my-10 ${openModal ? "blur-sm" : ""}`}>
-                <div className="flex justify-center">
-                    <button onClick={() => { setOpenTestModal(true) }}>
-                        <p className="text-3xl font-bold">TICKET</p>
-                    </button>
+                <div className="flex flex-col justify-center items-center">
+                    {/* <button onClick={() => { setOpenTestModal(true) }}> */}
+                    <p className="text-3xl font-bold">TICKET</p>
+                    {/* </button> */}
+                    {/* <button onClick={() => { setOpenLoadingModal(true) }}>
+                        <p className="text-3xl font-bold">Loading Modal</p>
+                    </button> */}
                 </div>
-                {openTestModal && (
+                {/* {openTestModal && (
                     <Modal
                         isOpen={openTestModal}
                         setOpen={toggleTestModel}
@@ -48,6 +57,14 @@ const Ticket = ({ src, ticketData }: Props) => {
                         label={"Success"}
                     />
                 )}
+                {openLoadingModal && (
+                    <LoadingModal
+                        isOpen={openLoadingModal}
+                        setOpen={toggleTestLoadingModal}
+                        message="Loading..."
+                    />
+                )} */}
+
                 <div className="flex flex-row justify-center items-center gap-10 mt-14 text-xl">
                     <div className={`cursor-pointer ${selectedTicketType == 0 ? "font-bold" : ""}`} onClick={() => setSelectedTicketType(0)}>
                         Upcoming

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Script from "react-load-script";
 import CheckOutWithCreditCard from "./CheckOutWithCreditCard";
-import Modal from "./Modal";
+import LoadingModal from "./LoadingModal";
 import { useRouter } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
@@ -83,8 +83,6 @@ const CheckOut = ({
   };
 
   const handleClick = (e) => {
-    // setIsLoading(true)
-
     e.preventDefault();
     if (!session) {
       router.push("/site/authentication/login");
@@ -94,8 +92,19 @@ const CheckOut = ({
     }
   };
 
+  const toggleOpenLoadingModal = () => {
+    setIsLoading(!isLoading);
+  };
+
   if (isLoading) {
-    return <Modal />;
+    return (
+      <LoadingModal
+        isOpen={isLoading}
+        setOpen={toggleOpenLoadingModal}
+        loadingMessage="Loading..."
+        successMessage="Payment Success"
+      />
+    );
   }
 
   return (
