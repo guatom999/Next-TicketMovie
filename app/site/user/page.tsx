@@ -23,9 +23,9 @@ const page = (props: Props) => {
   }
 
   return (
-    <div className="w-1/3 mx-auto pt-6">
+    <div className="lg:w-1/3 md:w-2/4 mx-auto my-10">
       <div className="flex justify-center items-center">
-        <h1>PROFILE</h1>
+        <p className="text-3xl font-bold">PROFILE</p>
       </div>
       <div className="">
         {/* <div className="flex justify-center items-center">
@@ -57,7 +57,7 @@ const page = (props: Props) => {
           <p className="w-1/2">MOBILE</p>
           <div className="flex flex-row w-1/2 relative">
             <p className="">+66 89 888 8888</p>
-            <button className="border-2 p-1 absolute right-0">CHANGE</button>
+            <button className="border-2 p-1 absolute right-0 lg:px-5 md:px">CHANGE</button>
           </div>
         </div>
         <div className="flex flex-row py-3">
@@ -79,12 +79,12 @@ const page = (props: Props) => {
           >
             <span className="px-20">Ticket</span>
           </div>
-          <div
+          {/* <div
             className={`cursor-pointer ${option == 1 ? "" : "text-slate-500"} px-[20px] py-[17px]`}
             onClick={() => { setOption(1) }}
           >
             <span className="px-20">History</span>
-          </div>
+          </div> */}
         </div>
       </div>
     </div >
