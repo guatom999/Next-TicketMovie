@@ -4,12 +4,18 @@ import Movie from './Movie'
 
 type Props = {}
 
-const page = async ({}: Props) => {
+const page = async ({ }: Props) => {
 
-  const { data } = await axios.get(`http://localhost:8090/movie/getallmovie`)
+  const { data: movie } = await axios.get(`http://localhost:8090/movie/getallmovie`)
+  const { data: comingSoonMovie } = await axios.get(`http://localhost:8090/movie/comingsoonmovie`)
+
+  console.log("comingSoonMovie is ", comingSoonMovie)
 
   return (
-    <Movie data={data}/>
+    <Movie
+      movie={movie}
+      comingSoonMovie={comingSoonMovie}
+    />
   )
 }
 
