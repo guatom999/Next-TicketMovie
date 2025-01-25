@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { FormatTime } from '@/utils/time'
 
 interface MovieProps {
     movie: MovieDetail[]
@@ -47,7 +48,8 @@ const Movie: React.FC<MovieProps> = ({ movie, comingSoonMovie }) => {
                                         />
                                         <div className='flex flex-col items-center my-2 gap-1'>
                                             <p className="font-bold">{value.title}</p>
-                                            <p className="">{value.relea}</p>
+                                            <p className="">{FormatTime(value.release_at)}</p>
+                                            {/* <p className="">{value.release_at.split(":")[0].replaceAll("-", " ")}</p> */}
                                         </div>
                                     </div>
                                 </Link>

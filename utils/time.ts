@@ -28,14 +28,19 @@ export const GetNumericalDate = (getHours?: boolean): number => {
 export const FormatTime = (date: string): string => {
   const dateObject = new Date(date);
 
-  const options = { weekday: "long", day: "numeric", month: "short" };
-  const formattedDate = new Intl.DateTimeFormat("en-Us", options).format(
-    dateObject,
-  );
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "long",
+    month: "short",
+    year: "numeric",
+    timeZone: "Asia/Bangkok", // Specify the Bangkok timezone
+  };
 
-  return formattedDate.replace(",", "");
+  const parts = new Intl.DateTimeFormat("en-US", options).format(dateObject);
+
+  const [month, year, weekday] = parts.split(" ");
+
+  return `${weekday} ${month} ${year}`;
 };
-
 export const ConvertBangkokTime = (
   dateString: string,
   time: string,
