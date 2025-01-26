@@ -78,7 +78,7 @@ export const authOptions: AuthOptions = {
       const now = Date.now();
 
       // Refresh token if access token is expired
-      if (now > token.accessTokenExpireAt) {
+      if (token.accessTokenExpireAt && now > token.accessTokenExpireAt) {
         try {
           const res = await axios.post(
             `${process.env.NEXT_DEV_AUTH_URL_REFRESHTOKEN}`,
@@ -88,11 +88,6 @@ export const authOptions: AuthOptions = {
               refresh_token: token.refreshToken,
             },
           );
-
-          // console.log(
-          //   "res after refresh is :::::::::::::::::::::::::::::>",
-          //   res.data,
-          // );
 
           if (res.data?.status === "ok" && res.data.user) {
             const accessTokenDecoded = decode(
@@ -115,10 +110,7 @@ export const authOptions: AuthOptions = {
             return null;
           }
         } catch (error) {
-          // console.error(
-          //   "Error refreshing token during session callback:",
-          //   error,
-          // );
+          console.error("Error refreshing token:", error);
           await signOut({ redirect: false });
 
           return null;
