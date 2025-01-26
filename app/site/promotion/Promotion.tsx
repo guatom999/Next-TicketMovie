@@ -46,7 +46,7 @@ const Promotion: React.FC<PromotionProps> = (props) => {
                                 alt={promotion.title}
                             />
                             {/* <img src={promotion.promotion_image} alt={promotion.title} className="w-80 h-80 object-cover" /> */}
-                            <p className="text-2xl font-bold">{promotion.title}</p>
+                            <p className="text-xl font-medium ">{promotion.title}</p>
                             <p>{promotion.date}</p>
                         </Link>
 

@@ -9,8 +9,6 @@ const page = async ({ }: Props) => {
   const { data: movie } = await axios.get(`http://localhost:8090/movie/getallmovie`)
   const { data: comingSoonMovie } = await axios.get(`http://localhost:8090/movie/comingsoonmovie`)
 
-  console.log("comingSoonMovie is ", comingSoonMovie)
-
   return (
     <Movie
       movie={movie}

@@ -29,7 +29,8 @@ export const FormatTime = (date: string): string => {
   const dateObject = new Date(date);
 
   const options: Intl.DateTimeFormatOptions = {
-    weekday: "long",
+    // weekday: "long",
+    day: "numeric",
     month: "short",
     year: "numeric",
     timeZone: "Asia/Bangkok", // Specify the Bangkok timezone
@@ -37,9 +38,11 @@ export const FormatTime = (date: string): string => {
 
   const parts = new Intl.DateTimeFormat("en-US", options).format(dateObject);
 
-  const [month, year, weekday] = parts.split(" ");
+  console.log("parts is =============>", parts);
 
-  return `${weekday} ${month} ${year}`;
+  const [month, day, year] = parts.replaceAll(",", "").split(" ");
+
+  return `${day} ${month} ${year}`;
 };
 export const ConvertBangkokTime = (
   dateString: string,
