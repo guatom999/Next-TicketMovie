@@ -72,20 +72,6 @@ const page = (props: Props) => {
           <p className="w-1/2">MY POINTS</p>
           <p className="w-1/2">0</p>
         </div>
-        <div className="flex justify-center gap-10 text-xl">
-          <div
-            className={`cursor-pointer ${option == 0 ? "" : "text-slate-500"} px-[20px] py-[17px]`}
-            onClick={() => { setOption(0) }}
-          >
-            <span className="px-20">Ticket</span>
-          </div>
-          {/* <div
-            className={`cursor-pointer ${option == 1 ? "" : "text-slate-500"} px-[20px] py-[17px]`}
-            onClick={() => { setOption(1) }}
-          >
-            <span className="px-20">History</span>
-          </div> */}
-        </div>
       </div>
     </div >
   );

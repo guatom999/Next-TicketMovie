@@ -7,6 +7,60 @@ import NewsLabel from "./components/NewsLabel";
 import PromotionsLabel from "./components/PromotionsLabel";
 
 
+const RecommendedPromotions = [
+  {
+    name: "สมัครสมาชิกเฮ้าส์ จ่ายทีเดียว เป็นตลอดชีพ",
+    date: "25 Jan 2022",
+    promotion_image: "https://www.housesamyan.com/assets/uploads/promotion/thumbnail_web_path/20240617032015_EDE5E3D2-253A-4340-AC03-0C1A4E585112.jpg",
+    description: "Promotion Description",
+    link: "",
+    status: true
+  },
+  {
+    name: "House Tumbler KEEP IT COOL",
+    date: "25 Dec 2019",
+    promotion_image: "https://www.housesamyan.com/assets/uploads/promotion/thumbnail_web_path/20191225153440_B60985BA-D3CF-42BA-BFD0-95E7BD348403.jpg",
+    description: "Promotion Description",
+    link: "",
+    status: true
+  },
+  {
+    name: "กระเป๋าดินสอ LOVE OF SIAM LIMITED CHRISTMAS EDITION",
+    date: "08 Dec 2019",
+    promotion_image: "https://www.housesamyan.com/assets/uploads/promotion/thumbnail_web_path/20191208091408_05626AB8-CA69-4C2D-AEEA-839B9F568856.jpg",
+    description: "Promotion Description",
+    link: "",
+    status: true
+  },
+]
+
+const RecommendedNews = [
+  {
+    name: "โปรแกรมฉายเดือนมกราคม 2568 ที่โรงภาพยนตร์ House สามย่าน",
+    date: "28 Dec 2024",
+    promotion_image: "https://www.housesamyan.com//assets/uploads/news/thumbnail_web_path/20241228113334_6C68686A-3161-4619-AC18-1C5CF69A4DD5.jpg",
+    description: "Promotion Description",
+    link: "",
+    status: true
+  },
+  {
+    name: "โปรแกรมฉายเดือนธันวาคม 2567 ที่โรงภาพยนตร์ House สามย่าน",
+    date: "06 Dec 2024",
+    promotion_image: "https://www.housesamyan.com//assets/uploads/news/thumbnail_web_path/20241206171752_7105AF82-97CF-498E-8FEC-633EE92FC8FD.jpg",
+    description: "Promotion Description",
+    link: "",
+    status: true
+  },
+  {
+    name: "โปรแกรมฉายเดือนพฤศจิกายน 2567 ที่โรงภาพยนตร์ House สามย่าน",
+    date: "12 Nov 2024",
+    promotion_image: "https://www.housesamyan.com//assets/uploads/news/thumbnail_web_path/20241112153025_82C2371A-ECF9-42A4-8311-334298354011.jpg",
+    description: "Promotion Description",
+    link: "",
+    status: true
+  },
+]
+
 export default async function Home() {
 
   const slides = [
@@ -19,11 +73,13 @@ export default async function Home() {
   const { data: comingsoonMovie } = await axios.get(`http://localhost:8090/movie/comingsoonmovie`)
 
   return (
-    <div>
+    <div className="space-y-5 mb-20">
       <Carousel slides={slides} />
       <MovieList movie={movie} comingsoonMovie={comingsoonMovie} />
-      <PromotionsLabel />
-      <NewsLabel />
+      <Label data={RecommendedPromotions} width={594} height={420} labelName="PROMOTION" />
+      <Label data={RecommendedNews} width={594} height={420} labelName="NEWS" />
+      {/* <PromotionsLabel />
+      <NewsLabel /> */}
     </div>
   );
 }

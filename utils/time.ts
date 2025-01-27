@@ -38,8 +38,6 @@ export const FormatTime = (date: string): string => {
 
   const parts = new Intl.DateTimeFormat("en-US", options).format(dateObject);
 
-  console.log("parts is =============>", parts);
-
   const [month, day, year] = parts.replaceAll(",", "").split(" ");
 
   return `${day} ${month} ${year}`;

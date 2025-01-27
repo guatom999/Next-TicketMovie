@@ -17,7 +17,7 @@ interface MovieData {
 
 interface Props {
   movie: any;
-  autoSlide: boolean;
+  autoSlide?: boolean;
   comingsoonMovie: any;
 }
 

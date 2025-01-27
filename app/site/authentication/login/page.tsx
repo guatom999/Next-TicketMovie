@@ -3,6 +3,7 @@ import { useSession, signIn } from "next-auth/react";
 import { AiFillGithub } from "react-icons/ai";
 import React, { useRef, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
+import { FaGithub } from 'react-icons/fa';
 
 type Props = {};
 
@@ -87,23 +88,27 @@ const page = (props: Props) => {
         ) : (
           <></>
         )}
-        <div className="flex flex-col justify-center mt-12 gap-y-6">
+        <div className="flex flex-col justify-center mt-20 gap-y-6 ">
           <button
-            className="bg-gray-300 border rounded-md p-2 mx-2"
+            className="bg-gray-300 bg-opacity-90 border rounded-md p-2 mx-2 text-white hover:bg-slate-600 "
             onClick={handleSubmit}
           >
             Sign In
           </button>
           <button
-            className="bg-gray-300 border rounded-md p-2 mx-2"
+            className="bg-gray-300 border rounded-md p-2 mx-2 mt-2 text-white hover:bg-slate-600"
             onClick={() => handleLoginWithGitHub()}
           >
-            Login With GitHub
+            <div className="flex flex-row  justify-center items-center ">
+              <FaGithub size={30} color="black" />
+              <p className="mx-2">Login With GitHub</p>
+            </div>
+
           </button>
         </div>
         <div className="flex justify-center">
           <button
-            className="mt-12 bg-gray-300 border rounded-md p-2 mx-2"
+            className="mt-2 p-2 mx-2 font-light text-opacity-90--"
             onClick={handlerRegisterBunnton}
           >
             Register
