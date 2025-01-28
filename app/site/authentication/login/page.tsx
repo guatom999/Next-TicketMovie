@@ -44,6 +44,10 @@ const page = (props: Props) => {
     router.push("/site/authentication/register");
   }
 
+  const handleForgotPasswordButton = () => {
+    router.push("/site/authentication/forgotpassword")
+  }
+
   const handleLoginWithGitHub = () => {
     signIn("github").then((res) => {
       setTimeout(() => { }, 1000);
@@ -106,12 +110,18 @@ const page = (props: Props) => {
 
           </button>
         </div>
-        <div className="flex justify-center">
+        <div className="flex flex-col justify-center">
           <button
-            className="mt-2 p-2 mx-2 font-light text-opacity-90--"
+            className="mt-2 p-2 mx-2 font-light text-opacity-90"
             onClick={handlerRegisterBunnton}
           >
             Register
+          </button>
+          <button
+            className=" mx-2 font-light text-opacity-90"
+            onClick={handleForgotPasswordButton}
+          >
+            Forgot Password
           </button>
         </div>
       </div>
