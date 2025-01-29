@@ -192,13 +192,11 @@ const Movieshowdate = ({
                     <div className=" flex flex-wrap gap-2 my-3 ">
                       {/* {movieDetailShowCase[i].filter((showtime: any, index: number) => compareShowTime(date, parseInt(showtime.split(":")[0]))).map( */}
                       {movieDetailShowCase[i].filter((showtime: any) => {
-                        // console.log("check showtime ", date, showtime, new Date(ConvertBangkokTime(date, showtime)), new Date(GetNumericalDate(true)))
                         return ConvertBangkokTime(date, showtime) >= GetNumericalDate(true)
                       }).map(
                         // {movieDetailShowCase[i].map(
                         (data: any, index: number) => (
                           <div
-                            // key={movieDetailIndex[i][index]}
                             key={movieDetailIndex[i][index]}
                           >
                             <button
@@ -231,7 +229,7 @@ const Movieshowdate = ({
               <div className="font-serif font-semibold text-2xl">SEATING</div>
               <div className="py-10">
                 <p className="font-semibold text-2xl">
-                  {movieDetailSeparate[movieIndex].title}
+                  {movieDetailSeparate?.[movieIndex]?.title ?? ""}
                 </p>
                 <SeatDetail />
                 <p className="flex justify-center font-semibold text-3xl">
@@ -245,9 +243,10 @@ const Movieshowdate = ({
                   {/* {movieDetailSeparate[movieIndex].seat_available.map((data: string, index: number) => ( */}
                   {seat.map((data: string, index: number) => (
                     <div key={index}>
-                      {movieDetailSeparate[movieIndex].seat_available[index][
+                      {/* {movieDetailSeparate[movieIndex].seat_available[index][
                         `${data.toString()}`
-                      ] ? (
+                      ] ? ( */}
+                      {movieDetailSeparate?.[movieIndex]?.seat_available?.[index]?.[data] ? (
                         <button
                           className={`${isSelected[index] ? "selected" : "select"
                             }`}
@@ -256,7 +255,7 @@ const Movieshowdate = ({
                           }}
                         ></button>
                       ) : (
-                        <button className="bg-[#898989] hover:cursor-pointer border-2 border-[#898989] border-opacity-90 w-6 h-6 m-1"></button>
+                        <p className="bg-[#898989] border-2 border-[#898989] border-opacity-90 w-6 h-6 m-1"></p>
                       )}
                     </div>
                   ))}

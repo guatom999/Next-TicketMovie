@@ -5,6 +5,7 @@ import Link from 'next/link'
 interface LabelProps {
     data: any[];
     labelName?: string;
+    link?: string
     width?: number;
     height?: number;
 }
@@ -18,7 +19,7 @@ const Label: React.FC<LabelProps> = ({ data, labelName, width, height }) => {
             <div className="flex flex-row justify-center gap-7 font-sans">
                 {data.filter((value: any) => value.status === true).map((value: any, index: number) => (
                     <div key={index}>
-                        <Link href="/">
+                        <Link href={`${value.link}`}>
                             <Image src={value.promotion_image} alt="promotion" width={width} height={height} />
                             <div className="flex flex-col mt-5">
                                 <div className="font-sans text-gray-800">

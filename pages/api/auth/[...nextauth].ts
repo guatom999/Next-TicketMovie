@@ -77,8 +77,8 @@ export const authOptions: AuthOptions = {
     async session({ session, token }: { session: any; token: any }) {
       const now = Date.now();
 
-      // Refresh token if access token is expired
       if (token.accessTokenExpireAt && now > token.accessTokenExpireAt) {
+        console.log("already expired and try to refreshToken");
         try {
           const res = await axios.post(
             `${process.env.NEXT_DEV_AUTH_URL_REFRESHTOKEN}`,
@@ -105,15 +105,10 @@ export const authOptions: AuthOptions = {
             token.refreshTokenExpireAt = refreshTokenDecoded?.exp
               ? refreshTokenDecoded.exp * 1000
               : now;
-          } else {
-            // console.error("Failed to refresh token: Invalid response");
-            return null;
           }
         } catch (error) {
-          console.error("Error refreshing token:", error);
+          console.error("Error refreshing token:");
           await signOut({ redirect: false });
-
-          return null;
         }
       }
 

@@ -13,7 +13,7 @@ const RecommendedPromotions = [
     date: "25 Jan 2022",
     promotion_image: "https://www.housesamyan.com/assets/uploads/promotion/thumbnail_web_path/20240617032015_EDE5E3D2-253A-4340-AC03-0C1A4E585112.jpg",
     description: "Promotion Description",
-    link: "",
+    link: "site/promotion/detail/1",
     status: true
   },
   {
@@ -21,7 +21,7 @@ const RecommendedPromotions = [
     date: "25 Dec 2019",
     promotion_image: "https://www.housesamyan.com/assets/uploads/promotion/thumbnail_web_path/20191225153440_B60985BA-D3CF-42BA-BFD0-95E7BD348403.jpg",
     description: "Promotion Description",
-    link: "",
+    link: "site/promotion/detail/2",
     status: true
   },
   {
@@ -29,7 +29,7 @@ const RecommendedPromotions = [
     date: "08 Dec 2019",
     promotion_image: "https://www.housesamyan.com/assets/uploads/promotion/thumbnail_web_path/20191208091408_05626AB8-CA69-4C2D-AEEA-839B9F568856.jpg",
     description: "Promotion Description",
-    link: "",
+    link: "site/promotion/detail/3",
     status: true
   },
 ]
@@ -40,7 +40,7 @@ const RecommendedNews = [
     date: "28 Dec 2024",
     promotion_image: "https://www.housesamyan.com//assets/uploads/news/thumbnail_web_path/20241228113334_6C68686A-3161-4619-AC18-1C5CF69A4DD5.jpg",
     description: "Promotion Description",
-    link: "",
+    link: "site/news/detail/1",
     status: true
   },
   {
@@ -48,7 +48,7 @@ const RecommendedNews = [
     date: "06 Dec 2024",
     promotion_image: "https://www.housesamyan.com//assets/uploads/news/thumbnail_web_path/20241206171752_7105AF82-97CF-498E-8FEC-633EE92FC8FD.jpg",
     description: "Promotion Description",
-    link: "",
+    link: "site/news/detail/2",
     status: true
   },
   {
@@ -56,7 +56,7 @@ const RecommendedNews = [
     date: "12 Nov 2024",
     promotion_image: "https://www.housesamyan.com//assets/uploads/news/thumbnail_web_path/20241112153025_82C2371A-ECF9-42A4-8311-334298354011.jpg",
     description: "Promotion Description",
-    link: "",
+    link: "site/news/detail/3",
     status: true
   },
 ]
