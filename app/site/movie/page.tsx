@@ -6,8 +6,8 @@ type Props = {}
 
 const page = async ({ }: Props) => {
 
-  const { data: movie } = await axios.get(`http://localhost:8090/movie/getallmovie`)
-  const { data: comingSoonMovie } = await axios.get(`http://localhost:8090/movie/comingsoonmovie`)
+  const { data: movie } = await axios.get(`${process.env.NEXT_DEV_MOVIE_URL}/getallmovie`)
+  const { data: comingSoonMovie } = await axios.get(`${process.env.NEXT_DEV_MOVIE_URL}/movie/comingsoonmovie`)
 
   return (
     <Movie

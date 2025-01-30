@@ -20,10 +20,13 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials) {
         try {
-          const res = await axios.post("http://localhost:8100/user/login", {
-            email: credentials?.email,
-            password: credentials?.password,
-          });
+          const res = await axios.post(
+            `${process.env.NEXT_PUBLIC_DEV_CUSTOMER_URL}/user/login`,
+            {
+              email: credentials?.email,
+              password: credentials?.password,
+            },
+          );
 
           if (res.data?.status === "ok" && res.data.user) {
             let accessTokenDecoded = decode(

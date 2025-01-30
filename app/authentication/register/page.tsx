@@ -11,33 +11,33 @@ const page = (props: Props) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const handleSubmit =async (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
 
     setIsLoading(true)
 
-    await axios.post("http://localhost:8100/user/register", {
+    await axios.post(`${process.env.NEXT_PUBLIC_DEV_CUSTOMER_URL}/user/register`, {
       username: username,
       email: email,
       password: password,
     }).then(() => {
       setTimeout(() => {
         setIsLoading(false)
-      },3000)
+      }, 3000)
     }).catch((err) => {
-      console.log("err is" , err)
+      console.log("err is", err)
     })
   }
 
   return (
     <RegisterForm
-    isLoading={isLoading}
-    username={username}
-    password={password}
-    email={email}
-    setUsername={setUsername}
-    setPassword={setPassword}
-    setEmail={setEmail}
+      isLoading={isLoading}
+      username={username}
+      password={password}
+      email={email}
+      setUsername={setUsername}
+      setPassword={setPassword}
+      setEmail={setEmail}
       handleSubmit={handleSubmit}
     />
     // <div className="flex justify-center items-center">

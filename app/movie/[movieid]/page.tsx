@@ -27,9 +27,8 @@ const page = async ({
   params: { movieid: string };
   props: Props;
 }) => {
-  // const { data: session } = useSession()
   const { data: movieDetail } = await axios.get(
-    `http://localhost:8090/movie/getmovieshowtime/${params.movieid}`,
+    `${process.env.NEXT_PUBLIC_DEV_MOVIE_URL}/movie/getmovieshowtime/${params.movieid}`,
     {
       headers: {
         // 'Authorization':`bearer ${session?.}`
@@ -38,7 +37,7 @@ const page = async ({
   );
 
   const { data: movieList } = await axios.get(
-    `http://localhost:8090/movie/getmovie/${params.movieid}`,
+    `${process.env.NEXT_PUBLIC_DEV_MOVIE_URL}/movie/getmovie/${params.movieid}`,
   );
 
   let movieDetailShowCase: string[][] = [];
@@ -75,8 +74,6 @@ const page = async ({
       movieTime = [];
     }
   });
-
-  // console.log("movieDate is", movieDate)
 
   return (
     <>

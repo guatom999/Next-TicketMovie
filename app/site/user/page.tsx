@@ -13,7 +13,6 @@ const page = (props: Props) => {
   let router = useRouter();
 
   const { data: session } = useSession();
-  const [option, setOption] = useState(0)
 
   // console.log("session", { session })
 

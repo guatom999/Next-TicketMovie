@@ -21,7 +21,7 @@ const page = (props: Props) => {
 
     setIsLoading(true);
 
-    await axios.post("http://localhost:8100/user/register", {
+    await axios.post(`${process.env.NEXT_PUBLIC_DEV_CUSTOMER_URL}/user/register`, {
       username: username,
       email: email,
       password: password,

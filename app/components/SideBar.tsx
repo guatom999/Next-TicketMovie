@@ -51,7 +51,7 @@ const SideBar = ({ isOpen, setOpen, session }: Props) => {
   };
 
   const handleSingOut = () => {
-    axios.post("http://localhost:8100/user/logout",)
+    axios.post(`${process.env.NEXT_PUBLIC_DEV_CUSTOMER_URL}/user/logout`,)
     signOut();
   }
 

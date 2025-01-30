@@ -69,8 +69,8 @@ export default async function Home() {
   ]
 
 
-  const { data: movie } = await axios.get(`http://localhost:8090/movie/getallmovie`)
-  const { data: comingsoonMovie } = await axios.get(`http://localhost:8090/movie/comingsoonmovie`)
+  const { data: movie } = await axios.get(`${process.env.NEXT_PUBLIC_DEV_MOVIE_URL}/movie/getallmovie`)
+  const { data: comingsoonMovie } = await axios.get(`${process.env.NEXT_PUBLIC_DEV_MOVIE_URL}/movie/comingsoonmovie`)
 
   return (
     <div className="space-y-5 mb-20">
