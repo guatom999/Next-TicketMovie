@@ -154,7 +154,7 @@ const Movieshowdate = ({
               <div className="py-10 ">
                 {movieDate.map((date: any, i: number) => (
                   <div key={i} className="my-5">
-                    <p className='text-red-600'>{FormatTime(date)}</p>
+                    <p className=''>{FormatTime(date)}</p>
                     <div className=" flex flex-wrap gap-2 my-3 ">
                       {/* {movieDetailShowCase[i].filter((showtime: any, index: number) => compareShowTime(date, parseInt(showtime.split(":")[0]))).map( */}
                       {movieDetailShowCase[i].filter((showtime: any) => {
