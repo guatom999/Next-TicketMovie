@@ -29,25 +29,42 @@ const Modal: React.FC<ModalProps> = ({ iconType, label, isOpen, setOpen }) => {
         isOpen && (
             <div className="modal-card fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 ">
                 <div className="flex flex-col justify-center items-center bg-white rounded-lg shadow-lg w-full max-w-sm p-4">
-                    <svg
-                        className="w-16  h-16  text-green-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                    </svg>
+                    {iconType === 'error' ? (
+                        <svg
+                            className="w-16 h-16 text-red-500"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={2}
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M6 18L18 6M6 6l12 12"
+                            />
+                        </svg>
+                    ) : (
+                        <svg
+                            className="w-16 h-16 text-green-500"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={2}
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                        </svg>
+                    )}
                     <div>
                         <h2 className="mt-4 text-lg font-bold text-gray-800">{label}</h2>
                     </div>
-                    <div className="w-4/5 rounded-lg bg-green-500 text-white text-center mt-4">
-                        <button className="w-full py-2 px-4 rounded-lg bg-green-500 text-white text-center"
+                    <div className={`w-4/5 rounded-lg  text-white text-center mt-4`}>
+                        <button className={`w-full py-2 px-4 rounded-lg ${iconType == "error" ? "bg-red-500" : "bg-green-500"} text-white text-center`}
                             onClick={() => setOpen()}
                         >
                             Close

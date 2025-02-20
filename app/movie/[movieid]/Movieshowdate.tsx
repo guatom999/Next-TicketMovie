@@ -11,7 +11,8 @@ import SeatDetail from "@/app/components/SeatDetail";
 type Props = {
   movid_id: string;
   movieList: AxiosResponse<any, any> | any | undefined;
-  movieDetail: AxiosResponse<any, any> | undefined;
+  // movieDetail: AxiosResponse<any, any> | undefined;
+  movieDetail: any,
   movieDetailIndex: number[][];
   movieDetailShowCase: any;
   movieDate: any;
@@ -42,57 +43,12 @@ const Movieshowdate = ({
 
 
   const seat = [
-    "A1",
-    "A2",
-    "A3",
-    "A4",
-    "A5",
-    "A6",
-    "A7",
-    "A8",
-    "A9",
-    "A10",
-    "A11",
-    "A12",
-    "B1",
-    "B2",
-    "B3",
-    "B4",
-    "B5",
-    "B6",
-    "B7",
-    "B8",
-    "B9",
-    "B10",
-    "B11",
-    "B12",
-    "C1",
-    "C2",
-    "C3",
-    "C4",
-    "C5",
-    "C6",
-    "C7",
-    "C8",
-    "C9",
-    "C10",
-    "C11",
-    "C12",
-    "D1",
-    "D2",
-    "D3",
-    "D4",
-    "D5",
-    "D6",
-    "D7",
-    "D8",
-    "D9",
-    "D10",
-    "D11",
-    "D12",
+    "A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10", "A11", "A12",
+    "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "B12",
+    "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11", "C12",
+    "D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10", "D11", "D12",
   ];
 
-  const movieDetailSeparate = movieDetail;
 
   useEffect(() => {
     // setIsSelected([false, false, false, false, false, false, false, false, false, false, false, false])
@@ -118,6 +74,16 @@ const Movieshowdate = ({
     // console.log("movieDate after first filter is", movieDate[0])
     return true;
   };
+
+
+  const movieDetailSeparate = movieDetail.filter((data: any) => {
+    return DateStringToInteger(data.show_time) >= GetNumericalDate(false)
+  })
+
+  // console.log("movieDetail is ", movieDetailSeparate.filter((data: any) => {
+  //   return data.show_time >= GetNumericalDate(false)
+  // }))
+  console.log("movieDetailSeparate", movieDetailSeparate)
 
   const isThatButton = (data: string) => {
     if (data == showTime) {
@@ -188,7 +154,7 @@ const Movieshowdate = ({
               <div className="py-10 ">
                 {movieDate.map((date: any, i: number) => (
                   <div key={i} className="my-5">
-                    <p>{FormatTime(date)}</p>
+                    <p className='text-red-600'>{FormatTime(date)}</p>
                     <div className=" flex flex-wrap gap-2 my-3 ">
                       {/* {movieDetailShowCase[i].filter((showtime: any, index: number) => compareShowTime(date, parseInt(showtime.split(":")[0]))).map( */}
                       {movieDetailShowCase[i].filter((showtime: any) => {

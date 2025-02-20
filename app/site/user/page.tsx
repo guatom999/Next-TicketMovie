@@ -55,7 +55,7 @@ const page = (props: Props) => {
         <div className="flex flex-row py-3">
           <p className="w-1/2">MOBILE</p>
           <div className="flex flex-row w-1/2 relative">
-            <p className="">+66 89 888 8888</p>
+            <p className="">+66 8X XXX XXXX</p>
             <button className="border-2 p-1 absolute right-0 lg:px-5 md:px">CHANGE</button>
           </div>
         </div>

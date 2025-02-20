@@ -5,12 +5,13 @@ import { Dialog } from "@headlessui/react";
 
 interface LoadingModalProps {
     isOpen: boolean;
+    isError: boolean;
     setOpen: () => void;
     loadingMessage?: string;
     successMessage?: string;
 }
 
-const LoadingModal: React.FC<LoadingModalProps> = ({ isOpen, setOpen, loadingMessage, successMessage }) => {
+const LoadingModal: React.FC<LoadingModalProps> = ({ isOpen, isError, setOpen, loadingMessage, successMessage }) => {
     const timeLoading = 3000
     const [isLoading, setIsLoading] = useState(true)
     const [isClose, setIsClose] = useState(false)
@@ -60,9 +61,10 @@ const LoadingModal: React.FC<LoadingModalProps> = ({ isOpen, setOpen, loadingMes
                     </div>
                 ) : (
                     <Modal
+                        iconType={isError ? "error" : "success"}
                         isOpen={isOpen}
                         setOpen={setOpen}
-                        label={successMessage}
+                        label={isError ? "payment failed" : "payment success"}
                     />
                 )
             }

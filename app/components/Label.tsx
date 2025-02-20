@@ -13,8 +13,13 @@ interface LabelProps {
 const Label: React.FC<LabelProps> = ({ data, labelName, width, height }) => {
     return (
         <div className="mx-5">
-            <div className="mb-[8px]">
+            <div className="mb-[8px] flex justify-between items-center">
                 <span className="text-bold text-4xl">{labelName}</span>
+                <Link
+                    href={`/site/${labelName?.toLocaleLowerCase()}`}
+                >
+                    <span className="text-bold text-">VIEW ALL</span>
+                </Link>
             </div>
             <div className="flex flex-row justify-center gap-7 font-sans">
                 {data.filter((value: any) => value.status === true).map((value: any, index: number) => (

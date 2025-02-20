@@ -24,6 +24,7 @@ const CheckOut = ({
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   let amount = totalPrice * 100;
 
@@ -66,14 +67,20 @@ const CheckOut = ({
             date: date,
           })
             .then((result) => {
+              console.log("result is ===========>", result);
               setTimeout(() => {
                 setIsLoading(false);
-                // router.push(`../ticket/` + result.url);
                 router.push(`../ticket`);
               }, 5000);
+
+              // router.push(`../ticket/` + result.url);
             })
             .catch((error) => {
-              console.log("error", error);
+              console.log("error ------------------>", error);
+              setIsError(true);
+              setTimeout(() => {
+                setIsLoading(false);
+              }, 5000);
             });
       },
       onFormClosed: () => {
@@ -100,9 +107,9 @@ const CheckOut = ({
     return (
       <LoadingModal
         isOpen={isLoading}
+        isError={isError}
         setOpen={toggleOpenLoadingModal}
         loadingMessage="Loading..."
-        successMessage="Payment Success"
       />
     );
   }

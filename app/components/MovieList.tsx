@@ -93,7 +93,6 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
               className="flex transition-transform duration-500 ease-in-out"
               onMouseOver={() => setIsHover(!isHover)}
               onMouseOut={() => setIsHover(!isHover)}
-              // style={{ transform: `translateX(-${curr * 100}%)` }}
               style={{ transform: `translateX(-${curr * 317}px)` }}
             >
               {movie?.map((result: MovieData, index: number) => (
@@ -108,10 +107,10 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
                     alt="Movie Image"
                     width={309}
                     height={463}
+                    style={{ height: '463px' }}
                   />
                   <div className="flex flex-col justify-between m-2 font-sans">
                     <div className=" font-semibold font-serif ">{result.title}</div>
-                    {/* <div>{result?.release_at}</div> */}
                     <div className="text-sm">{FormatTime(result?.release_at)}</div>
                   </div>
                 </Link>
@@ -132,7 +131,6 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
               className="flex transition-transform duration-500 ease-in-out"
               onMouseOver={() => setIsHover(!isHover)}
               onMouseOut={() => setIsHover(!isHover)}
-              // style={{ transform: `translateX(-${curr * 100}%)` }}
               style={{ transform: `translateX(-${curr * 317}px)` }}
             >
               {comingsoonMovie?.map((result: MovieData, index: number) => (
@@ -142,15 +140,15 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
                   href={`/movie/${result.movie_id}`}
                 >
                   <Image
-                    className="mx-1 cursor-pointer" // Add cursor-pointer here
+                    className="mx-1 cursor-pointer"
                     src={result.image_url}
                     alt="Movie Image"
                     width={309}
                     height={463}
+                    style={{ height: '463px' }}
                   />
                   <div className="flex flex-col justify-between m-2 font-sans">
                     <div className=" font-semibold ">{result.title}</div>
-                    {/* <div>{result?.release_at}</div> */}
                     <div>{FormatTime(result?.release_at)}</div>
                   </div>
                 </Link>
