@@ -98,7 +98,7 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
               {movie?.map((result: MovieData, index: number) => (
                 <Link
                   key={result.movie_id}
-                  className="hover:cursor-pointer flex-shrink-0"
+                  className="hover:cursor-pointer flex-shrink-0 justify-center items-center "
                   href={`/movie/${result.movie_id}`}
                 >
                   <Image
@@ -109,8 +109,8 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
                     height={463}
                     style={{ height: '463px' }}
                   />
-                  <div className="flex flex-col justify-between m-2 font-sans">
-                    <div className=" font-semibold font-serif ">{result.title}</div>
+                  <div className="flex flex-col justify-between m-2 font-sans w-[310px]">
+                    <p className="font-semibold font-serif word-wrap">{result.title}</p>
                     <div className="text-sm">{FormatTime(result?.release_at)}</div>
                   </div>
                 </Link>
@@ -147,8 +147,8 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
                     height={463}
                     style={{ height: '463px' }}
                   />
-                  <div className="flex flex-col justify-between m-2 font-sans">
-                    <div className=" font-semibold ">{result.title}</div>
+                  <div className="flex flex-col justify-between m-2 font-sans ">
+                    <div className="font-semibold break-words">{result.title}</div>
                     <div>{FormatTime(result?.release_at)}</div>
                   </div>
                 </Link>

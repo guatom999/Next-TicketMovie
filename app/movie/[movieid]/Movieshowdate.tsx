@@ -51,14 +51,11 @@ const Movieshowdate = ({
 
 
   useEffect(() => {
-    // setIsSelected([false, false, false, false, false, false, false, false, false, false, false, false])
     setReserveSeat([]);
   }, [movieIndex, showTime],);
 
-  // console.log("movieDetailShowCase is :::::::::>", movieDetailShowCase)
 
   const isNotComingSoon = () => {
-    // console.log("to compare date is", movieDate[0], DateStringToInteger(movieDate[0]), GetNumericalDate())
     if (
       DateStringToInteger(movieDate[0]) > GetNumericalDate(false)
     ) {
@@ -83,7 +80,6 @@ const Movieshowdate = ({
   // console.log("movieDetail is ", movieDetailSeparate.filter((data: any) => {
   //   return data.show_time >= GetNumericalDate(false)
   // }))
-  console.log("movieDetailSeparate", movieDetailSeparate)
 
   const isThatButton = (data: string) => {
     if (data == showTime) {

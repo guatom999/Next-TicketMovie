@@ -75,7 +75,6 @@ const page = async ({
     }
   });
 
-  console.log("movie Date is ", movieDate)
   return (
     <>
       <Movieshowdate
