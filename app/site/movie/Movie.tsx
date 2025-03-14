@@ -36,7 +36,7 @@ const Movie: React.FC<MovieProps> = ({ movie, comingSoonMovie }) => {
                 optionsSelect == 0 ? (
                     <div className="w-11/12 mx-auto">
                         <div className="flex flex-wrap justify-center">
-                            {movie.map((value: any, index: number) => (
+                            {movie?.map((value: any, index: number) => (
                                 <Link href={`/movie/${value.movie_id}`}>
                                     <div className="content-center px-4">
                                         <Image
@@ -45,6 +45,7 @@ const Movie: React.FC<MovieProps> = ({ movie, comingSoonMovie }) => {
                                             alt='test'
                                             width={234}
                                             height={100}
+                                            unoptimized={true}
                                         />
                                         <div className='flex flex-col items-center my-2 gap-1'>
                                             <p className="font-bold">{value.title}</p>
@@ -59,7 +60,7 @@ const Movie: React.FC<MovieProps> = ({ movie, comingSoonMovie }) => {
                 ) : (
                     <div className="w-11/12 mx-auto">
                         <div className="flex flex-wrap justify-center">
-                            {comingSoonMovie.map((value: any, index: number) => (
+                            {comingSoonMovie?.map((value: any, index: number) => (
                                 <Link href={`/movie/${value.movie_id}`}>
                                     <div className="content-center px-4">
                                         <Image
@@ -68,6 +69,7 @@ const Movie: React.FC<MovieProps> = ({ movie, comingSoonMovie }) => {
                                             alt='test'
                                             width={234}
                                             height={100}
+                                            unoptimized={true}
                                         />
                                         <div className='flex flex-col items-center my-2 gap-1'>
                                             <p className="font-bold">{value.title}</p>

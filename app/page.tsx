@@ -1,6 +1,5 @@
 import Carousel from "./components/Carousel";
 import MovieList from "./components/MovieList";
-import axios from 'axios'
 import { useSession } from "next-auth/react"
 import Label from "./components/Label";
 import NewsLabel from "./components/NewsLabel";
@@ -68,9 +67,13 @@ export default async function Home() {
     "https://www.housesamyan.com/assets/uploads/banner/image_web_path/20201128151756_C63F1989-AD8D-4BE8-BE6E-D1E5117294A1.jpg"
   ]
 
+  const moviesRes = await fetch(`${process.env.NEXT_PUBLIC_DEV_MOVIE_URL}/movie/getallmovie`, {
+    cache: "no-store",
+  });
+  const cmsMoviesRes = await fetch(`${process.env.NEXT_PUBLIC_DEV_MOVIE_URL}/movie/comingsoonmovie`)
 
-  const { data: movie } = await axios.get(`${process.env.NEXT_PUBLIC_DEV_MOVIE_URL}/movie/getallmovie`)
-  const { data: comingsoonMovie } = await axios.get(`${process.env.NEXT_PUBLIC_DEV_MOVIE_URL}/movie/comingsoonmovie`)
+  const movie = await moviesRes.json();
+  const comingsoonMovie = await cmsMoviesRes.json();
 
   return (
     <div className="space-y-5 mb-20">

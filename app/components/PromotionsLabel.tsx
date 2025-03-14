@@ -20,6 +20,7 @@ const PromotionsLabel = (props: Props) => {
                             alt=''
                             width={594}
                             height={420}
+                            unoptimized={true}
                         />
                         <div className="flex flex-col">
                             <div className="font-sans text-gray-800">
@@ -41,6 +42,7 @@ const PromotionsLabel = (props: Props) => {
                             alt=''
                             width={594}
                             height={420}
+                            unoptimized={true}
                         />
                         <div className="flex flex-col">
                             <div className="promotion-description">
@@ -62,6 +64,7 @@ const PromotionsLabel = (props: Props) => {
                             alt=''
                             width={594}
                             height={420}
+                            unoptimized={true}
                         />
                         <div className="flex flex-col">
                             <div className="promotion-description">

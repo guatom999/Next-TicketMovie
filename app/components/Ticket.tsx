@@ -5,7 +5,7 @@ type Props = {
     src: string
 }
 
-const Ticket = ({src}: Props) => {
+const Ticket = ({ src }: Props) => {
 
     return (
         <div className="flex justify-center my-10 ">
@@ -24,6 +24,7 @@ const Ticket = ({src}: Props) => {
                             alt='qr code'
                             width={300}
                             height={463}
+                            unoptimized={true}
                         />
                     </div>
                 </div>

@@ -1,0 +1,18 @@
+version: "3.8"
+
+name: "ticket-shop-compose-frontend"
+services:
+  nextjs:
+    container_name: my-next-app
+    build:
+      context: .
+      target: builder
+    ports:
+      - "3003:3000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    command: ["npm", "run", "start"]

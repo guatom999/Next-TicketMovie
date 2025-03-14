@@ -133,6 +133,7 @@ const Movieshowdate = ({
             alt="movie image"
             width={350}
             height={100}
+            unoptimized={true}
           />
         </div>
         <div className="flex flex-col items-center p-5 gap-4">

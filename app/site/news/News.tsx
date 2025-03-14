@@ -47,6 +47,7 @@ const News: React.FC<NewsProps> = (props) => {
                                     alt={news.title}
                                     width={234}
                                     height={100}
+                                    unoptimized={true}
                                 />
                                 <div className="my-2">
                                     <h3 className="text-md font-medium text-gray-800 ">

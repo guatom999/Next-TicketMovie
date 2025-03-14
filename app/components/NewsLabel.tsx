@@ -20,6 +20,7 @@ const NewsLabel = (props: Props) => {
                             alt=''
                             width={594}
                             height={420}
+                            unoptimized={true}
                         />
                         <div>
                         </div>
@@ -34,6 +35,7 @@ const NewsLabel = (props: Props) => {
                             alt=''
                             width={594}
                             height={420}
+                            unoptimized={true}
                         />
                     </Link>
                 </div>
@@ -46,6 +48,7 @@ const NewsLabel = (props: Props) => {
                             alt=''
                             width={594}
                             height={420}
+                            unoptimized={true}
                         />
                     </Link>
                 </div>

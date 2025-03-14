@@ -27,6 +27,7 @@ const Header = (props: Props) => {
               width={150}
               height={48}
               alt="Logo"
+              unoptimized={true}
             />
           </Link>
         </div>

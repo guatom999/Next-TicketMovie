@@ -40,30 +40,6 @@ const page = (props: Props) => {
       setEmail={setEmail}
       handleSubmit={handleSubmit}
     />
-    // <div className="flex justify-center items-center">
-    //   <div className="w-[400px] m-10">
-    //     <p className="flex justify-center">Register</p>
-    //     <form
-    //       onSubmit={handleSubmit}
-    //     >
-    //       <div className="flex justify-center">
-    //         <input className=" border-b-4 p-2" placeholder="Email"></input>
-    //       </div>
-    //       <div className="flex justify-center">
-    //         <input className="border-b-4 p-2" placeholder="Password"></input>
-    //       </div>
-    //       <div className="flex justify-center">
-    //         <button
-    //           className="mt-12 bg-gray-300 border rounded-md p-2"
-    //         // onClick={register}
-    //         >
-    //           Submit
-    //         </button>
-    //       </div>
-
-    //     </form>
-    //   </div>
-    // </div>
   )
 }
 

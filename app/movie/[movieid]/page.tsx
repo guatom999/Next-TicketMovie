@@ -4,10 +4,6 @@ import React, { useState, useEffect } from "react";
 import Movieshowdate from "./Movieshowdate";
 import { getServerSession } from "next-auth/next";
 
-interface Props {
-  image_url: string;
-}
-
 interface MovieData {
   title: string;
   price: number;
@@ -21,13 +17,9 @@ interface MovieDetails {
   seat_available: [];
 }
 
-const page = async ({
-  params,
-}: {
-  params: { movieid: string };
-  props: Props;
-}) => {
-  const { data: movieDetail } = await axios.get(
+const Page = async ({ params, }: { params: { movieid: string } }) => {
+
+  const movieDetailRes = await fetch(
     `${process.env.NEXT_PUBLIC_DEV_MOVIE_URL}/movie/getmovieshowtime/${params.movieid}`,
     {
       headers: {
@@ -36,9 +28,28 @@ const page = async ({
     },
   );
 
-  const { data: movieList } = await axios.get(
+  const movieListRes = await fetch(
     `${process.env.NEXT_PUBLIC_DEV_MOVIE_URL}/movie/getmovie/${params.movieid}`,
   );
+
+  const movieDetail: any = movieDetailRes.json()
+  const movieList: any = movieListRes.json()
+
+
+  // const { data: movieDetail } = await axios.get(
+  //   `${process.env.NEXT_PUBLIC_DEV_MOVIE_URL}/movie/getmovieshowtime/${params.movieid}`,
+  //   {
+  //     headers: {
+  //       // 'Authorization':`bearer ${session?.}`
+  //     },
+  //   },
+  // );
+
+
+
+  // const { data: movieList } = await axios.get(
+  //   `${process.env.NEXT_PUBLIC_DEV_MOVIE_URL}/movie/getmovie/${params.movieid}`,
+  // );
 
   let movieDetailShowCase: string[][] = [];
   let movieDetailIndex: number[][] = [];
@@ -91,4 +102,4 @@ const page = async ({
   );
 };
 
-export default page;
+export default Page;

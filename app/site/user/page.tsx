@@ -1,24 +1,26 @@
 "use client";
-import React, { useState } from "react";
+
+import React, { useEffect } from "react";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+import Link from "next/link";
 
-type Props = {
-  // session:
-};
+const Page = () => {
+  const router = useRouter();
+  const { data: session, status } = useSession();
 
-const page = (props: Props) => {
-  let router = useRouter();
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.replace("/site/authentication/login");
+    }
+  }, [status, router]);
 
-  const { data: session } = useSession();
-
-  // console.log("session", { session })
-
+  if (status === "loading") {
+    return <div>Loading...</div>; // ป้องกันการ render ก่อน session โหลดเสร็จ
+  }
 
   if (!session) {
-    router.replace("/site/authentication/login");
+    return null; // ป้องกัน error ตอน session ยังไม่มีค่า
   }
 
   return (
@@ -27,15 +29,6 @@ const page = (props: Props) => {
         <p className="text-3xl font-bold">PROFILE</p>
       </div>
       <div className="">
-        {/* <div className="flex justify-center items-center">
-          <Image
-            className="mx-1 cursor-pointer"
-            src={session?.user?.image ?? ""}
-            alt="Movie Image"
-            width={200}
-            height={463}
-          />
-        </div> */}
         <div className="flex flex-row py-3">
           <p className="w-1/2">EMAIL</p>
           <p className="w-1/2">{session?.user?.email}</p>
@@ -43,12 +36,9 @@ const page = (props: Props) => {
         <div className="flex flex-row py-3">
           <p className="w-1/2">TICKET</p>
           <Link
-            // href={`../site/ticket`}
-            href={`../ticket`}
+            href="/ticket"
             className="flex justify-center border px-5 py-1 w-1/2"
-            replace
           >
-            {/* <button className="border  px-5 py-1 w-1/2">SHOW TICKET</button> */}
             SHOW TICKET
           </Link>
         </div>
@@ -56,7 +46,9 @@ const page = (props: Props) => {
           <p className="w-1/2">MOBILE</p>
           <div className="flex flex-row w-1/2 relative">
             <p className="">+66 8X XXX XXXX</p>
-            <button className="border-2 p-1 absolute right-0 lg:px-5 md:px">CHANGE</button>
+            <button className="border-2 p-1 absolute right-0 lg:px-5 md:px">
+              CHANGE
+            </button>
           </div>
         </div>
         <div className="flex flex-row py-3">
@@ -72,8 +64,8 @@ const page = (props: Props) => {
           <p className="w-1/2">0</p>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 
-export default page;
+export default Page;

@@ -44,6 +44,7 @@ const Promotion: React.FC<PromotionProps> = (props) => {
                                 width={500}
                                 height={100}
                                 alt={promotion.title}
+                                unoptimized={true}
                             />
                             {/* <img src={promotion.promotion_image} alt={promotion.title} className="w-80 h-80 object-cover" /> */}
                             <p className="text-xl font-medium ">{promotion.title}</p>

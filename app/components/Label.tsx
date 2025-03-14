@@ -25,7 +25,7 @@ const Label: React.FC<LabelProps> = ({ data, labelName, width, height }) => {
                 {data.filter((value: any) => value.status === true).map((value: any, index: number) => (
                     <div key={index}>
                         <Link href={`${value.link}`}>
-                            <Image src={value.promotion_image} alt="promotion" width={width} height={height} />
+                            <Image src={value.promotion_image} alt="promotion" width={width} height={height} unoptimized={true} />
                             <div className="flex flex-col mt-5">
                                 <div className="font-sans text-gray-800">
                                     {value.name}

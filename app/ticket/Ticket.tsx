@@ -7,11 +7,11 @@ import LoadingModal from "@/app/components/LoadingModal";
 import TicketDetail from "./[ticketid]/TicketDetail";
 
 type Props = {
-    src: string;
+    // src: string;
     ticketData: any;
 };
 
-const Ticket = ({ src, ticketData }: Props) => {
+const Ticket = ({ ticketData }: Props) => {
     const [openModal, setOpenModal] = useState(false);
     // const [openTestModal, setOpenTestModal] = useState(false)
     // const [openLoadingModal, setOpenLoadingModal] = useState(false)

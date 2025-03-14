@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "react-feather";
@@ -108,6 +107,7 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
                     width={309}
                     height={463}
                     style={{ height: '463px' }}
+                    unoptimized={true}
                   />
                   <div className="flex flex-col justify-between m-2 font-sans w-[310px]">
                     <p className="font-semibold font-serif word-wrap">{result.title}</p>
@@ -146,6 +146,7 @@ const MovieList = ({ movie, comingsoonMovie }: Props) => {
                     width={309}
                     height={463}
                     style={{ height: '463px' }}
+                    unoptimized={true}
                   />
                   <div className="flex flex-col justify-between m-2 font-sans ">
                     <div className="font-semibold break-words">{result.title}</div>

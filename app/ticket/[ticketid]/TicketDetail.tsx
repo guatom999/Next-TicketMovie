@@ -47,6 +47,7 @@ const TicketDetail = ({ data, setOpen, isOpen }: Props) => {
               width={300}
               height={100}
               alt=''
+              unoptimized={true}
             />
           </div>
           <div></div>

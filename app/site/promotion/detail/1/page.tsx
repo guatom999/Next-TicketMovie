@@ -15,6 +15,7 @@ const page = (props: Props) => {
                     alt={""}
                     width={730}
                     height={100}
+                    unoptimized={true}
                 />
                 <div className="font-thin text-lg">
                     <p>

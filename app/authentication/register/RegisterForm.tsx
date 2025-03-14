@@ -1,5 +1,7 @@
+'use client'
 import React, { Dispatch, SetStateAction } from 'react'
 import Modal from "../../components/Modal"
+import LoadingModal from '@/app/components/LoadingModal'
 
 type Props = {
     isLoading: boolean
@@ -17,10 +19,19 @@ type Props = {
 const RegisterForm = ({ isLoading, email, username, password, setEmail, setUsername, setPassword, handleSubmit }: Props) => {
 
 
+
+
+
     return (
         <div className="flex justify-center items-center">
             {isLoading ? (
-                <Modal />
+                <></>
+                // <LoadingModal
+                //     isOpen={isLoading}
+                //     isError={isError}
+                //     setOpen={toggleOpenLoadingModal}
+                //     loadingMessage="Loading..."
+                // />
             ) : (
                 <div className="w-[400px] m-10">
                     <p className="flex justify-center">Register</p>
