@@ -21,20 +21,14 @@ const Page = async ({ params, }: { params: { movieid: string } }) => {
 
   const movieDetailRes = await fetch(
     `${process.env.NEXT_PUBLIC_DEV_MOVIE_URL}/movie/getmovieshowtime/${params.movieid}`,
-    {
-      headers: {
-        // 'Authorization':`bearer ${session?.}`
-      },
-    },
   );
 
   const movieListRes = await fetch(
     `${process.env.NEXT_PUBLIC_DEV_MOVIE_URL}/movie/getmovie/${params.movieid}`,
   );
 
-  const movieDetail: any = movieDetailRes.json()
-  const movieList: any = movieListRes.json()
-
+  const movieDetail: any = await movieDetailRes.json()
+  const movieList: any = await movieListRes.json()
 
   // const { data: movieDetail } = await axios.get(
   //   `${process.env.NEXT_PUBLIC_DEV_MOVIE_URL}/movie/getmovieshowtime/${params.movieid}`,
