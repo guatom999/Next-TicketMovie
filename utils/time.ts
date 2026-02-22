@@ -51,8 +51,6 @@ export const ConvertBangkokTime = (
 
   const bkkNowDate = new Date(year, month - 1, day, hoursPart, minutePart);
 
-  // console.log("bkkNowDate is", bkkNowDate);
-
   return bkkNowDate.getTime();
 };
 

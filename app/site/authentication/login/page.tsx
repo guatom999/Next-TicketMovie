@@ -27,7 +27,6 @@ const page = (props: Props) => {
       redirect: false,
     }).then((res) => {
       if (res?.error) {
-        console.log("res error is ::::::::::::::::::::::::::::::>", res);
         seIsError(true);
       } else {
         console.log(

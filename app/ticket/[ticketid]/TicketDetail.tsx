@@ -12,8 +12,6 @@ type Props = {
 const TicketDetail = ({ data, setOpen, isOpen }: Props) => {
   const [openModal, setOpenModal] = useState(true);
 
-  console.log("data on TikcetDeatail is :::::::::::::::::::::::::::::::::::::::>", data)
-
   const handleClickOutside = (event: any) => {
     if (isOpen && !event.target.closest(".ticket-card") && !event.target.closest(".sidebarbutton")) {
       setOpen();

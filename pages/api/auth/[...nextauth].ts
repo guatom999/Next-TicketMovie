@@ -54,7 +54,6 @@ export const authOptions: AuthOptions = {
           }
           return null;
         } catch (error) {
-          // console.log("login error", error);
           return null;
         }
       },
@@ -81,7 +80,6 @@ export const authOptions: AuthOptions = {
       const now = Date.now();
 
       if (token.accessTokenExpireAt && now > token.accessTokenExpireAt) {
-        console.log("already expired and try to refreshToken");
         try {
           const res = await axios.post(
             `${process.env.NEXT_DEV_AUTH_URL_REFRESHTOKEN}`,

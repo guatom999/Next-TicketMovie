@@ -6,10 +6,11 @@ import Image from "next/image";
 import CheckOut from "@/app/components/CheckOut";
 import { useSession } from "next-auth/react";
 import { DateStringToInteger, FormatTime, GetNumericalDate, ConvertBangkokTime } from "@/utils/time";
+import { RoundDetail } from "@/app/type/MovieAvailable";
 import SeatDetail from "@/app/components/SeatDetail";
 
 type Props = {
-  movid_id: string;
+  movie_id: string;
   movieList: AxiosResponse<any, any> | any | undefined;
   // movieDetail: AxiosResponse<any, any> | undefined;
   movieDetail: any,
@@ -18,10 +19,17 @@ type Props = {
   movieDate: any;
   movieTime: any;
   movie_length: any;
+  separateDateAndTime: Record<string, RoundDetail[]>;
   // isComingsoon: boolean;
 };
+
+// interface Props {
+
+// }
+
+
 const Movieshowdate = ({
-  movid_id,
+  movie_id,
   movieDetailIndex,
   movieList,
   movieDetail,
@@ -29,14 +37,19 @@ const Movieshowdate = ({
   movieDate,
   movieTime,
   movie_length,
+  separateDateAndTime,
 }: Props) => {
+  const defaultValidDates = Object.entries(separateDateAndTime).filter((data: any) => DateStringToInteger(data[0]) >= GetNumericalDate(false));
+  const defaultFirstRound = defaultValidDates?.[0]?.[1]?.[0] as RoundDetail | undefined;
+
   const [movieIndex, setMovieIndex] = useState(0);
-  const [showTime, setShowTime] = useState("00");
-  const [showDate, setShowDate] = useState("");
+  const [showTime, setShowTime] = useState(defaultFirstRound ? "0" + defaultFirstRound.timeString : "00");
+  const [showDate, setShowDate] = useState(defaultFirstRound ? defaultFirstRound.timeString : "");
   const [reserveSeat, setReserveSeat] = useState<string[]>([]);
   const [isSelected, setIsSelected] = useState<Boolean[]>(
     Array(48).fill(false),
   );
+  const [selectedRound, setSelectedRound] = useState<RoundDetail | null>(defaultFirstRound || null);
   const [checkDate, setCheckDate] = useState(movieDate[0]);
 
   const { data: session } = useSession();
@@ -48,7 +61,6 @@ const Movieshowdate = ({
     "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11", "C12",
     "D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10", "D11", "D12",
   ];
-
 
   useEffect(() => {
     setReserveSeat([]);
@@ -63,23 +75,19 @@ const Movieshowdate = ({
     }
     movieDate = movieDate.filter(
       (showDate: string) => {
-        // console.log("movieDate = movieDate.filter", new Date(DateStringToInteger(showDate)), new Date(GetNumericalDate(false)))
         return DateStringToInteger(showDate) >= GetNumericalDate(false)
       }
     );
 
-    // console.log("movieDate after first filter is", movieDate[0])
     return true;
   };
 
 
-  const movieDetailSeparate = movieDetail.filter((data: any) => {
-    return DateStringToInteger(data.show_time) >= GetNumericalDate(false)
-  })
+  // const movieDetailSeparate = Object.entries(separateDateAndTime).filter((data: any, i: number) => {
+  //   return DateStringToInteger(data[0]) >= GetNumericalDate(false)
+  // })
 
-  // console.log("movieDetail is ", movieDetailSeparate.filter((data: any) => {
-  //   return data.show_time >= GetNumericalDate(false)
-  // }))
+
 
   const isThatButton = (data: string) => {
     if (data == showTime) {
@@ -149,15 +157,40 @@ const Movieshowdate = ({
             <div className="w-full max-h-screen p-4 overflow-y-scroll">
               <div className="font-serif font-semibold text-2xl">SHOWTIMES</div>
               <div className="py-10 ">
-                {movieDate.map((date: any, i: number) => (
+                {
+                  Object.entries(separateDateAndTime).filter((data: any, i: number) => {
+                    return DateStringToInteger(data[0]) >= GetNumericalDate(false)
+                  }).map((data: any, i: number) => (
+                    <div key={i}>
+                      <p>{FormatTime(data[0])}</p>
+                      <div className="flex flex-wrap gap-2 my-3">
+                        {separateDateAndTime[data[0]].map((round: RoundDetail, j: number) => (
+                          <button
+                            key={j}
+                            className={`flex justify-center items-center border rounded-md 
+                            w-[120px] h-[36px] hover:bg-slate-500 duration-100 
+                            hover:text-white hover:cursor-pointer 
+                            ${isThatButton(i.toString() + round.timeString)}`}
+                            onClick={() => {
+                              setShowTime(i.toString() + round.timeString);
+                              setSelectedRound(round);
+                              setShowDate(round.timeString);
+                            }}
+                          >
+                            <p>{round.timeString}</p>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))
+                }
+                {/* {movieDate.map((date: any, i: number) => (
                   <div key={i} className="my-5">
                     <p className=''>{FormatTime(date)}</p>
                     <div className=" flex flex-wrap gap-2 my-3 ">
-                      {/* {movieDetailShowCase[i].filter((showtime: any, index: number) => compareShowTime(date, parseInt(showtime.split(":")[0]))).map( */}
                       {movieDetailShowCase[i].filter((showtime: any) => {
                         return ConvertBangkokTime(date, showtime) >= GetNumericalDate(true)
                       }).map(
-                        // {movieDetailShowCase[i].map(
                         (data: any, index: number) => (
                           <div
                             key={movieDetailIndex[i][index]}
@@ -184,7 +217,7 @@ const Movieshowdate = ({
                       )}
                     </div>
                   </div>
-                ))}
+                ))} */}
               </div>
             </div>
 
@@ -192,7 +225,8 @@ const Movieshowdate = ({
               <div className="font-serif font-semibold text-2xl">SEATING</div>
               <div className="py-10">
                 <p className="font-semibold text-2xl">
-                  {movieDetailSeparate?.[movieIndex]?.title ?? ""}
+                  {/* {movieDetailSeparate?.[movieIndex]?.title ?? ""} */}
+                  TestNaja
                 </p>
                 <SeatDetail />
                 <p className="flex justify-center font-semibold text-3xl">
@@ -201,22 +235,19 @@ const Movieshowdate = ({
                 <div className="relative mt-3 mb-20">
                   <div className="absolute bottom-0 left-0 right-0 border-b-2 border-slate-700"></div>
                 </div>
-                {/* <div className="flex flex-wrap px-30 "> */}
                 <div className="grid grid-cols-12  w-3/5 mx-auto">
-                  {/* {movieDetailSeparate[movieIndex].seat_available.map((data: string, index: number) => ( */}
                   {seat.map((data: string, index: number) => (
                     <div key={index}>
-                      {/* {movieDetailSeparate[movieIndex].seat_available[index][
-                        `${data.toString()}`
-                      ] ? ( */}
-                      {movieDetailSeparate?.[movieIndex]?.seat_available?.[index]?.[data] ? (
+                      {selectedRound?.seat_available?.[index]?.[data] ? (
+
                         <button
                           className={`${isSelected[index] ? "selected" : "select"
                             }`}
                           onClick={() => {
                             handleSelectSeat(data, index);
                           }}
-                        ></button>
+                        >
+                        </button>
                       ) : (
                         <p className="bg-[#898989] border-2 border-[#898989] border-opacity-90 w-6 h-6 m-1"></p>
                       )}
@@ -226,7 +257,7 @@ const Movieshowdate = ({
                 <div className="text-2xl font-bold">ที่นั่ง</div>
                 <div className=" w-full bg-red h-[40px]">
                   <div className="flex flex-row w-full">
-                    {reserveSeat.map((v, index) => (
+                    {reserveSeat.sort((a: any, b: any) => a.localeCompare(b, undefined, { numeric: true })).map((v: any, index: number) => (
                       <div key={index} className="mx-1">
                         {index == reserveSeat.length - 1 ? (
                           <div>
@@ -244,15 +275,16 @@ const Movieshowdate = ({
                 <div className="w-full bg-slate-600 flex justify-center items-center">
                   <button>
                     {reserveSeat.length === 0 ? (
-                      <p className="p-4 text-5xl text-white">ชำระเงิน </p>
+                      <p className="p-4 text-5xl text-white">ชำระเงิน</p>
                     ) : (
                       <CheckOut
                         totalPrice={reserveSeat.length * 150}
                         session={session}
                         movie_name={movieList?.title}
                         movie_date={movieDate[showTime.split("")[0]]}
-                        movie_showtime={movieDetailShowCase[showTime.split("")[0]][showTime.split("")[1]]}
-                        movie_id={movieDetailSeparate[movieIndex]?.movie_id}
+                        // movie_showtime={movieDetailShowCase[showTime.split("")[0]][showTime.split("")[1]]}
+                        movie_showtime={selectedRound?.timeString}
+                        movie_id={movie_id}
                         movie_image={movieList?.image_url}
                         reserveSeat={reserveSeat}
                         date={showDate}
