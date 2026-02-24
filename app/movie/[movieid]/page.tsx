@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import React, { useState, useEffect } from "react";
 import Movieshowdate from "./Movieshowdate";
 import { getServerSession } from "next-auth/next";
-import { RoundDetail } from "@/app/type/MovieAvailable";
+import RoundDetail from "@/app/type/MovieAvailable";
 
 export const dynamic = 'force-dynamic';
 
@@ -14,6 +14,7 @@ interface MovieData {
 }
 
 interface MovieDetails {
+  movie_id: string
   title: string;
   show_time: string;
   seat_available: [];
@@ -64,6 +65,8 @@ const Page = async ({ params, }: { params: { movieid: string } }) => {
     separateDateAndTime[date].push({
       timeString: time,
       seat_available: detail.seat_available,  // เก็บ array ของ seat ทั้งหมด
+      movie_id: detail.movie_id,
+      movie_date: date,
     });
   });
 

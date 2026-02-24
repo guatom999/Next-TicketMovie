@@ -6,7 +6,7 @@ import Image from "next/image";
 import CheckOut from "@/app/components/CheckOut";
 import { useSession } from "next-auth/react";
 import { DateStringToInteger, FormatTime, GetNumericalDate, ConvertBangkokTime } from "@/utils/time";
-import { RoundDetail } from "@/app/type/MovieAvailable";
+import RoundDetail from "@/app/type/MovieAvailable";
 import SeatDetail from "@/app/components/SeatDetail";
 
 type Props = {
@@ -281,13 +281,14 @@ const Movieshowdate = ({
                         totalPrice={reserveSeat.length * 150}
                         session={session}
                         movie_name={movieList?.title}
-                        movie_date={movieDate[showTime.split("")[0]]}
+                        movie_date={selectedRound?.movie_date}
+                        // movie_date={movieDate[showTime.split("")[0]]}
                         // movie_showtime={movieDetailShowCase[showTime.split("")[0]][showTime.split("")[1]]}
                         movie_showtime={selectedRound?.timeString}
-                        movie_id={movie_id}
+                        movie_id={selectedRound?.movie_id}
                         movie_image={movieList?.image_url}
                         reserveSeat={reserveSeat}
-                        date={showDate}
+                        date={selectedRound?.movie_date}
                       />
                     )}
                   </button>
