@@ -18,6 +18,7 @@ interface MovieDetails {
   title: string;
   show_time: string;
   seat_available: [];
+  fullDateTime: string;
 }
 
 // interface RoundDetail {
@@ -67,6 +68,7 @@ const Page = async ({ params, }: { params: { movieid: string } }) => {
       seat_available: detail.seat_available,  // เก็บ array ของ seat ทั้งหมด
       movie_id: detail.movie_id,
       movie_date: date,
+      fullDateTime: detail.show_time
     });
   });
 

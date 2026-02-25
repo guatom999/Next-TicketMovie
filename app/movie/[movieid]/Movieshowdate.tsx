@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import CheckOut from "@/app/components/CheckOut";
 import { useSession } from "next-auth/react";
-import { DateStringToInteger, FormatTime, GetNumericalDate, ConvertBangkokTime } from "@/utils/time";
+import { DateStringToInteger, FormatTime, GetNumericalDate, ConvertBangkokTime, GetBangkokHour, IsTimeHourGreater, IsRoundPassed } from "@/utils/time";
 import RoundDetail from "@/app/type/MovieAvailable";
 import SeatDetail from "@/app/components/SeatDetail";
 
@@ -40,7 +40,13 @@ const Movieshowdate = ({
   separateDateAndTime,
 }: Props) => {
   const defaultValidDates = Object.entries(separateDateAndTime).filter((data: any) => DateStringToInteger(data[0]) >= GetNumericalDate(false));
-  const defaultFirstRound = defaultValidDates?.[0]?.[1]?.[0] as RoundDetail | undefined;
+  const defaultFirstRound = (() => {
+    for (const [, rounds] of defaultValidDates) {
+      const upcoming = (rounds as RoundDetail[]).find((round) => !IsRoundPassed(round.fullDateTime));
+      if (upcoming) return upcoming;
+    }
+    return undefined;
+  })();
 
   const [movieIndex, setMovieIndex] = useState(0);
   const [showTime, setShowTime] = useState(defaultFirstRound ? "0" + defaultFirstRound.timeString : "00");
@@ -53,7 +59,7 @@ const Movieshowdate = ({
   const [checkDate, setCheckDate] = useState(movieDate[0]);
 
   const { data: session } = useSession();
-
+  const bangkokHour = GetBangkokHour();
 
   const seat = [
     "A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10", "A11", "A12",
@@ -89,11 +95,19 @@ const Movieshowdate = ({
 
 
 
-  const isThatButton = (data: string) => {
-    if (data == showTime) {
-      return "bg-slate-500 text-white";
-    }
-    return "bg-white";
+  // const isThatButton = (data: string) => {
+  //   if (data == showTime) {
+  //     return "bg-slate-500 text-white";
+  //   }
+  //   return "bg-white";
+  // };
+
+  const isThatButton = (data: boolean) => {
+    // if (data == showTime) {
+    return data ? "bg-slate-500 text-white hover:bg-slate-500 duration-100 hover:text-white hover:cursor-pointer" : "text-gray-300 hover:bg-slate-500 duration-100 hover:text-white hover:cursor-pointer";
+    //   return "bg-slate-500 text-white";
+    // }
+    // return "bg-white";
   };
 
   // const compareShowTime = (day: string, hours: number): boolean => {
@@ -165,20 +179,43 @@ const Movieshowdate = ({
                       <p>{FormatTime(data[0])}</p>
                       <div className="flex flex-wrap gap-2 my-3">
                         {separateDateAndTime[data[0]].map((round: RoundDetail, j: number) => (
-                          <button
-                            key={j}
-                            className={`flex justify-center items-center border rounded-md 
-                            w-[120px] h-[36px] hover:bg-slate-500 duration-100 
-                            hover:text-white hover:cursor-pointer 
-                            ${isThatButton(i.toString() + round.timeString)}`}
-                            onClick={() => {
-                              setShowTime(i.toString() + round.timeString);
-                              setSelectedRound(round);
-                              setShowDate(round.timeString);
-                            }}
-                          >
-                            <p>{round.timeString}</p>
-                          </button>
+                          <React.Fragment key={j}>
+                            {
+                              !IsRoundPassed(round.fullDateTime) ? (
+                                <>
+                                  <button
+                                    className={`flex justify-center items-center border rounded-md 
+                                                w-[120px] h-[36px] duration-100 hover:cursor-pointer
+                                                ${selectedRound?.timeString === round.timeString && selectedRound?.movie_date === round.movie_date
+                                        ? "bg-slate-500 text-white hover:bg-slate-500"
+                                        : "bg-white hover:bg-slate-200 text-gray-400"
+                                      }
+                                              `}
+                                    onClick={() => {
+                                      setShowTime(i.toString() + round.timeString);
+                                      setSelectedRound(round);
+                                      setShowDate(round.timeString);
+                                    }}
+                                  >
+                                    <p>{round.timeString}</p>
+                                  </button>
+                                </>
+                              ) : (
+                                <>
+                                  <button
+                                    disabled
+                                    className={`flex justify-center items-center border rounded-md 
+                                                w-[120px] h-[36px] 
+                                                text-gray-300 bg-gray-100 cursor-not-allowed
+                                              `}
+                                  >
+                                    <p>{round.timeString}</p>
+                                  </button>
+                                </>
+                              )
+                            }
+                          </React.Fragment>
+
                         ))}
                       </div>
                     </div>
