@@ -3,6 +3,7 @@ import NextAuth from "next-auth";
 declare module "next-auth" {
   interface Session {
     status: string;
+    error?: "RefreshAccessTokenError" | "RefreshTokenExpired";
     user: {
       _id: string;
       email: string;
