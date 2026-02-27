@@ -85,8 +85,8 @@ const page = (props: Props) => {
           </label>
         </div>
         {isError ? (
-          <div className="my-2 flex justify-center border border-red-600">
-            <p className="text-lg">Some thing wrong</p>
+          <div className="my-2 flex justify-center border border-red-600 rounded-md bg-red-100">
+            <p className="text-lg text-red-500">Invalid email or password</p>
           </div>
         ) : (
           <></>
@@ -98,26 +98,26 @@ const page = (props: Props) => {
           >
             Sign In
           </button>
-          <button
+          {/* <button
             className="bg-gray-300 border rounded-md p-2 mx-2 mt-2 text-white hover:bg-slate-600"
             onClick={() => handleLoginWithGitHub()}
           >
             <div className="flex flex-row  justify-center items-center ">
               <FaGithub size={30} color="black" />
-              <p className="mx-2">Login With GitHub</p>
+              <p className="mx-2">SignIn With GitHub</p>
             </div>
 
-          </button>
+          </button> */}
         </div>
         <div className="flex flex-col justify-center">
           <button
-            className="mt-2 p-2 mx-2 font-light text-opacity-90"
+            className="mt-2 p-2 mx-2 font-light text-opacity-90 hover:text-opacity-100 hover:text-black hover:font-normal"
             onClick={handlerRegisterBunnton}
           >
             Register
           </button>
           <button
-            className=" mx-2 font-light text-opacity-90"
+            className=" mx-2 font-light text-opacity-90 hover:text-opacity-100 hover:text-black hover:font-normal"
             onClick={handleForgotPasswordButton}
           >
             Forgot Password
