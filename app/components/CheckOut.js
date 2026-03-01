@@ -1,12 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Script from "react-load-script";
 import CheckOutWithCreditCard from "./CheckOutWithCreditCard";
 import LoadingModal from "./LoadingModal";
 import { useRouter } from "next/navigation";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import Ticket from "./Ticket";
-import { type } from "os";
 
 let OmiseCard;
 
@@ -25,6 +21,12 @@ const CheckOut = ({
 
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    if (!session) {
+      router.push("/site/authentication/login");
+    }
+  }, [session]);
 
   let amount = totalPrice * 100;
 
@@ -52,7 +54,7 @@ const CheckOut = ({
     OmiseCard.open({
       amount: amount,
       onCreateTokenSuccess: (token) => {
-        setIsLoading(true),
+        (setIsLoading(true),
           CheckOutWithCreditCard({
             email: session.email,
             customer_id: session.user.customer_id,
@@ -81,7 +83,7 @@ const CheckOut = ({
               setTimeout(() => {
                 setIsLoading(false);
               }, 5000);
-            });
+            }));
       },
       onFormClosed: () => {
         console.log("closed form");

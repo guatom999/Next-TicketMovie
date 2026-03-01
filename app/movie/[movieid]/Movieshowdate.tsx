@@ -3,6 +3,7 @@
 import { AxiosResponse } from "axios";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import CheckOut from "@/app/components/CheckOut";
 import { useSession } from "next-auth/react";
 import { DateStringToInteger, FormatTime, GetNumericalDate, ConvertBangkokTime, GetBangkokHour, IsTimeHourGreater, IsRoundPassed } from "@/utils/time";
@@ -59,6 +60,7 @@ const Movieshowdate = ({
   const [checkDate, setCheckDate] = useState(movieDate[0]);
 
   const { data: session } = useSession();
+  const router = useRouter();
   const bangkokHour = GetBangkokHour();
 
   const seat = [
@@ -312,7 +314,14 @@ const Movieshowdate = ({
                 <div className="w-full bg-slate-600 flex justify-center items-center">
                   <button>
                     {reserveSeat.length === 0 ? (
-                      <p className="p-4 text-5xl text-white">ชำระเงิน</p>
+                      <p
+                        className="p-4 text-5xl text-white"
+                        onClick={() => {
+                          if (!session) router.push("/site/authentication/login");
+                        }}
+                      >
+                        ชำระเงิน
+                      </p>
                     ) : (
                       <CheckOut
                         totalPrice={reserveSeat.length * 150}
