@@ -2,7 +2,7 @@
 import { useSession, signIn } from "next-auth/react";
 import { AiFillGithub } from "react-icons/ai";
 import React, { useRef, useState } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FaGithub } from 'react-icons/fa';
 
 type Props = {};
@@ -12,6 +12,7 @@ const page = (props: Props) => {
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { data: session } = useSession();
 
   // const { error } = useParams();
@@ -29,11 +30,8 @@ const page = (props: Props) => {
       if (res?.error) {
         seIsError(true);
       } else {
-        console.log(
-          res?.status
-        );
-        setTimeout(() => { }, 5000);
-        router.push("/");
+        const callbackUrl = searchParams?.get("callbackUrl") || "/";
+        router.push(callbackUrl);
       }
     });
 

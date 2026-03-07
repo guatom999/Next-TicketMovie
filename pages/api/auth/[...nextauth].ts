@@ -155,8 +155,8 @@ export const authOptions: AuthOptions = {
     },
   },
   pages: {
-    signIn: "/authentication/login",
-    error: "/authentication/login",
+    signIn: "/site/authentication/login",
+    error: "/site/authentication/login",
   },
   secret: process.env.NEXTAUTH_SECRET,
   session: {
