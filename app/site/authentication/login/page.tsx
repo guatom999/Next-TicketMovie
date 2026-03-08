@@ -1,13 +1,13 @@
 "use client";
 import { useSession, signIn } from "next-auth/react";
 import { AiFillGithub } from "react-icons/ai";
-import React, { useRef, useState } from "react";
+import React, { Suspense, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FaGithub } from 'react-icons/fa';
 
 type Props = {};
 
-const page = (props: Props) => {
+const LoginForm = (props: Props) => {
   const [isError, seIsError] = useState(false);
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
@@ -124,6 +124,14 @@ const page = (props: Props) => {
         </div>
       </div>
     </div>
+  );
+};
+
+const page = () => {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
   );
 };
 
