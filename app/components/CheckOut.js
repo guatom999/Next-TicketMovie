@@ -72,7 +72,7 @@ const CheckOut = ({
               console.log("result is ===========>", result);
               setTimeout(() => {
                 setIsLoading(false);
-                router.push(`../ticket`);
+                router.push(`/ticket`);
               }, 5000);
 
               // router.push(`../ticket/` + result.url);

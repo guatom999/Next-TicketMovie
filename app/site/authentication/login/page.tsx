@@ -18,7 +18,8 @@ const page = (props: Props) => {
   // const { error } = useParams();
 
   if (session) {
-    router.replace("../../");
+    const callbackUrl = searchParams?.get("callbackUrl") || "/";
+    router.replace(callbackUrl);
   }
 
   const handleSubmit = () => {
