@@ -23,7 +23,7 @@ const Header = (props: Props) => {
         <div className="flex">
           <Link href="/">
             <Image
-              src="https://storage.googleapis.com/ticket-shop-bucket/07592026-9cc5-4c18-8ff4-da7d4763fcc8.png"
+              src="https://storage.googleapis.com/ticket-shop-bucket/Bounce_Boss.png"
               width={150}
               height={48}
               alt="Logo"
