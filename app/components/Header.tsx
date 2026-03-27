@@ -25,9 +25,8 @@ const Header = (props: Props) => {
             <Image
               src="https://storage.googleapis.com/ticket-shop-bucket/Bounce_Boss.png"
               width={150}
-              height={48}
+              height={44}
               alt="Logo"
-              unoptimized={true}
             />
           </Link>
         </div>
