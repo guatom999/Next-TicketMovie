@@ -23,7 +23,7 @@ const Header = (props: Props) => {
         <div className="flex">
           <Link href="/">
             <Image
-              src="https://www.housesamyan.com/assets/website/img/logo.png"
+              src="https://storage.googleapis.com/ticket-shop-bucket/07592026-9cc5-4c18-8ff4-da7d4763fcc8.png"
               width={150}
               height={48}
               alt="Logo"
